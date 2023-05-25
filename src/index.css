@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* Navbar */
+.navbar-container{
+  @apply flex bg-cyan-500 py-1
+}
+
+.title{
+  @apply mx-auto text-2xl pl-1
+}
+
+.account-img{
+  @apply w-9 mr-1 
+}
+
+.account-img:hover{
+  @apply cursor-pointer
+}
+
+.sign-in{
+  @apply absolute left-12 top-2 bg-cyan-600 font-bold
+}
+
+.dropdown-container{
+  @apply block absolute left-0 right-0 items-center bg-cyan-600 w-[90%]
+  mx-auto rounded-2xl py-5 text-white mt-3
+}
+
+.dropdown-form{
+  @apply flex flex-col border mx-10 px-3 py-3
+}
+
+.new-user{
+  @apply flex flex-col my-3 italic font-semibold underline text-black
+}
+
+.sign-in-btn{
+  @apply w-[100%] bg-cyan-400 mt-5 py-1 rounded-md border border-2 border-gray-500
+  text-white font-semibold
+
+}
+
+.sign-up-btn{
+  @apply mb-2 mt-2
+}
+
+.inputs{
+  @apply py-2 rounded-lg
+}
+
+/* Landing */
+
+.landing-container{
+  @apply flex flex-col items-center mt-36 text-3xl text-cyan-500 font-bold
+}
+
+.save-games{
+  @apply mt-52
+}
+
+.sign-in-text{
+  @apply mb-52
+}
+
+/* Footer */
+
+.footer-container{
+  @apply absolute bottom-0 bg-cyan-600 w-[100%] py-2 
+}
+
+.footer-btns{
+  @apply flex justify-around text-white
+}
+
+.games-played,
+.games-saved{
+  @apply w-10
+}
+
+.games-played,
+.games-saved,
+.games-search{
+  @apply cursor-pointer
+}
+
+.games-search{
+  @apply absolute bottom-[30px] bg-cyan-600 rounded-3xl w-12 
+}
