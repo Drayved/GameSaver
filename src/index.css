@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
+body{
+  
+}
 /* Navbar */
 .navbar-container{
   @apply flex bg-cyan-500 py-1
@@ -54,7 +56,15 @@
 /* Landing */
 
 .landing-container{
-  @apply flex flex-col items-center mt-36 text-3xl text-cyan-500 font-bold
+  @apply flex flex-col items-center mt-36 text-2xl text-cyan-500 font-semibold max-w-[50%] mx-auto
+}
+
+.find-games-container{
+  
+}
+
+.find-games{
+ 
 }
 
 .save-games{
@@ -62,13 +72,46 @@
 }
 
 .sign-in-text{
-  @apply mb-52
+  @apply mt-52 text-center
+}
+
+.search{
+  @apply w-[100%] mt-8 shadow-sm border-2 border-gray-100 rounded-md px-2
+}
+
+.search:hover{
+  @apply border-gray-200
+}
+.find-games-container{
+  
+}
+
+/* Games */
+
+.games-card-container{
+  @apply w-[30%] flex flex-col  mx-auto mt-5
+}
+
+.games-card{
+  @apply shadow-lg border-2 p-5 mb-5
+}
+
+.game-img{
+  
+}
+
+.game-info{
+  
+}
+
+.page-container{
+  @apply mt-5 flex justify-around 
 }
 
 /* Footer */
 
 .footer-container{
-  @apply absolute bottom-0 bg-cyan-600 w-[100%] py-2 
+  @apply fixed bottom-0 bg-cyan-600 w-[100%] py-2 
 }
 
 .footer-btns{
