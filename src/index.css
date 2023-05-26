@@ -11,7 +11,7 @@ body{
 }
 
 .title{
-  @apply mx-auto text-2xl pl-1
+  @apply mx-auto text-2xl pl-1 text-white font-semibold
 }
 
 .account-img{
@@ -28,7 +28,7 @@ body{
 
 .dropdown-container{
   @apply block absolute left-0 right-0 items-center bg-cyan-600 w-[90%]
-  mx-auto rounded-2xl py-5 text-white mt-3
+  mx-auto rounded-2xl py-5 text-white mt-3 max-w-[1200px]
 }
 
 .dropdown-form{
@@ -50,9 +50,24 @@ body{
 }
 
 .inputs{
-  @apply py-2 rounded-lg
+  @apply py-2 rounded-lg text-black
 }
 
+.signed-in-container{
+  @apply absolute right-1 bg-cyan-500 w-52 text-white text-center rounded-md shadow-md shadow-gray-600 border-t-2 
+}
+
+.sign-out-btn{
+  @apply my-1 underline font-bold
+}
+
+.sign-out-btn:hover{
+  @apply text-gray-600
+}
+
+.signed-in{
+  @apply my-1 font-semibold
+}
 /* Landing */
 
 .landing-container{
@@ -89,24 +104,68 @@ body{
 /* Games */
 
 .games-card-container{
-  @apply w-[30%] flex flex-col  mx-auto mt-5
+  @apply w-[40%] max-w-[600px] min-w-[400px] flex flex-col  mx-auto mt-5
 }
 
 .games-card{
-  @apply shadow-lg border-2 p-5 mb-5
+  @apply shadow-sm shadow-gray-400 p-5 mt-7 mb-7 h-[280px] bg-blue-100
+}
+
+.game-name{
+  @apply mt-[-10px] mb-2 font-bold text-center
 }
 
 .game-img{
-  
+  @apply w-[50%] h-[170px]  rounded-md shadow-sm shadow-gray-400
 }
 
 .game-info{
-  
+  @apply flex font-semibold
 }
 
 .page-container{
-  @apply mt-5 flex justify-around 
+  @apply mt-7 flex justify-center
 }
+
+.prev-page{
+  @apply mr-2
+}
+
+.prev-page:disabled,
+.next-page:disabled{
+  @apply text-gray-300 
+}
+
+.next-page{
+  @apply ml-2
+}
+
+
+.game-details{
+  @apply ml-5
+}
+
+.game-release{
+  @apply flex  mb-6 mt-1 
+}
+
+.more-info-btn{
+  @apply mt-6 italic text-blue-600 font-bold underline
+}
+
+.list-btns{
+  @apply flex justify-around mt-3 text-white font-bold
+}
+
+
+.want-btn{
+  @apply bg-blue-600 border-black shadow-md shadow-black px-5 py-1 rounded-md 
+}
+
+.played-btn{
+  @apply bg-purple-600 border-black shadow-md shadow-black px-10 py-1 rounded-md 
+}
+
 
 /* Footer */
 

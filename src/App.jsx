@@ -12,6 +12,7 @@ export const AuthContext = createContext();
 export default function App() {
   const [gamesSearched, setGamesSearched] = useState(false);
   const [search, setSearch] = useState("")
+  const [user, setUser] = useState(null)
 
   const router = createBrowserRouter(
     createRoutesFromChildren(
@@ -23,7 +24,7 @@ export default function App() {
 
   return (
     <div>
-      <AuthContext.Provider value={{ gamesSearched, setGamesSearched, search, setSearch}}>
+      <AuthContext.Provider value={{ user, setUser, gamesSearched, setGamesSearched, search, setSearch}}>
         <RouterProvider router={router} />
       </AuthContext.Provider>
       
