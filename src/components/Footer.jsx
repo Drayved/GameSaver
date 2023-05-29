@@ -3,7 +3,7 @@
 export default function Footer(){
     
     return(
-        <div>
+        
             <div className="footer-container">
                 <div className="footer-btns">
                     <img className="games-saved" src="./images/game-console.png" alt="" />
@@ -11,6 +11,6 @@ export default function Footer(){
                     <img className="games-played" src="./images/game-over.png" alt="" />
                 </div>
             </div>
-        </div>
+        
     )
 }

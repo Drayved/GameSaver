@@ -97,7 +97,24 @@ export default function GetGames() {
   const displayedGames = games.slice(0, 3);
 
   return (
-    <div>
+    <div >
+      <div className="page-container page-top">
+        <button
+          className="prev-page"
+          onClick={handlePreviousPage}
+          disabled={currentPage === 1}
+        >
+          Previous Page
+        </button>
+        <p>-</p>
+        <button
+          className="next-page"
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+        >
+          Next Page
+        </button>
+      </div>
       <div className="games-card-container">
         {displayedGames.map((game) => (
           <div key={game.id} className="games-card">
@@ -138,7 +155,7 @@ export default function GetGames() {
         ))}
       </div>
 
-      <div className="page-container">
+      <div className="page-container page-bottom">
         <button
           className="prev-page"
           onClick={handlePreviousPage}

@@ -2,8 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
 body{
- @apply h-screen
+  @apply h-[100%]
 }
 /* Navbar */
 .navbar-container{
@@ -104,11 +105,11 @@ body{
 /* Games */
 
 .games-card-container{
-  @apply w-[40%] max-w-[600px] min-w-[400px] flex flex-col  mx-auto mt-5 
+  @apply w-[40%] max-w-[600px] min-w-[400px] flex flex-col  mx-auto mt-10
 }
 
 .games-card{
-  @apply shadow-sm shadow-gray-400 p-5 mt-7 mb-7 h-[250px] bg-blue-100 
+  @apply shadow-sm shadow-gray-400 p-5 mb-10 h-[250px] bg-blue-100 
 }
 
 .game-name{
@@ -124,7 +125,11 @@ body{
 }
 
 .page-container{
-  @apply mt-7 flex justify-center items-end
+  @apply flex justify-center
+}
+
+.page-top{
+  @apply hidden
 }
 
 .prev-page{
@@ -172,7 +177,7 @@ body{
     }
 
     .games-card-container{
-      @apply min-w-[99%] text-sm
+      @apply min-w-[95%] text-sm 
     }
 
     .game-release{
@@ -202,7 +207,15 @@ body{
   }
 
   .games-card-container{
-    @apply mt-2
+    @apply mt-2 
+  }
+
+  .page-top{
+    @apply flex mt-1
+  }
+
+  .page-bottom{
+    @apply hidden
   }
 
 
@@ -212,7 +225,7 @@ body{
 /* Footer */
 
 .footer-container{
-  @apply fixed bottom-0 bg-cyan-600 w-[100%] py-2 
+  @apply fixed bottom-0 bg-cyan-600 w-[100%] py-2
 }
 
 .footer-btns{
