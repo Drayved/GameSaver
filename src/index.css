@@ -108,7 +108,7 @@ body{
 }
 
 .games-card{
-  @apply shadow-sm shadow-gray-400 p-5 mt-7 mb-7 h-[300px] bg-blue-100 
+  @apply shadow-sm shadow-gray-400 p-5 mt-7 mb-7 h-[250px] bg-blue-100 
 }
 
 .game-name{
@@ -116,7 +116,7 @@ body{
 }
 
 .game-img{
-  @apply w-[50%] h-[170px]  rounded-md shadow-sm shadow-gray-400
+  @apply w-[50%] h-[120px] rounded-md shadow-sm shadow-gray-400
 }
 
 .game-info{
@@ -124,7 +124,7 @@ body{
 }
 
 .page-container{
-  @apply mt-7 flex justify-center
+  @apply mt-7 flex justify-center items-end
 }
 
 .prev-page{
@@ -146,11 +146,11 @@ body{
 }
 
 .game-release{
-  @apply flex  mt-1 mb-4 flex-col
+  @apply flex mb-2 flex-col
 }
 
 .more-info-btn{
-  @apply mt-6 italic text-blue-600 font-bold underline
+  @apply mt-3 italic text-blue-600 font-bold underline
 }
 
 .list-btns{
@@ -167,29 +167,47 @@ body{
 }
 
 @media(max-width: 420px){
+    .body{
+      @apply h-[700px]
+    }
+
+    .games-card-container{
+      @apply min-w-[99%] text-sm
+    }
+
+    .game-release{
+      @apply mb-2
+    }
+
+    .game-img{
+      @apply w-[60%] 
+    }
+
+    .list-btns{
+      @apply mt-7
+    }
+
+    .want-btn{
+    @apply mr-1
+  }
+
+  .played-btn{
+    @apply ml-1 
+  }
+}
+
+@media(max-height:1100px){
+  .games-card{
+    @apply mt-0 mb-3
+  }
+
   .games-card-container{
-    @apply min-w-[99%] text-sm
+    @apply mt-2
   }
 
-  .game-release{
-    @apply mb-2
+  .page-container{
+    @apply mt-0
   }
-
-  .game-img{
-    @apply w-[60%] 
-  }
-
-  .list-btns{
-    @apply mt-7
-  }
-
-  .want-btn{
-  @apply mr-1
-}
-
-.played-btn{
-  @apply ml-1 
-}
 }
 
 

@@ -111,11 +111,11 @@ export default function GetGames() {
               <div className="game-details">
                 <div className="game-release">
                   <p>Released: </p>
-                  <p>{game.released}</p>
+                  <p className="text-xs">{game.released}</p>
                 </div>
                 <div className="game-genres">
                   <p>Genres:</p>
-                  <p> {game.genres.map((genre) => genre.name).join(", ")}</p>
+                  <p className="text-xs"> {game.genres.map((genre) => genre.name).join(", ")}</p>
                 </div>
                 <button className="more-info-btn">More Info</button>
               </div>
