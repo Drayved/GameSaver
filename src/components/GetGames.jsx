@@ -110,7 +110,7 @@ export default function GetGames() {
               ></img>
               <div className="game-details">
                 <div className="game-release">
-                  <p>Released:</p>
+                  <p>Released: </p>
                   <p>{game.released}</p>
                 </div>
                 <div className="game-genres">

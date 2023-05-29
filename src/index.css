@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 body{
-  
+ @apply h-screen
 }
 /* Navbar */
 .navbar-container{
-  @apply flex bg-cyan-500 py-1
+  @apply flex bg-cyan-500 py-1 w-[screen]
 }
 
 .title{
@@ -71,7 +71,7 @@ body{
 /* Landing */
 
 .landing-container{
-  @apply flex flex-col items-center mt-36 text-2xl text-cyan-500 font-semibold max-w-[50%] mx-auto
+  @apply flex flex-col items-center justify-between mt-16 text-2xl text-cyan-500 font-semibold max-w-[50%] mx-auto
 }
 
 .find-games-container{
@@ -83,11 +83,11 @@ body{
 }
 
 .save-games{
-  @apply mt-52
+  @apply my-52
 }
 
 .sign-in-text{
-  @apply mt-52 text-center
+  
 }
 
 .search{
@@ -104,11 +104,11 @@ body{
 /* Games */
 
 .games-card-container{
-  @apply w-[40%] max-w-[600px] min-w-[400px] flex flex-col  mx-auto mt-5
+  @apply w-[40%] max-w-[600px] min-w-[400px] flex flex-col  mx-auto mt-5 
 }
 
 .games-card{
-  @apply shadow-sm shadow-gray-400 p-5 mt-7 mb-7 h-[280px] bg-blue-100
+  @apply shadow-sm shadow-gray-400 p-5 mt-7 mb-7 h-[300px] bg-blue-100 
 }
 
 .game-name{
@@ -146,7 +146,7 @@ body{
 }
 
 .game-release{
-  @apply flex  mb-6 mt-1 
+  @apply flex  mt-1 mb-4 flex-col
 }
 
 .more-info-btn{
@@ -154,7 +154,7 @@ body{
 }
 
 .list-btns{
-  @apply flex justify-around mt-3 text-white font-bold
+  @apply flex justify-around mt-4 text-white font-bold
 }
 
 
@@ -164,6 +164,32 @@ body{
 
 .played-btn{
   @apply bg-purple-600 border-black shadow-md shadow-black px-10 py-1 rounded-md 
+}
+
+@media(max-width: 420px){
+  .games-card-container{
+    @apply min-w-[99%] text-sm
+  }
+
+  .game-release{
+    @apply mb-2
+  }
+
+  .game-img{
+    @apply w-[60%] 
+  }
+
+  .list-btns{
+    @apply mt-7
+  }
+
+  .want-btn{
+  @apply mr-1
+}
+
+.played-btn{
+  @apply ml-1 
+}
 }
 
 
