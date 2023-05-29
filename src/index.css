@@ -196,7 +196,17 @@ body{
   }
 }
 
+@media(max-height:1100px){
+  .games-card{
+    @apply mt-0 mb-3
+  }
 
+  .games-card-container{
+    @apply mt-2
+  }
+
+
+}
 
 
 /* Footer */
