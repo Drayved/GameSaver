@@ -98,23 +98,6 @@ export default function GetGames() {
 
   return (
     <div >
-      <div className="page-container page-top">
-        <button
-          className="prev-page"
-          onClick={handlePreviousPage}
-          disabled={currentPage === 1}
-        >
-          Previous Page
-        </button>
-        <p>-</p>
-        <button
-          className="next-page"
-          onClick={handleNextPage}
-          disabled={currentPage === totalPages}
-        >
-          Next Page
-        </button>
-      </div>
       <div className="games-card-container">
         {displayedGames.map((game) => (
           <div key={game.id} className="games-card">
