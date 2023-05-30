@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import firebase from "../firebaseConfig";
 
-const WantToPlayList = () => {
+import GameCard from "./GameCard";
+
+const GamesSaved = () => {
   const [wantToPlayGames, setWantToPlayGames] = useState([]);
 
   useEffect(() => {
@@ -24,17 +25,9 @@ const WantToPlayList = () => {
 
   return (
     <div>
-      <h2>I Want to Play</h2>
-      <div>
-        {wantToPlayGames.map((game) => (
-          <div key={game.id} className="game-card">
-            <h3>{game.name}</h3>
-            {/* Additional game details */}
-          </div>
-        ))}
-      </div>
+      {GameCard}
     </div>
   );
 };
 
-export default WantToPlayList;
+export default GamesSaved;

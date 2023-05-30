@@ -1,14 +1,19 @@
 import { useState, useEffect, useContext} from 'react'
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from "../App";
 
 export default function Landing(){
-    
+    const navigate = useNavigate();
     const {gamesSearched, setGamesSearched, search, setSearch} = useContext(AuthContext)
 
     function handleSearch(e) {
         setSearch(e.target.value.toLowerCase());
-        setGamesSearched(true)
-        console.log(e.target.value)
+        if(e.key === "Enter"){
+            navigate('/search');
+            setGamesSearched(true)
+            console.log(e.target.value)
+        }
+
       }
 
     return(
@@ -21,7 +26,7 @@ export default function Landing(){
                     placeholder="Find games"
                     value={search}
                     onChange={handleSearch}
-                    onKeyUp={handleSearch}
+                    onKeyDown={handleSearch}
                 />
             </div>
             
