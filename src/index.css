@@ -164,11 +164,15 @@ body{
 
 
 .want-btn{
-  @apply bg-blue-600 border-black shadow-md shadow-black px-5 py-1 rounded-md 
+  @apply bg-blue-600 border-black shadow-md shadow-black w-36 py-1 rounded-md 
 }
 
 .played-btn{
-  @apply bg-purple-600 border-black shadow-md shadow-black px-10 py-1 rounded-md 
+  @apply bg-purple-600 border-black shadow-md shadow-black w-36 py-1 rounded-md 
+}
+
+.remove-btn{
+  @apply bg-red-900 border-black shadow-md shadow-black w-36 py-1 rounded-md
 }
 
 @media(max-width: 420px){

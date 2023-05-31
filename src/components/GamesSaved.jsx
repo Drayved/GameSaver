@@ -1,33 +1,46 @@
-import React, { useState, useEffect } from "react";
-
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../App";
+import { getDocs, collection } from "firebase/firestore";
 import GameCard from "./GameCard";
+import { db } from "../../firebase";
 
-const GamesSaved = () => {
-  const [wantToPlayGames, setWantToPlayGames] = useState([]);
+export default function GamesSaved() {
+  const { games, setGames } = useContext(AuthContext);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
-    // Fetch the games from the "wantToPlay" list in Firebase
+    // Fetch the games from the "wantToPlay" collection in Firestore
     const fetchWantToPlayGames = async () => {
-      const ref = firebase.database().ref("wantToPlay");
-      const snapshot = await ref.once("value");
-      const games = snapshot.val() || [];
-      setWantToPlayGames(games);
+      try {
+        const querySnapshot = await getDocs(collection(db, "wantToPlay"));
+        const wantToPlayGames = querySnapshot.docs.map((doc) => doc.data().game);
+        setGames(wantToPlayGames);
+        console.log(wantToPlayGames);
+      } catch (error) {
+        console.log("Error fetching played games:", error);
+      }
     };
 
     fetchWantToPlayGames();
   }, []);
 
-  const addToWantToPlayList = (game) => {
-    // Add the game to the "wantToPlay" list in Firebase
-    const ref = firebase.database().ref("wantToPlay");
-    ref.push(game);
-  };
+  useEffect(() => {
+    const calculatedTotalPages = Math.ceil(games.length / 3);
+    setTotalPages(calculatedTotalPages);
+  }, [games]);
 
   return (
     <div>
-      {GameCard}
+      <GameCard
+        games={games}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalPages={totalPages}
+        setTotalPages={setTotalPages}
+      />
     </div>
   );
 };
 
-export default GamesSaved;
+

@@ -1,6 +1,12 @@
 import { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../App";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { 
+    getAuth, 
+    createUserWithEmailAndPassword, 
+    signInWithEmailAndPassword, 
+    signOut,
+    onAuthStateChanged
+    } from "firebase/auth";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import firebaseApp from "../../firebase";
 
@@ -11,6 +17,22 @@ export default function Navbar() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const {user, setUser} = useContext(AuthContext)
+
+    useEffect(() => {
+        const auth = getAuth();
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+          if (user) {
+            setSignedIn(true);
+            setUser(user);
+          } else {
+            setSignedIn(false);
+            setUser(null);
+          }
+        });
+    
+        // Clean up the listener
+        return () => unsubscribe();
+      }, [setUser]);
 
     
     function handleClick() {
@@ -77,7 +99,7 @@ export default function Navbar() {
             <div className={signedIn ? "signed-in-container" : "dropdown-container"}>
             {signedIn ? (
                 <div className="signed-in-menu">
-                <p className="signed-in">Signed in as {email}</p>
+                <p className="signed-in">Signed in as {user && user.email}</p>
                 <button className="sign-out-btn" onClick={handleSignOut}>
                     Sign Out
                 </button>
