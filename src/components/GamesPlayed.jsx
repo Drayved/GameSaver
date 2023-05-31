@@ -33,13 +33,14 @@ export default function GamesPlayed() {
 
   return (
     <div>
-      <GameCard
-        games={games}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        totalPages={totalPages}
-        setTotalPages={setTotalPages}
-      />
+        <h1 className="game-list-title">Games You've' Conquered</h1>
+        <GameCard
+            games={games}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalPages={totalPages}
+            setTotalPages={setTotalPages}
+        />
     </div>
   );
 }

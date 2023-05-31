@@ -32,6 +32,7 @@ export default function GamesSaved() {
 
   return (
     <div>
+      <h1 className="game-list-title">Games You Haven't Played</h1>
       <GameCard
         games={games}
         currentPage={currentPage}
