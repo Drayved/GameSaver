@@ -6,7 +6,7 @@ import { db } from "../../firebase";
 
 export default function GamesPlayed() {
   
-  const {games, setGames} = useContext(AuthContext)
+  const {games, setGames, signedIn} = useContext(AuthContext)
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
@@ -33,14 +33,20 @@ export default function GamesPlayed() {
 
   return (
     <div>
-        <h1 className="game-list-title">Games You've' Conquered</h1>
-        <GameCard
-            games={games}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            totalPages={totalPages}
-            setTotalPages={setTotalPages}
-        />
+      {signedIn ? 
+      <div>
+        
+          <h1 className="game-list-title">Games You've' Conquered</h1>
+          <GameCard
+              games={games}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              totalPages={totalPages}
+              setTotalPages={setTotalPages}
+          />
+        
+      </div>
+    : <p className="sign-in-list">Sign in to view your list</p>}
     </div>
   );
 }

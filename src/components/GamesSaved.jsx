@@ -5,7 +5,7 @@ import GameCard from "./GameCard";
 import { db } from "../../firebase";
 
 export default function GamesSaved() {
-  const { games, setGames } = useContext(AuthContext);
+  const { games, setGames, signedIn } = useContext(AuthContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
@@ -32,14 +32,18 @@ export default function GamesSaved() {
 
   return (
     <div>
-      <h1 className="game-list-title">Games You Haven't Played</h1>
-      <GameCard
-        games={games}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        totalPages={totalPages}
-        setTotalPages={setTotalPages}
-      />
+      {signedIn ? 
+      <div>
+        <h1 className="game-list-title">Games You Haven't Played</h1>
+        <GameCard
+          games={games}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPages}
+          setTotalPages={setTotalPages}
+        />
+      </div>
+      : "Sign in to view your list"}
     </div>
   );
 };

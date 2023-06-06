@@ -1,4 +1,5 @@
 import { useState, useContext, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../App";
 import { 
     getAuth, 
@@ -12,11 +13,9 @@ import firebaseApp from "../../firebase";
 
 export default function Navbar() {
     const [showMenu, setShowMenu] = useState(false);
-    const [signedIn, setSignedIn] = useState(false);
-    const [newUser, setNewUser] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const {user, setUser} = useContext(AuthContext)
+    const {user, setUser, signedIn, setSignedIn, newUser, setNewUser} = useContext(AuthContext)
 
     useEffect(() => {
         const auth = getAuth();
@@ -91,7 +90,7 @@ export default function Navbar() {
     return (
         <div>
         <div className="navbar-container">
-            <h1 className="title">GameSaver</h1>
+            <h1 className="title"><Link to="/">GameSaver</Link></h1>
             <img className="account-img" src="./images/account.png" alt="account" onClick={handleClick} />
         </div>
         

@@ -8,20 +8,21 @@ import GameCard from "./GameCard";
 const db = getFirestore(firebaseApp);
 
 export default function GetGames() {
-  
+  const [loading, setLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [gamesPerPage] = useState(3);
   const apiKey = "10cab07048cb4f6591685d4bf79954bd";
-  const { games, setGames } = useContext(AuthContext)
+  const { games, setGames, search } = useContext(AuthContext)
 
   const fetchGames = async (page) => {
     try {
       const response = await fetch(
-        `https://api.rawg.io/api/games?key=${apiKey}&page=${page}`
+        `https://api.rawg.io/api/games?key=${apiKey}&page=${page}&search=${search}`
       );
       const data = await response.json();
       setGames(data.results);
+      setLoading(false)
     } catch (error) {
       console.log(error);
     }
@@ -48,12 +49,17 @@ export default function GetGames() {
 
   useEffect(() => {
     fetchGames(currentPage);
-  }, [currentPage]);
+  }, [currentPage, search]);
 
 
   
   return (
     <div >
+      {loading ? 
+      <h1 className="loading">Loading...</h1>
+    :
+    <div>
+      <h1 className="results-title">Results for "{search}"</h1>
       <GameCard 
         games={games} 
         currentPage={currentPage} 
@@ -61,6 +67,8 @@ export default function GetGames() {
         totalPages={totalPages}
         setTotalPages={setTotalPages}
       />
+    </div>
+    }
     </div>
   );
 }

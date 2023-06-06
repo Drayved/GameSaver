@@ -83,7 +83,8 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
     };
 
     const isGamesSavedPage = window.location.pathname === "/games-saved";
-  const isPlayedGamesPage = window.location.pathname === "/games-played";
+    const isPlayedGamesPage = window.location.pathname === "/games-played";
+    const isSearchPage = window.location.pathname === "/search"
 
 
     return(
@@ -106,7 +107,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
                   <p>Genres:</p>
                   <p className="text-xs"> {game.genres.map((genre) => genre.name).join(", ")}</p>
                 </div>
-                <button className="more-info-btn">More Info</button>
+                <button onClick={() => window.open(`https://rawg.io/games/${game.name}`)} className="more-info-btn">More Info</button>
               </div>
             </div>
             <div className="list-btns">
@@ -121,18 +122,18 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
               </button>
             )}
           
-              
+            {isSearchPage ? "" : 
                 <button className="remove-btn" onClick={() => handleDelete(game)}>
                   Remove
                 </button>
-              
+            }  
             </div>
           </div>
         ))}
 
         <div className="page-container page-bottom">
           <button
-            className="prev-page"
+            className="prev-page font-semibold"
             onClick={handlePreviousPage}
             disabled={currentPage === 1}
           >
@@ -140,13 +141,14 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
           </button>
           <p>-</p>
           <button
-            className="next-page"
+            className="next-page font-semibold"
             onClick={handleNextPage}
             disabled={currentPage === totalPages}
           >
             Next Page
           </button>
         </div>
+        <p className="page-displayed">{currentPage} - {totalPages}</p>
       </div>
     )
 }

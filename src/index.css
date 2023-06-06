@@ -4,15 +4,21 @@
 
 html,
 body{
-  height: 100vh
+  height:100vh;
+  
 }
+
+
+
+
+
 /* Navbar */
 .navbar-container{
   @apply flex bg-cyan-500 py-1 w-[screen]
 }
 
 .title{
-  @apply mx-auto text-2xl pl-1 text-white font-semibold
+  @apply mx-auto text-2xl pl-1 font-semibold  font-extrabold max-w-[50%] mx-auto text-transparent bg-clip-text bg-gradient-to-br from-fuchsia-500 to-purple-800  drop-shadow-sm 
 }
 
 .account-img{
@@ -72,7 +78,9 @@ body{
 /* Landing */
 
 .landing-container{
-  @apply flex flex-col items-center justify-between mt-16 text-2xl text-cyan-500 font-semibold max-w-[50%] mx-auto
+  @apply flex flex-col items-center justify-between mt-16 text-2xl 
+  font-extrabold max-w-[50%] mx-auto text-transparent bg-clip-text bg-gradient-to-r 
+  from-fuchsia-500 to-purple-800 drop-shadow-sm 
 }
 
 .find-games-container{
@@ -81,6 +89,10 @@ body{
 
 .find-games{
  
+}
+
+.games-search-landing{
+  @apply w-7 relative left-[275px] top-[-35px] cursor-pointer z-50
 }
 
 .save-games{
@@ -92,7 +104,7 @@ body{
 }
 
 .search{
-  @apply w-[100%] mt-8 shadow-sm border-2 border-gray-100 rounded-md px-2
+  @apply w-[100%] mt-8 shadow-sm border-2 border-gray-100 rounded-md px-2 py-0.5
 }
 
 .search:hover{
@@ -102,7 +114,25 @@ body{
   
 }
 
+.list-btns-landing{
+  @apply flex justify-between mt-[-150px] mb-40
+}
+
+.games-saved-landing,
+.games-played-landing{
+  @apply w-12
+}
+
+.games-beat-container,
+.games-saved-container{
+  @apply flex flex-col items-center
+}
+
 /* Games */
+
+.results-title{
+  @apply text-center text-3xl my-7 text-cyan-600 font-bold
+}
 
 .game-list-title{
   @apply text-3xl text-cyan-600 font-semibold text-center mt-8
@@ -129,7 +159,7 @@ body{
 }
 
 .page-container{
-  @apply flex justify-center
+  @apply flex justify-center mt-[-20px]
 }
 
 .page-top{
@@ -147,6 +177,10 @@ body{
 
 .next-page{
   @apply ml-2
+}
+
+.page-displayed{
+  @apply text-center mt-3 italic text-gray-500
 }
 
 
@@ -184,6 +218,13 @@ body{
   @apply bg-red-900 
 }
 
+.loading{
+  @apply text-center mt-10 text-2xl 
+}
+
+.sign-in-list{
+  @apply text-center text-xl mt-10 text-cyan-600 font-semibold
+}
 @media(max-width: 420px){
     .body{
       @apply h-[700px]
