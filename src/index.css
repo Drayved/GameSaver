@@ -128,6 +128,19 @@ body{
   @apply flex flex-col items-center
 }
 
+.login-landing-container{
+  @apply relative
+}
+
+.login-landing{
+  @apply w-52 mx-auto z-10
+}
+
+.login-landing-text{
+  @apply absolute top-[50%] left-[50%];
+  transform: translate(-50%, -50%);
+}
+
 /* Games */
 
 .results-title{

@@ -107,7 +107,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
                   <p>Genres:</p>
                   <p className="text-xs"> {game.genres.map((genre) => genre.name).join(", ")}</p>
                 </div>
-                <button onClick={() => window.open(`https://rawg.io/games/${game.name}`)} className="more-info-btn">More Info</button>
+                <button onClick={() => window.open(`https://rawg.io/games/${game.name.replace(/\s/g, "-").replace(/:/g, "")}`)} className="more-info-btn">More Info</button>
               </div>
             </div>
             <div className="list-btns">

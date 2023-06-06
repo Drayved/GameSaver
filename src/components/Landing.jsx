@@ -54,7 +54,10 @@ export default function Landing(){
             
             <div>
                 <h1 className="sign-in-text">Sign in to access your list on any device!</h1>
-                
+                <div className='login-landing-container'>
+                    <img className='login-landing' src="login.png" alt="Login button" />
+                    <p className='login-landing-text' href="">Login</p>
+                </div>
             </div>
             
         </div>
