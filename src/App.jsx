@@ -1,5 +1,5 @@
 import { useEffect, useState, createContext } from "react";
-import { createBrowserRouter, RouterProvider, Route, createRoutesFromChildren } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Route, createRoutesFromChildren, Outlet } from "react-router-dom";
 import Landing from "./components/Landing";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -76,7 +76,9 @@ export default function App() {
       setShowMenu,
       handleMenuClick
       }}>
-        <RouterProvider router={router} />
+        <RouterProvider router={router}>
+          <Outlet />
+        </RouterProvider> 
       </AuthContext.Provider>
       
     </div>
