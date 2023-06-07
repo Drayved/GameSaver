@@ -25,6 +25,11 @@ GameSaver is a web application built with React, JavaScript, and Tailwind CSS. I
 
 GameSaver utilizes the RAWG.io API to fetch game information, including titles, descriptions, and cover images. This integration ensures that users have access to up-to-date and comprehensive game details.
 
+## Project Link
+
+You can access the Quizzical application [here](https://davids-gamesaver.netlify.app).
+
+
 ## Technologies Used
 
 - React - [https://reactjs.org](https://reactjs.org)
