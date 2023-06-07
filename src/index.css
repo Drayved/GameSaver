@@ -150,11 +150,11 @@
   }
 
   .list-btns-landing{
-    @apply mt-[-20px] mb-16
+    @apply mt-[-20px] mb-10
   }
 
   .save-games{
-    @apply my-16
+    @apply my-10
   }
 }
 
