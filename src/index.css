@@ -96,7 +96,7 @@
 }
 
 .search{
-  @apply w-[100%] mt-8 shadow-sm border-2 border-gray-100 rounded-md px-1 py-0.5 
+  @apply w-[100%] mt-8 shadow-sm border-2 border-gray-100 rounded-md px-1 py-0.5 text-gray-700
 }
 
 .search:hover{
@@ -160,11 +160,11 @@
 
 @media(max-width: 380px){
   .login-landing-text{
-    @apply mt-[-50px]
+    
   }
 
   .search{
-    @apply text-lg py-1
+    @apply text-lg py-1 
   }
 }
 
