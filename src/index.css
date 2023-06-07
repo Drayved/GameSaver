@@ -3,11 +3,6 @@
 @tailwind utilities;
 
 
-
-
-
-
-
 /* Navbar */
 .navbar-container{
   @apply flex bg-cyan-500 py-1 w-[screen]
@@ -298,7 +293,7 @@
  
 
   .page-bottom{
-    @apply pb-20
+    @apply mt-2
   }
 
 
@@ -309,6 +304,12 @@
 
 .footer-container{
   @apply fixed bottom-0 bg-cyan-600 w-[100%] py-2
+}
+
+@media(max-height:1040px){
+  .footer-container{
+    @apply sticky mt-16
+  }
 }
 
 .footer-btns{
