@@ -43,7 +43,7 @@ export default function GamesSaved() {
           setTotalPages={setTotalPages}
         />
       </div>
-      : "Sign in to view your list"}
+      : <p className="sign-in-list">Sign in to view your list</p>}
     </div>
   );
 };
