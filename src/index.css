@@ -155,7 +155,7 @@ body{
   }
 
   .list-btns-landing{
-    @apply mt-[-20px] mb-8
+    @apply mt-[-12px] mb-8
   }
 
   .save-games{
