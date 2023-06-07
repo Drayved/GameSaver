@@ -312,9 +312,12 @@ body{
  
 
   .page-bottom{
-    @apply mt-2
+    @apply mt-2 
   }
 
+  .page-displayed{
+    @apply pb-20
+  }
 
 }
 
