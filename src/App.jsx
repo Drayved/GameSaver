@@ -26,10 +26,11 @@ export default function App() {
     createRoutesFromChildren(
       <Route path={"/"} element={<Layout />}>
         <Route index element={<Landing />} />
+        <Route path="*" element={<Landing />} />
         <Route path="/search" element={<GetGames />} />
         <Route path="/games-saved" element={<GamesSaved />}/>
         <Route path="/games-played" element={<GamesPlayed />}/>
-        <Route path="*" element={<Landing />} />
+        
       </Route>
     )
   );
