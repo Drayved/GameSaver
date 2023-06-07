@@ -83,8 +83,8 @@ body{
   from-fuchsia-500 to-purple-800 drop-shadow-sm 
 }
 
-.find-games-container{
-  
+.search-container{
+  @apply relative
 }
 
 .find-games{
@@ -92,7 +92,8 @@ body{
 }
 
 .games-search-landing{
-  @apply w-7 relative left-[275px] top-[-35px] cursor-pointer z-50
+
+  @apply w-8 absolute top-[70%] right-[15px] cursor-pointer translate-y-[-50%]
 }
 
 .save-games{
@@ -104,7 +105,7 @@ body{
 }
 
 .search{
-  @apply w-[100%] mt-8 shadow-sm border-2 border-gray-100 rounded-md px-2 py-0.5
+  @apply w-[100%] mt-8 shadow-sm border-2 border-gray-100 rounded-md px-1 py-0.5 
 }
 
 .search:hover{
@@ -139,6 +140,14 @@ body{
 .login-landing-text{
   @apply absolute top-[50%] left-[50%];
   transform: translate(-50%, -50%);
+}
+
+.lets-play-container{
+  @apply mt-2 text-center
+}
+
+.lets-play-img{
+  @apply w-20 mx-auto mt-5
 }
 
 /* Games */

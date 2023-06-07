@@ -13,9 +13,8 @@ import firebaseApp from "../../firebase";
 
 export default function Navbar() {
     const [showMenu, setShowMenu] = useState(false);
-    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const {user, setUser, signedIn, setSignedIn, newUser, setNewUser} = useContext(AuthContext)
+    const {user, setUser, signedIn, setSignedIn, newUser, setNewUser, email, setEmail} = useContext(AuthContext)
 
     useEffect(() => {
         const auth = getAuth();
@@ -95,7 +94,7 @@ export default function Navbar() {
         </div>
         
         {showMenu ? (
-            <div className={signedIn ? "signed-in-container" : "dropdown-container"}>
+            <div className={signedIn ? "signed-in-container z-50" : "dropdown-container z-50"}>
             {signedIn ? (
                 <div className="signed-in-menu">
                 <p className="signed-in">Signed in as {user && user.email}</p>

@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="footer-container">
       <div className="footer-btns">
         <Link className="games-saved" to="/games-saved">
-          <img src="./images/game-console.png" alt="" />
+          <img src="./images/computer-game.png" alt="" />
         </Link>
         <Link to="/" className="games-search">
           <img  src="./images/search.png" alt="" />

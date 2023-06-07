@@ -4,7 +4,7 @@ import { AuthContext } from "../App";
 
 export default function Landing(){
     const navigate = useNavigate();
-    const {gamesSearched, setGamesSearched, search, setSearch} = useContext(AuthContext)
+    const {gamesSearched, setGamesSearched, search, setSearch, signedIn, user, email} = useContext(AuthContext)
 
     function handleSearch() {
         navigate('/search');
@@ -20,15 +20,17 @@ export default function Landing(){
         <div className="landing-container">
             <div className="find-games-container">
                 <h1 className="find-games">Find Games you want to play</h1>
-                <input 
-                    className="search" 
-                    type="text" 
-                    placeholder="Find games"
-                    value={search}
-                    onChange={handleInputChange}
-                    onKeyDown={e => e.key === "Enter" && handleSearch()}
-                />
-                <img onClick={handleSearch} className='games-search-landing' src='/images/search.png'></img>
+                <div className='search-container'>
+                    <input 
+                        className="search" 
+                        type="text" 
+                        placeholder="Find games"
+                        value={search}
+                        onChange={handleInputChange}
+                        onKeyDown={e => e.key === "Enter" && handleSearch()}
+                    />
+                    <img onClick={handleSearch} className='games-search-landing' src='/images/search.png'></img>
+                </div>
             </div>
             
             <div className="save-games-container">
@@ -36,7 +38,7 @@ export default function Landing(){
                 <div className='list-btns-landing'>
                     <Link to="/games-saved">
                         <div className='games-saved-container'>
-                            <img className='games-saved-landing' src='/images/game-console.png' alt="Games to play"/>
+                            <img className='games-saved-landing' src='/images/computer-game.png' alt="Games to play"/>
                             <p className='text-sm'>Games to play</p>
                         </div>
                     </Link>
@@ -53,11 +55,26 @@ export default function Landing(){
             </div>
             
             <div>
-                <h1 className="sign-in-text">Sign in to access your list on any device!</h1>
-                <div className='login-landing-container'>
-                    <img className='login-landing' src="login.png" alt="Login button" />
-                    <p className='login-landing-text' href="">Login</p>
-                </div>
+            {!signedIn ?
+                <>
+                    <h1 className="sign-in-text">Sign in to access your list on any device!</h1>
+                    <div className='login-landing-container'>
+                        
+                        <img className='login-landing' src="images/login.png" alt="Login button" />
+                        <p className='login-landing-text' href="">Login</p>
+                        
+                    </div>
+                </>
+                : 
+                <>
+                    <h1 className='sign-in-text'>Welcome back {email}!</h1>
+                    <div className='lets-play-container'>
+                        <p>Lets play!</p>
+                        <img src='images/game-console.png' className='lets-play-img' alt="game console" />
+                        
+                    </div>
+
+                </>}
             </div>
             
         </div>
