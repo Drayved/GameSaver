@@ -29,7 +29,7 @@ export default function App() {
         <Route path="/search" element={<GetGames />} />
         <Route path="/games-saved" element={<GamesSaved />}/>
         <Route path="/games-played" element={<GamesPlayed />}/>
-        <Route path="*" element={<Layout />} />
+        <Route path="*" element={<Landing />} />
       </Route>
     )
   );
