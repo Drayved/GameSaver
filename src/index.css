@@ -317,14 +317,10 @@
 /* Footer */
 
 .footer-container{
-  @apply absolute bottom-0 bg-cyan-600 w-[100%] py-2
+  @apply fixed bottom-0 bg-cyan-600 w-[100%] py-2
 }
 
-@media(max-height:1040px){
-  .footer-container{
-    @apply  mt-16 
-  }
-}
+
 
 .footer-btns{
   @apply flex justify-around text-white
