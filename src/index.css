@@ -133,7 +133,7 @@ body{
 }
 
 .login-landing-content {
-  @apply flex flex-col items-center
+  @apply flex flex-col items-center pb-28
 }
 
 .login-landing-text{
@@ -142,14 +142,14 @@ body{
 }
 
 .lets-play-container{
-  @apply mt-2 text-center
+  @apply mt-2 text-center 
 }
 
 .lets-play-img{
-  @apply w-20 mx-auto mt-5
+  @apply w-20 mx-auto mt-5 
 }
 
-@media(max-height: 1100px){
+@media(max-height: 800px){
   .landing-container{
     @apply mt-2
   }
