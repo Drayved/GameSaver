@@ -7,7 +7,7 @@ import GetGames from "./components/GetGames";
 import Layout from "./components/Layout"
 import GamesSaved from "./components/GamesSaved";
 import GamesPlayed from "./components/GamesPlayed"
-
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 export const AuthContext = createContext();
 
@@ -19,6 +19,8 @@ export default function App() {
   const [signedIn, setSignedIn] = useState(false);
   const [newUser, setNewUser] = useState(false);
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showMenu, setShowMenu] = useState(false);
 
   const router = createBrowserRouter(
     createRoutesFromChildren(
@@ -30,6 +32,24 @@ export default function App() {
       </Route>
     )
   );
+
+  function handleMenuClick() {
+    setShowMenu(!showMenu);
+}
+
+  async function handleSignIn(event) {
+    event.preventDefault();
+    const auth = getAuth();
+    try {
+    await signInWithEmailAndPassword(auth, email, password);
+    setSignedIn(true);
+    setUser(email)
+    console.log(user)
+    console.log("User signed in!");
+    } catch (error) {
+    console.log("Error signing in:", error);
+    }
+}
 
   return (
     <div>
@@ -47,7 +67,13 @@ export default function App() {
       signedIn,
       setSignedIn,
       email,
-      setEmail
+      setEmail,
+      handleSignIn,
+      password,
+      setPassword,
+      showMenu,
+      setShowMenu,
+      handleMenuClick
       }}>
         <RouterProvider router={router} />
       </AuthContext.Provider>

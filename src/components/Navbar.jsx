@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../App";
 import { 
     getAuth, 
-    createUserWithEmailAndPassword, 
-    signInWithEmailAndPassword, 
+    createUserWithEmailAndPassword,  
     signOut,
     onAuthStateChanged
     } from "firebase/auth";
@@ -12,9 +11,9 @@ import { getFirestore, collection, addDoc } from "firebase/firestore";
 import firebaseApp from "../../firebase";
 
 export default function Navbar() {
-    const [showMenu, setShowMenu] = useState(false);
-    const [password, setPassword] = useState("");
-    const {user, setUser, signedIn, setSignedIn, newUser, setNewUser, email, setEmail} = useContext(AuthContext)
+    
+    
+    const {user, setUser, signedIn, setSignedIn, newUser, setNewUser, email, setEmail, handleSignIn, password, setPassword, showMenu, handleMenuClick} = useContext(AuthContext)
 
     useEffect(() => {
         const auth = getAuth();
@@ -32,28 +31,12 @@ export default function Navbar() {
         return () => unsubscribe();
       }, [setUser]);
 
-    
-    function handleClick() {
-        setShowMenu(!showMenu);
-    }
 
     function handleNewUsers() {
         setNewUser(!newUser);
     }
 
-    async function handleSignIn(event) {
-        event.preventDefault();
-        const auth = getAuth();
-        try {
-        await signInWithEmailAndPassword(auth, email, password);
-        setSignedIn(true);
-        setUser(email)
-        console.log(user)
-        console.log("User signed in!");
-        } catch (error) {
-        console.log("Error signing in:", error);
-        }
-    }
+
 
     async function handleSignUp(event) {
         event.preventDefault();
@@ -90,14 +73,14 @@ export default function Navbar() {
         <div>
         <div className="navbar-container">
             <h1 className="title"><Link to="/">GameSaver</Link></h1>
-            <img className="account-img" src="./images/account.png" alt="account" onClick={handleClick} />
+            <img className="account-img" src="./images/account.png" alt="account" onClick={handleMenuClick} />
         </div>
         
         {showMenu ? (
             <div className={signedIn ? "signed-in-container z-50" : "dropdown-container z-50"}>
             {signedIn ? (
                 <div className="signed-in-menu">
-                <p className="signed-in">Signed in as {user && user.email}</p>
+                <p className="signed-in">Signed in as {user && email}</p>
                 <button className="sign-out-btn" onClick={handleSignOut}>
                     Sign Out
                 </button>

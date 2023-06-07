@@ -18,7 +18,7 @@ body{
 }
 
 .title{
-  @apply mx-auto text-2xl pl-1 font-semibold  font-extrabold max-w-[50%] mx-auto text-transparent bg-clip-text bg-gradient-to-br from-fuchsia-500 to-purple-800  drop-shadow-sm 
+  @apply mx-auto text-2xl pl-1 font-semibold  font-extrabold max-w-[50%] mx-auto text-transparent bg-clip-text bg-gradient-to-br from-green-600 to-fuchsia-600  drop-shadow-sm 
 }
 
 .account-img{
@@ -80,7 +80,7 @@ body{
 .landing-container{
   @apply flex flex-col items-center justify-between mt-16 text-2xl 
   font-extrabold max-w-[50%] mx-auto text-transparent bg-clip-text bg-gradient-to-r 
-  from-fuchsia-500 to-purple-800 drop-shadow-sm 
+  from-green-600 to-fuchsia-600 drop-shadow-sm 
 }
 
 .search-container{
@@ -129,17 +129,20 @@ body{
   @apply flex flex-col items-center
 }
 
-.login-landing-container{
-  @apply relative
+.login-landing-container {
+  @apply h-[100%] flex items-center justify-center
 }
 
 .login-landing{
-  @apply w-52 mx-auto z-10
+  @apply  mx-auto w-52 mt-10 
+}
+
+.login-landing-content {
+  @apply flex flex-col items-center
 }
 
 .login-landing-text{
-  @apply absolute top-[50%] left-[50%];
-  transform: translate(-50%, -50%);
+  @apply text-green-400 mt-[-57px] font-extrabold drop-shadow-md
 }
 
 .lets-play-container{
@@ -148,6 +151,16 @@ body{
 
 .lets-play-img{
   @apply w-20 mx-auto mt-5
+}
+
+@media(max-width: 380px){
+  .login-landing-text{
+    @apply mt-[-50px]
+  }
+
+  .search{
+    @apply text-lg py-1
+  }
 }
 
 /* Games */

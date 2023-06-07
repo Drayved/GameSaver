@@ -4,7 +4,8 @@ import { AuthContext } from "../App";
 
 export default function Landing(){
     const navigate = useNavigate();
-    const {gamesSearched, setGamesSearched, search, setSearch, signedIn, user, email} = useContext(AuthContext)
+    
+    const {setGamesSearched, search, setSearch, signedIn, email, handleMenuClick} = useContext(AuthContext)
 
     function handleSearch() {
         navigate('/search');
@@ -59,10 +60,10 @@ export default function Landing(){
                 <>
                     <h1 className="sign-in-text">Sign in to access your list on any device!</h1>
                     <div className='login-landing-container'>
-                        
-                        <img className='login-landing' src="images/login.png" alt="Login button" />
-                        <p className='login-landing-text' href="">Login</p>
-                        
+                        <div className='login-landing-content'>
+                            <img className='login-landing' src="images/login.png" alt="Login button" onClick={handleMenuClick} />
+                            <p className='login-landing-text'>Login</p>
+                        </div>
                     </div>
                 </>
                 : 
@@ -70,7 +71,7 @@ export default function Landing(){
                     <h1 className='sign-in-text'>Welcome back {email}!</h1>
                     <div className='lets-play-container'>
                         <p>Lets play!</p>
-                        <img src='images/game-console.png' className='lets-play-img' alt="game console" />
+                        <img src='images/game-console.png' className='lets-play-img' alt="game console" onClick={handleMenuClick}/>
                         
                     </div>
 
