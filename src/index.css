@@ -9,11 +9,11 @@ body{
 
 /* Navbar */
 .navbar-container{
-  @apply flex bg-cyan-500 py-1 w-[screen]
+  @apply flex bg-gray-900 py-1 w-[screen]
 }
 
 .title{
-  @apply mx-auto text-2xl pl-1 font-semibold  font-extrabold max-w-[50%] mx-auto text-transparent bg-clip-text bg-gradient-to-br from-green-600 to-fuchsia-600  drop-shadow-sm 
+  @apply mx-auto text-2xl pl-1 font-semibold  font-extrabold max-w-[50%] mx-auto text-transparent bg-clip-text bg-gradient-to-br from-cyan-400 to-green-600  drop-shadow-sm 
 }
 
 .account-img{
@@ -42,7 +42,7 @@ body{
 }
 
 .sign-in-btn{
-  @apply w-[100%] bg-cyan-400 mt-5 py-1 rounded-md border border-2 border-gray-500
+  @apply w-[100%] bg-cyan-500 mt-5 py-1 rounded-md border border-2 border-gray-500
   text-white font-semibold
 
 }
@@ -56,7 +56,7 @@ body{
 }
 
 .signed-in-container{
-  @apply absolute right-1 bg-cyan-500 w-52 text-white text-center rounded-md shadow-md shadow-gray-600 border-t-2 
+  @apply absolute right-1 bg-cyan-600 w-52 text-white text-center rounded-md shadow-md shadow-gray-600 border-t-2 
 }
 
 .sign-out-btn{
@@ -75,11 +75,11 @@ body{
 .landing-container{
   @apply flex flex-col items-center mt-16 text-2xl 
   font-extrabold max-w-[70%] mx-auto text-transparent bg-clip-text bg-gradient-to-r 
-  from-green-600 to-fuchsia-600 drop-shadow-sm 
+  from-cyan-500 to-green-600 drop-shadow-sm 
 }
 
 .search-container{
-  @apply relative
+  @apply relative 
 }
 
 .find-games{
@@ -100,7 +100,7 @@ body{
 }
 
 .search{
-  @apply w-[100%] mt-8 shadow-sm border-2 border-gray-100 rounded-md px-1 py-0.5 text-gray-700
+  @apply w-[100%] mt-8 shadow-sm border-2 border-gray-100 rounded-md px-1 py-0.5 text-gray-600
 }
 
 .search:hover{
@@ -204,7 +204,7 @@ body{
 }
 
 .page-container{
-  @apply flex justify-center mt-[-20px]
+  @apply flex justify-center mt-[-20px] text-gray-700
 }
 
 .page-top{
@@ -325,7 +325,7 @@ body{
 /* Footer */
 
 .footer-container{
-  @apply fixed bottom-0 bg-cyan-600 w-[100%] py-2
+  @apply fixed bottom-0 bg-gray-900 w-[100%] py-2
 }
 
 
@@ -346,5 +346,5 @@ body{
 }
 
 .games-search{
-  @apply absolute bottom-[30px] bg-cyan-600 rounded-3xl w-12 
+  @apply absolute bottom-[30px] bg-gray-900 rounded-3xl w-12 
 }

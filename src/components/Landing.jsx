@@ -17,6 +17,10 @@ export default function Landing(){
         setSearch(e.target.value.toLowerCase());
       }
 
+      useEffect(() => {
+        setSearch(''); // Clear the search input when the page is loaded
+      }, []);
+
     return(
         <div className="landing-container">
             <div className="find-games-container">
@@ -57,7 +61,7 @@ export default function Landing(){
             
             <div>
             {!signedIn ?
-                <>
+                <div>
                     <h1 className="sign-in-text">Sign in to access your list on any device!</h1>
                     <div className='login-landing-container'>
                         <div className='login-landing-content'>
@@ -65,17 +69,17 @@ export default function Landing(){
                             <p className='login-landing-text'>Login</p>
                         </div>
                     </div>
-                </>
+                </div>
                 : 
-                <>
-                    <h1 className='sign-in-text'>Welcome back {email}!</h1>
+                <div>
+                    <h1 className='sign-in-text'>signed in as:</h1>
                     <div className='lets-play-container'>
-                        <p>Lets play!</p>
+                        <p>{email}</p>
                         <img src='images/game-console.png' className='lets-play-img' alt="game console" onClick={handleMenuClick}/>
                         
                     </div>
 
-                </>}
+                </div>}
             </div>
             
         </div>

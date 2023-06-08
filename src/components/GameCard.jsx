@@ -2,30 +2,85 @@ import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../App";
 import { collection, doc, setDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../../firebase";
+
 export default function GameCard({ currentPage, setCurrentPage, totalPages, setTotalPages}){
     const { games, setGames, user } = useContext(AuthContext)
     const startIndex = (currentPage - 1) * 3;
     let endIndex = startIndex + 3;
     const [displayedGames, setDisplayedGames] = useState(games.slice(startIndex, endIndex))
+    
 
+    const isGamesSavedPage = window.location.pathname === "/games-saved";
+    const isPlayedGamesPage = window.location.pathname === "/games-played";
+    const isSearchPage = window.location.pathname === "/search"
+    const [currentPageType, setCurrentPageType] = useState(isGamesSavedPage ? "saved" : "played")
+
+    useEffect(() => {
+      setCurrentPageType(isGamesSavedPage ? "saved" : "played");
+    }, [isGamesSavedPage]);
+  
     useEffect(() => {
       const updatedDisplayedGames = games.slice(startIndex, endIndex);
       setDisplayedGames(updatedDisplayedGames);
     }, [games, startIndex, endIndex]);
-
+  
+    useEffect(() => {
+      if (user) {
+        const fetchGames = async () => {
+          try {
+            let fetchedGames = [];
+            if (isGamesSavedPage) {
+              const querySnapshot = await getDocs(
+                query(collection(db, "wantToPlay"), where("game.played", "==", false))
+              );
+              fetchedGames = querySnapshot.docs.map((doc) => doc.data().game);
+            } else if (isPlayedGamesPage) {
+              const querySnapshot = await getDocs(
+                query(collection(db, "playedGames"), where("game.played", "==", true))
+              );
+              fetchedGames = querySnapshot.docs.map((doc) => doc.data().game);
+            }
+            setGames(fetchedGames);
+          } catch (error) {
+            console.log("Error fetching games:", error);
+          }
+        };
+  
+        fetchGames();
+      }
+    }, [user, isGamesSavedPage, isPlayedGamesPage, setGames]);
+  
     const handleWantToPlay = async (event, game) => {
       event.preventDefault();
       try {
         if (user) {
           const gameData = { game };
+          const collectionName = currentPageType === "played" ? "playedGames" : "wantToPlay";
+    
+          // Delete the game from the original list if it exists in Firebase
+          await deleteDoc(doc(collection(db, collectionName), game.id.toString()));
+    
+          // Add the game to the new list in Firebase
           await setDoc(doc(collection(db, "wantToPlay"), game.id.toString()), gameData);
-          console.log("Game added to the 'I want to play' list!");
+    
+          // Update the local state accordingly
+          const remainingGames = games.filter((g) => g.id !== game.id);
+          setGames(remainingGames);
+
+          if (remainingGames.length === 0 && currentPage > 1) {
+            setCurrentPage((prevPage) => prevPage - 1); // Navigate to previous page
+            return; // Exit the function to prevent further operations
+          }
+
+          setDisplayedGames((prevGames) => prevGames.filter((g) => g.id !== game.id));
+    
+          console.log("Game moved to the 'I want to play' list!");
         } else {
           console.log("User not authenticated.");
           // You can add a logic to show a message or redirect the user to the sign-in page
         }
       } catch (error) {
-        console.log("Error adding game to 'I want to play' list:", error);
+        console.log("Error moving game to the 'I want to play' list:", error);
       }
     };
   
@@ -34,41 +89,62 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
       try {
         if (user) {
           const gameData = { game };
-          await setDoc(doc(collection(db, "playedGames"), game.id.toString()), gameData);
-          console.log("Game added to the 'I played it' list!");
-        } else {
-          console.log("User not authenticated.");
-          // You can add a logic to show a message or redirect the user to the sign-in page
-        }
-      } catch (error) {
-        console.log("Error adding game to 'I played it' list:", error);
-      }
-    };
-
-    const handleDelete = async ( game) => {
-      
-      try {
-        if (user) {
-          const collectionName = game.played ? "playedGames" : "wantToPlay";
+          const collectionName = currentPageType === "played" ? "playedGames" : "wantToPlay";
+    
+          // Delete the game from the original list if it exists in Firebase
           await deleteDoc(doc(collection(db, collectionName), game.id.toString()));
-          console.log("Game deleted successfully!");
-
+    
+          // Add the game to the new list in Firebase
+          await setDoc(doc(collection(db, "playedGames"), game.id.toString()), gameData);
+    
+          // Update the local state accordingly
           const remainingGames = games.filter((g) => g.id !== game.id);
           setGames(remainingGames);
 
           if (remainingGames.length === 0 && currentPage > 1) {
-            setCurrentPage((prevPage) => prevPage - 1);
+            setCurrentPage((prevPage) => prevPage - 1); // Navigate to previous page
+            return; // Exit the function to prevent further operations
           }
 
           setDisplayedGames((prevGames) => prevGames.filter((g) => g.id !== game.id));
+    
+          console.log("Game moved to the 'Played it' list!");
         } else {
           console.log("User not authenticated.");
           // You can add a logic to show a message or redirect the user to the sign-in page
         }
       } catch (error) {
-        console.log("Error deleting game:", error);
+        console.log("Error moving game to the 'Played it' list:", error);
       }
     };
+
+const handleDelete = async (game) => {
+  try {
+    if (user) {
+      const collectionName = currentPageType === "saved" ? "wantToPlay" : "playedGames";
+
+      // Delete the game from Firebase
+      await deleteDoc(doc(collection(db, collectionName), game.id.toString()));
+      console.log("Game deleted successfully!");
+
+      // Remove the game from the local state
+      const remainingGames = games.filter((g) => g.id !== game.id);
+      setGames(remainingGames);
+
+      const remainingDisplayedGames = displayedGames.filter((g) => g.id !== game.id);
+      setDisplayedGames(remainingDisplayedGames);
+
+      if (remainingDisplayedGames.length === 0 && currentPage > 1) {
+        setCurrentPage((prevPage) => prevPage - 1); // Navigate to previous page
+      }
+    } else {
+      console.log("User not authenticated.");
+      // You can add a logic to show a message or redirect the user to the sign-in page
+    }
+  } catch (error) {
+    console.log("Error deleting game:", error);
+  }
+};
 
     const handlePreviousPage = () => {
       if (currentPage > 1) {
@@ -82,9 +158,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
       }
     };
 
-    const isGamesSavedPage = window.location.pathname === "/games-saved";
-    const isPlayedGamesPage = window.location.pathname === "/games-played";
-    const isSearchPage = window.location.pathname === "/search"
+
 
 
     return(
