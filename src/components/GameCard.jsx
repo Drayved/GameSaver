@@ -24,7 +24,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
       if (isSearchPage) {
         fetchDisplayedGames();
       }
-    }, [games, currentPage, isSearchPage]);
+    }, [currentPage]);
 
     useEffect(() => {
       setCurrentPageType(isGamesSavedPage ? "saved" : "played");
