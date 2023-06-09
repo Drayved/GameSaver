@@ -175,7 +175,7 @@ const handleDelete = async (game) => {
 
     return (
       <div className="games-card-container">
-        {!loading && (
+        {!loading && displayedGames.length > 0 && (
           <>
             {displayedGames.map((game) => (
               <div key={game.id} className="games-card">
