@@ -8,7 +8,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
     const startIndex = (currentPage - 1) * 3;
     let endIndex = startIndex + 3;
     const [displayedGames, setDisplayedGames] = useState(games.slice(startIndex, endIndex))
-    
+    const [gamesAdded, setGamesAdded] = useState(true)
 
     const isGamesSavedPage = window.location.pathname === "/games-saved";
     const isPlayedGamesPage = window.location.pathname === "/games-played";
@@ -18,6 +18,10 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
     useEffect(() => {
       setCurrentPageType(isGamesSavedPage ? "saved" : "played");
     }, [isGamesSavedPage]);
+
+    useEffect(() => {
+      displayedGames <= 0 && setGamesAdded(false)
+    }, [displayedGames])
   
     useEffect(() => {
       const updatedDisplayedGames = games.slice(startIndex, endIndex);
@@ -209,7 +213,9 @@ const handleDelete = async (game) => {
             </div>
           </div>
         ))}
-
+        
+        
+        <div className={`${!gamesAdded && "hidden"}`}>
         <div className="page-container page-bottom">
           <button
             className="prev-page font-semibold"
@@ -227,7 +233,10 @@ const handleDelete = async (game) => {
             Next Page
           </button>
         </div>
-        <p className="page-displayed">{currentPage} - {totalPages}</p>
+        <p className={`page-displayed`}>{currentPage} - {totalPages}</p>
+        </div>
+  
+        
       </div>
     )
 }

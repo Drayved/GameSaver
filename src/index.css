@@ -361,7 +361,7 @@ body{
   }
 
   .game-name{
-    @apply ml-20 pl-12
+    @apply ml-24 pl-2
   }
 
   .prev-page,

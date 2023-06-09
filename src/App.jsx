@@ -27,6 +27,7 @@ export default function App() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showMenu, setShowMenu] = useState(false);
+  const [gamesAdded, setGamesAdded] = useState(true)
 
   const router = createBrowserRouter(
     createRoutesFromChildren(
@@ -81,7 +82,9 @@ export default function App() {
       setPassword,
       showMenu,
       setShowMenu,
-      handleMenuClick
+      handleMenuClick,
+      gamesAdded,
+      setGamesAdded
       }}>
         <RouterProvider router={router}>
           <Outlet />

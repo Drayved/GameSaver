@@ -36,7 +36,7 @@ export default function GamesPlayed() {
       {signedIn ? 
       <div>
         
-          <h1 className="game-list-title">Games You've' Conquered</h1>
+          <h1 className="game-list-title">{games.length > 0 ? "Games You've' Conquered" : "You haven't added any games to this list"}</h1>
           <GameCard
               games={games}
               currentPage={currentPage}

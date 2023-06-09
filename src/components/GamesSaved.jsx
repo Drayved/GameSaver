@@ -34,7 +34,7 @@ export default function GamesSaved() {
     <div>
       {signedIn ? 
       <div>
-        <h1 className="game-list-title">Games You Haven't Played</h1>
+        <h1 className="game-list-title">{games.length > 0 ? "Games You Haven't Played" : "You haven't added any games to this list"}</h1>
         <GameCard
           games={games}
           currentPage={currentPage}
