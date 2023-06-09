@@ -52,7 +52,8 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
           );
           fetchedGames = querySnapshot.docs.map((doc) => doc.data().game);
         }
-        setGames(fetchedGames);
+        await setGames(fetchedGames)
+        fetchDisplayedGames()
       } catch (error) {
         console.log("Error fetching games:", error);
       }
