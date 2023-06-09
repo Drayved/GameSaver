@@ -9,6 +9,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
     let endIndex = startIndex + 3;
     const [displayedGames, setDisplayedGames] = useState(games.slice(startIndex, endIndex))
     const [gamesAdded, setGamesAdded] = useState(true)
+    const [loading, setLoading] = useState(true);
 
     const isGamesSavedPage = window.location.pathname === "/games-saved";
     const isPlayedGamesPage = window.location.pathname === "/games-played";
@@ -18,6 +19,13 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
     useEffect(() => {
       setCurrentPageType(isGamesSavedPage ? "saved" : "played");
     }, [isGamesSavedPage]);
+
+    useEffect(() => {
+      setLoading(true);
+      const updatedDisplayedGames = games.slice(startIndex, endIndex);
+      setDisplayedGames(updatedDisplayedGames);
+      setLoading(false);
+    }, [games, startIndex, endIndex]);
 
     useEffect(() => {
       displayedGames.length <= 0 && setGamesAdded(false)
@@ -165,78 +173,88 @@ const handleDelete = async (game) => {
 
 
 
-    return(
-        <div className="games-card-container">
-        {displayedGames.map((game) => (
-          <div key={game.id} className="games-card">
-            <h3 className="game-name">{game.name}</h3>
-            <div className="game-info">
-              <img
-                className="game-img"
-                src={game.background_image}
-                alt={game.name}
-              ></img>
-              <div className="game-details">
-                <div className="game-release">
-                  <p>Released: </p>
-                  <p className="release">{game.released}</p>
+    return (
+      <div className="games-card-container">
+        {!loading && (
+          <>
+            {displayedGames.map((game) => (
+              <div key={game.id} className="games-card">
+                <h3 className="game-name">{game.name}</h3>
+                <div className="game-info">
+                  <img
+                    className="game-img"
+                    src={game.background_image}
+                    alt={game.name}
+                  ></img>
+                  <div className="game-details">
+                    <div className="game-release">
+                      <p>Released: </p>
+                      <p className="release">{game.released}</p>
+                    </div>
+                    <div className="game-genres">
+                      <p>Genres:</p>
+                      <p className="genres">
+                        {game.genres.map((genre) => genre.name).slice(0, 2).join(", ")}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <div className="game-genres">
-                  <p>Genres:</p>
-                  <p className="genres"> {game.genres.map((genre) => genre.name).slice(0, 2).join(", ")}</p>
+                <div className="more-info-container">
+                  <button
+                    onClick={() =>
+                      window.open(
+                        `https://rawg.io/games/${game.name.replace(/\s/g, "-").replace(/:/g, "")}`
+                      )
+                    }
+                    className="more-info-btn"
+                  >
+                    More Info
+                  </button>
                 </div>
-                
+                <div className="list-btns">
+                  {!isGamesSavedPage && (
+                    <button onClick={(event) => handleWantToPlay(event, game)} className="want-btn">
+                      I want to play it
+                    </button>
+                  )}
+                  {!isPlayedGamesPage && (
+                    <button onClick={(event) => handlePlayedIt(event, game)} className="played-btn">
+                      I played it
+                    </button>
+                  )}
+                  {!isSearchPage && (
+                    <button className="remove-btn" onClick={() => handleDelete(game)}>
+                      Remove
+                    </button>
+                  )}
+                </div>
               </div>
-              
-            </div>
-            <div className="more-info-container">
-              <button onClick={() => window.open(`https://rawg.io/games/${game.name.replace(/\s/g, "-").replace(/:/g, "")}`)} className="more-info-btn">More Info</button>
-            </div>
-            
-            <div className="list-btns">
-            {!isGamesSavedPage && (
-              <button onClick={(event) => handleWantToPlay(event, game)} className="want-btn">
-                I want to play it
-              </button>
-            )}
-            {!isPlayedGamesPage && (
-              <button onClick={(event) => handlePlayedIt(event, game)} className="played-btn">
-                I played it
-              </button>
-            )}
-          
-            {isSearchPage ? "" : 
-                <button className="remove-btn" onClick={() => handleDelete(game)}>
-                  Remove
+            ))}
+            <div className={`${!gamesAdded && window.location.pathname !== "/search" ? "hidden" : ""}`}>
+              <div className="page-container page-bottom">
+                <button
+                  className="prev-page font-semibold"
+                  onClick={handlePreviousPage}
+                  disabled={currentPage === 1}
+                >
+                  Previous Page
                 </button>
-            }  
+                <p className="page-dash">-</p>
+                <button
+                  className="next-page font-semibold"
+                  onClick={handleNextPage}
+                  disabled={currentPage === totalPages}
+                >
+                  Next Page
+                </button>
+              </div>
+              <p className={`page-displayed`}>
+                {currentPage} - {totalPages}
+              </p>
             </div>
-          </div>
-        ))}
-        
-        
-        <div className={`${!gamesAdded && window.location.pathname !== "/search" ? "hidden" : ""}`}>
-        <div className="page-container page-bottom">
-          <button
-            className="prev-page font-semibold"
-            onClick={handlePreviousPage}
-            disabled={currentPage === 1}
-          >
-            Previous Page
-          </button>
-          <p className="page-dash">-</p>
-          <button
-            className="next-page font-semibold"
-            onClick={handleNextPage}
-            disabled={currentPage === totalPages}
-          >
-            Next Page
-          </button>
-        </div>
-        <p className={`page-displayed`}>{currentPage} - {totalPages}</p>
-        </div>
-  
-        
+          </>
+        )}
       </div>
     )
+    
 }
