@@ -129,7 +129,7 @@ body{
 }
 
 .login-landing{
-  @apply  mx-auto w-52 mt-10 
+  @apply  mx-auto w-44 mt-10 
 }
 
 .login-landing-content {
@@ -137,7 +137,7 @@ body{
 }
 
 .login-landing-text{
-  @apply text-green-400 mt-[-55px] font-extrabold drop-shadow-md pointer-events-none;
+  @apply text-green-400 mt-[-50px] font-extrabold drop-shadow-md pointer-events-none;
   font-family: 'Press Start 2P', cursive;
 }
 
@@ -188,7 +188,7 @@ body{
 }
 
 .games-card{
-  @apply shadow-sm shadow-gray-400 p-5 mb-12 h-[260px] bg-blue-100 
+  @apply shadow-sm shadow-gray-400 p-5 mb-12 h-[270px] bg-blue-100 
 }
 
 .game-name{
@@ -238,7 +238,7 @@ body{
 }
 
 .more-info-btn{
-  @apply mt-3 italic text-blue-600 font-bold underline
+  @apply ml-52 italic text-blue-600 font-bold underline
 }
 
 .list-btns{
@@ -297,6 +297,61 @@ body{
 
   .played-btn{
     @apply ml-1 
+  }
+}
+
+@media(max-width:400px){
+  .games-card-container{
+    @apply h-[150px] text-xs
+  }
+
+  .games-card{
+    
+  }
+
+  .game-img{
+    @apply w-[40%] h-[80%] ml-[-16px]
+  }
+
+  .want-btn,
+  .played-btn{
+    @apply w-24 text-xs mt-[-15px] h-[26px] pb-0.5
+  }
+
+  .list-btns{
+    
+  }
+
+  .results-title{
+    @apply text-lg mb-0 mt-2
+  }
+
+  .game-details{
+    @apply flex mx-3
+  }
+
+  .game-release{
+    @apply mr-10
+  }
+
+  .more-info-container{
+    
+  }
+
+  .more-info-btn{
+    @apply w-16 ml-0 mt-1
+  }
+
+  .page-displayed{
+    @apply  mt-[-10px]
+  }
+
+  .page-bottom{
+    @apply pb-5
+  }
+
+  .prev-page{
+   
   }
 }
 

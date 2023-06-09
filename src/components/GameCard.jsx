@@ -181,9 +181,14 @@ const handleDelete = async (game) => {
                   <p>Genres:</p>
                   <p className="text-xs"> {game.genres.map((genre) => genre.name).join(", ")}</p>
                 </div>
-                <button onClick={() => window.open(`https://rawg.io/games/${game.name.replace(/\s/g, "-").replace(/:/g, "")}`)} className="more-info-btn">More Info</button>
+                
               </div>
+              
             </div>
+            <div className="more-info-container">
+              <button onClick={() => window.open(`https://rawg.io/games/${game.name.replace(/\s/g, "-").replace(/:/g, "")}`)} className="more-info-btn">More Info</button>
+            </div>
+            
             <div className="list-btns">
             {!isGamesSavedPage && (
               <button onClick={(event) => handleWantToPlay(event, game)} className="want-btn">
