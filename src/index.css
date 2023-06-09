@@ -302,24 +302,32 @@ body{
 
 @media(max-width:400px){
   .games-card-container{
-    @apply h-[150px] text-xs
+    @apply h-[150px] text-xs 
+  }
+
+  .genres{
+    @apply text-[11px]
+  }
+
+  .release{
+    @apply text-[11px]
   }
 
   .games-card{
-    
+    @apply py-4
   }
 
   .game-img{
-    @apply w-[40%] h-[80%] ml-[-16px]
+    @apply w-[40%] h-[80%] ml-[-16px] mt-[-20px]
   }
 
   .want-btn,
   .played-btn{
-    @apply w-24 text-xs mt-[-15px] h-[26px] pb-0.5
+    @apply w-24 text-xs mt-[-28px] h-[26px] pb-0.5
   }
 
   .list-btns{
-    
+    @apply mx-10 mr-2 mt-10
   }
 
   .results-title{
@@ -335,11 +343,11 @@ body{
   }
 
   .more-info-container{
-    
+    @apply mt-[-5px]
   }
 
   .more-info-btn{
-    @apply w-16 ml-0 mt-1
+    @apply w-16 ml-0 ml-32 
   }
 
   .page-displayed{

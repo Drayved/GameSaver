@@ -175,11 +175,11 @@ const handleDelete = async (game) => {
               <div className="game-details">
                 <div className="game-release">
                   <p>Released: </p>
-                  <p className="text-xs">{game.released}</p>
+                  <p className="release">{game.released}</p>
                 </div>
                 <div className="game-genres">
                   <p>Genres:</p>
-                  <p className="text-xs"> {game.genres.map((genre) => genre.name).join(", ")}</p>
+                  <p className="genres"> {game.genres.map((genre) => genre.name).join(", ")}</p>
                 </div>
                 
               </div>
