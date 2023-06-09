@@ -3,7 +3,7 @@ import { AuthContext } from "../App";
 import { collection, doc, setDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 
-export default function GameCard({ currentPage, setCurrentPage, totalPages, setTotalPages}){
+export default function GameCard({ currentPage, setCurrentPage, totalPages, setTotalPages, loading, setLoading}){
     const { games, setGames, user } = useContext(AuthContext)
     const startIndex = (currentPage - 1) * 3;
     let endIndex = startIndex + 3;
@@ -167,7 +167,7 @@ const handleDelete = async (game) => {
 
     return(
         <div className="games-card-container">
-        {displayedGames.map((game) => (
+        {!loading && displayedGames.map((game) => (
           <div key={game.id} className="games-card">
             <h3 className="game-name">{game.name}</h3>
             <div className="game-info">

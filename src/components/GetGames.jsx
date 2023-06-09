@@ -25,6 +25,7 @@ export default function GetGames() {
       setLoading(false)
     } catch (error) {
       console.log(error);
+      setLoading
     }
   };
 
@@ -66,6 +67,7 @@ export default function GetGames() {
         setCurrentPage={setCurrentPage} 
         totalPages={totalPages}
         setTotalPages={setTotalPages}
+        loading={loading}
       />
     </div>
     }
