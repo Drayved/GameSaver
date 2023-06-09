@@ -165,78 +165,107 @@ const handleDelete = async (game) => {
 
 
 
-    return(
-        <div className="games-card-container">
-        {games.slice(startIndex, endIndex).map((game) => (
-          <div key={game.id} className="games-card">
-            <h3 className="game-name">{game.name}</h3>
-            <div className="game-info">
-              <img
-                className="game-img"
-                src={game.background_image}
-                alt={game.name}
-              ></img>
-              <div className="game-details">
-                <div className="game-release">
-                  <p>Released: </p>
-                  <p className="release">{game.released}</p>
+    return (
+      <div className="games-card-container">
+        {loading ? (
+          <div className="loading-message"></div>
+        ) : (
+          displayedGames.map((game) => (
+            <div key={game.id} className="games-card">
+              <h3 className="game-name">{game.name}</h3>
+              <div className="game-info">
+                <img
+                  className="game-img"
+                  src={game.background_image}
+                  alt={game.name}
+                ></img>
+                <div className="game-details">
+                  <div className="game-release">
+                    <p>Released: </p>
+                    <p className="release">{game.released}</p>
+                  </div>
+                  <div className="game-genres">
+                    <p>Genres:</p>
+                    <p className="genres">
+                      {" "}
+                      {game.genres.map((genre) => genre.name).slice(0, 2).join(", ")}
+                    </p>
+                  </div>
                 </div>
-                <div className="game-genres">
-                  <p>Genres:</p>
-                  <p className="genres"> {game.genres.map((genre) => genre.name).slice(0, 2).join(", ")}</p>
-                </div>
-                
               </div>
-              
-            </div>
-            <div className="more-info-container">
-              <button onClick={() => window.open(`https://rawg.io/games/${game.name.replace(/\s/g, "-").replace(/:/g, "")}`)} className="more-info-btn">More Info</button>
-            </div>
-            
-            <div className="list-btns">
-            {!isGamesSavedPage && (
-              <button onClick={(event) => handleWantToPlay(event, game)} className="want-btn">
-                I want to play it
-              </button>
-            )}
-            {!isPlayedGamesPage && (
-              <button onClick={(event) => handlePlayedIt(event, game)} className="played-btn">
-                I played it
-              </button>
-            )}
-          
-            {isSearchPage ? "" : 
-                <button className="remove-btn" onClick={() => handleDelete(game)}>
-                  Remove
+              <div className="more-info-container">
+                <button
+                  onClick={() =>
+                    window.open(
+                      `https://rawg.io/games/${game.name
+                        .replace(/\s/g, "-")
+                        .replace(/:/g, "")}`
+                    )
+                  }
+                  className="more-info-btn"
+                >
+                  More Info
                 </button>
-            }  
+              </div>
+              <div className="list-btns">
+                {!isGamesSavedPage && (
+                  <button
+                    onClick={(event) => handleWantToPlay(event, game)}
+                    className="want-btn"
+                  >
+                    I want to play it
+                  </button>
+                )}
+                {!isPlayedGamesPage && (
+                  <button
+                    onClick={(event) => handlePlayedIt(event, game)}
+                    className="played-btn"
+                  >
+                    I played it
+                  </button>
+                )}
+    
+                {isSearchPage ? (
+                  ""
+                ) : (
+                  <button
+                    className="remove-btn"
+                    onClick={() => handleDelete(game)}
+                  >
+                    Remove
+                  </button>
+                )}
+              </div>
             </div>
+          ))
+        )}
+    
+        <div
+          className={`${!gamesAdded && window.location.pathname !== "/search" ? "hidden" : ""}`}
+        >
+          <div className="page-container page-bottom">
+            <button
+              className="prev-page font-semibold"
+              onClick={handlePreviousPage}
+              disabled={currentPage === 1}
+            >
+              Previous Page
+            </button>
+            <p className="page-dash">-</p>
+            <button
+              className="next-page font-semibold"
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
+              Next Page
+            </button>
           </div>
-        ))}
-        
-        
-        <div className={`${!gamesAdded && window.location.pathname !== "/search" ? "hidden" : ""}`}>
-        <div className="page-container page-bottom">
-          <button
-            className="prev-page font-semibold"
-            onClick={handlePreviousPage}
-            disabled={currentPage === 1}
-          >
-            Previous Page
-          </button>
-          <p className="page-dash">-</p>
-          <button
-            className="next-page font-semibold"
-            onClick={handleNextPage}
-            disabled={currentPage === totalPages}
-          >
-            Next Page
-          </button>
+          <p className={`page-displayed`}>
+            {currentPage} - {totalPages}
+          </p>
         </div>
-        <p className={`page-displayed`}>{currentPage} - {totalPages}</p>
-        </div>
-  
-        
       </div>
-    )
+    );
+    
+    
 }
