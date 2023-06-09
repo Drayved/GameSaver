@@ -179,7 +179,7 @@ const handleDelete = async (game) => {
                 </div>
                 <div className="game-genres">
                   <p>Genres:</p>
-                  <p className="genres"> {game.genres.map((genre) => genre.name).join(", ")}</p>
+                  <p className="genres"> {game.genres.map((genre) => genre.name).slice(0, 2).join(", ")}</p>
                 </div>
                 
               </div>

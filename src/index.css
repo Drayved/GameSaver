@@ -92,7 +92,7 @@ body{
 }
 
 .save-games{
-  @apply my-52
+  @apply my-52 text-center
 }
 
 .sign-in-text{
@@ -106,8 +106,8 @@ body{
 .search:hover{
   @apply border-gray-200
 }
-.find-games-container{
-  
+.find-games{
+  @apply text-center
 }
 
 .list-btns-landing{
@@ -322,7 +322,8 @@ body{
   }
 
   .want-btn,
-  .played-btn{
+  .played-btn,
+  .remove-btn{
     @apply w-24 text-xs mt-[-28px] h-[26px] pb-0.5
   }
 
@@ -330,8 +331,9 @@ body{
     @apply mx-10 mr-2 mt-10
   }
 
-  .results-title{
-    @apply text-lg mb-0 mt-2
+  .results-title,
+  .game-list-title{
+    @apply text-lg mb-[-6px] mt-0
   }
 
   .game-details{
@@ -374,6 +376,8 @@ body{
   .page-container{
     @apply mt-[-25px]
   }
+
+
 }
 
 @media(max-height:1100px){
