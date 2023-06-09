@@ -27,29 +27,29 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
       const updatedDisplayedGames = games.slice(startIndex, endIndex);
       setDisplayedGames(updatedDisplayedGames);
     }, [games, startIndex, endIndex]);
+
+    const fetchGames = async () => {
+      try {
+        let fetchedGames = [];
+        if (isGamesSavedPage) {
+          const querySnapshot = await getDocs(
+            query(collection(db, "wantToPlay"), where("game.played", "==", false))
+          );
+          fetchedGames = querySnapshot.docs.map((doc) => doc.data().game);
+        } else if (isPlayedGamesPage) {
+          const querySnapshot = await getDocs(
+            query(collection(db, "playedGames"), where("game.played", "==", true))
+          );
+          fetchedGames = querySnapshot.docs.map((doc) => doc.data().game);
+        }
+        setGames(fetchedGames);
+      } catch (error) {
+        console.log("Error fetching games:", error);
+      }
+    };
   
     useEffect(() => {
       if (user) {
-        const fetchGames = async () => {
-          try {
-            let fetchedGames = [];
-            if (isGamesSavedPage) {
-              const querySnapshot = await getDocs(
-                query(collection(db, "wantToPlay"), where("game.played", "==", false))
-              );
-              fetchedGames = querySnapshot.docs.map((doc) => doc.data().game);
-            } else if (isPlayedGamesPage) {
-              const querySnapshot = await getDocs(
-                query(collection(db, "playedGames"), where("game.played", "==", true))
-              );
-              fetchedGames = querySnapshot.docs.map((doc) => doc.data().game);
-            }
-            setGames(fetchedGames);
-          } catch (error) {
-            console.log("Error fetching games:", error);
-          }
-        };
-  
         fetchGames();
       }
     }, [user, isGamesSavedPage, isPlayedGamesPage, setGames]);
@@ -215,7 +215,7 @@ const handleDelete = async (game) => {
         ))}
         
         
-        <div className={`${!gamesAdded && "hidden"}`}>
+        <div className={`${!gamesAdded && window.location.pathname !== "/search" ? "hidden" : ""}`}>
         <div className="page-container page-bottom">
           <button
             className="prev-page font-semibold"
