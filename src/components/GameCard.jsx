@@ -21,7 +21,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
     useEffect(() => {
       const updatedDisplayedGames = games.slice(startIndex, endIndex);
       setDisplayedGames(updatedDisplayedGames);
-    }, [games, startIndex, endIndex]);
+    }, [currentPage, startIndex, endIndex]);
 
     useEffect(() => {
       setCurrentPageType(isGamesSavedPage ? "saved" : "played");
