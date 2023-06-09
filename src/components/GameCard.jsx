@@ -167,7 +167,7 @@ const handleDelete = async (game) => {
 
     return(
         <div className="games-card-container">
-        {!loading && displayedGames.map((game) => (
+        {games.slice(startIndex, endIndex).map((game) => (
           <div key={game.id} className="games-card">
             <h3 className="game-name">{game.name}</h3>
             <div className="game-info">
