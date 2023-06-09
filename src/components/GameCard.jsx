@@ -15,6 +15,17 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
     const isSearchPage = window.location.pathname === "/search"
     const [currentPageType, setCurrentPageType] = useState(isGamesSavedPage ? "saved" : "played")
 
+    const fetchDisplayedGames = () => {
+      const updatedDisplayedGames = games.slice(startIndex, endIndex);
+      setDisplayedGames(updatedDisplayedGames);
+    };
+
+    useEffect(() => {
+      if (isSearchPage) {
+        fetchDisplayedGames();
+      }
+    }, [games, currentPage]);
+
     useEffect(() => {
       setCurrentPageType(isGamesSavedPage ? "saved" : "played");
     }, [isGamesSavedPage]);
@@ -23,10 +34,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
       displayedGames <= 0 && setGamesAdded(false)
     }, [displayedGames])
   
-    useEffect(() => {
-      const updatedDisplayedGames = games.slice(startIndex, endIndex);
-      setDisplayedGames(updatedDisplayedGames);
-    }, [games, startIndex, endIndex, currentPage]);
+
 
     const fetchGames = async () => {
       try {
@@ -168,7 +176,7 @@ const handleDelete = async (game) => {
     return (
       <div className="games-card-container">
         {loading ? (
-          <div className="loading-message"></div>
+          <div className="loading-message">Loading...</div>
         ) : (
           displayedGames.map((game) => (
             <div key={game.id} className="games-card">
