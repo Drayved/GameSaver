@@ -218,7 +218,7 @@ const handleDelete = async (game) => {
           >
             Previous Page
           </button>
-          <p>-</p>
+          <p className="page-dash">-</p>
           <button
             className="next-page font-semibold"
             onClick={handleNextPage}

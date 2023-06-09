@@ -318,7 +318,7 @@ body{
   }
 
   .game-img{
-    @apply w-[40%] h-[80%] ml-[-16px] mt-[-20px]
+    @apply w-[40%] h-[70px] ml-[-16px] mt-[-20px]
   }
 
   .want-btn,
@@ -351,15 +351,28 @@ body{
   }
 
   .page-displayed{
-    @apply  mt-[-10px]
+    @apply  mt-[-16px]
   }
 
   .page-bottom{
-    @apply pb-5
+    @apply pb-5 
   }
 
-  .prev-page{
-   
+  .game-name{
+    @apply ml-20 pl-12
+  }
+
+  .prev-page,
+  .next-page{
+    @apply mt-[-20px]
+  }
+
+  .page-dash{
+    @apply mt-[-19px]
+  }
+
+  .page-container{
+    @apply mt-[-25px]
   }
 }
 
