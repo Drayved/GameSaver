@@ -16,16 +16,11 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
     const isSearchPage = window.location.pathname === "/search"
     const [currentPageType, setCurrentPageType] = useState(isGamesSavedPage ? "saved" : "played")
 
-    const fetchDisplayedGames = () => {
-      
-      const updatedDisplayedGames = games.slice(startIndex, endIndex);
-      setDisplayedGames(updatedDisplayedGames);
-    };
+   
 
     useEffect(() => {
-      if (isSearchPage) {
-        fetchDisplayedGames();
-      }
+      const updatedDisplayedGames = games.slice(startIndex, endIndex);
+      setDisplayedGames(updatedDisplayedGames);
     }, [currentPage, startIndex, endIndex]);
 
     useEffect(() => {
@@ -38,28 +33,27 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
   
 
 
-    const fetchGames = async () => {
-      try {
-        let fetchedGames = [];
-        if (isGamesSavedPage) {
-          const querySnapshot = await getDocs(
-            query(collection(db, "wantToPlay"), where("game.played", "==", false))
-          );
-          fetchedGames = querySnapshot.docs.map((doc) => doc.data().game);
-        } else if (isPlayedGamesPage) {
-          const querySnapshot = await getDocs(
-            query(collection(db, "playedGames"), where("game.played", "==", true))
-          );
-          fetchedGames = querySnapshot.docs.map((doc) => doc.data().game);
-        }
-        await setGames(fetchedGames)
-        fetchDisplayedGames()
-      } catch (error) {
-        console.log("Error fetching games:", error);
-      }
-    };
-  
     useEffect(() => {
+      const fetchGames = async () => {
+        try {
+          let fetchedGames = [];
+          if (isGamesSavedPage) {
+            const querySnapshot = await getDocs(
+              query(collection(db, "wantToPlay"), where("game.played", "==", false))
+            );
+            fetchedGames = querySnapshot.docs.map((doc) => doc.data().game);
+          } else if (isPlayedGamesPage) {
+            const querySnapshot = await getDocs(
+              query(collection(db, "playedGames"), where("game.played", "==", true))
+            );
+            fetchedGames = querySnapshot.docs.map((doc) => doc.data().game);
+          }
+          setGames(fetchedGames);
+        } catch (error) {
+          console.log("Error fetching games:", error);
+        }
+      };
+  
       if (user) {
         fetchGames();
       }
