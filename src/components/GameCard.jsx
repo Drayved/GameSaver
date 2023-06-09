@@ -20,7 +20,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
     }, [isGamesSavedPage]);
 
     useEffect(() => {
-      displayedGames.length <= 0 && setGamesAdded(false)
+      displayedGames <= 0 && setGamesAdded(false)
     }, [displayedGames])
   
     useEffect(() => {
