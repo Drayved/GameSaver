@@ -68,6 +68,7 @@ export default function GetGames() {
         totalPages={totalPages}
         setTotalPages={setTotalPages}
         loading={loading}
+        setLoading={setLoading}
       />
     </div>
     }
