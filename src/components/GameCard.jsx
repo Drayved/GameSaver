@@ -10,9 +10,9 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
     const [displayedGames, setDisplayedGames] = useState(games.slice(startIndex, endIndex))
     const [gamesAdded, setGamesAdded] = useState(true)
 
-    const isGamesSavedPage = window && window.location.pathname === "/games-saved";
-    const isPlayedGamesPage = window && window.location.pathname === "/games-played";
-    const isSearchPage = window && window.location.pathname === "/search";
+    const isGamesSavedPage = window.location.pathname === "/games-saved";
+    const isPlayedGamesPage = window.location.pathname === "/games-played";
+    const isSearchPage = window.location.pathname === "/search"
     const [currentPageType, setCurrentPageType] = useState(isGamesSavedPage ? "saved" : "played")
 
     useEffect(() => {
@@ -20,7 +20,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
     }, [isGamesSavedPage]);
 
     useEffect(() => {
-      displayedGames <= 0 && setGamesAdded(false)
+      displayedGames.length <= 0 && setGamesAdded(false)
     }, [displayedGames])
   
     useEffect(() => {
