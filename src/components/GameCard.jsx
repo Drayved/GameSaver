@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../App";
-import { collection, doc, setDoc, deleteDoc } from "firebase/firestore";
+import { collection, doc, setDoc, deleteDoc, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
 
 export default function GameCard({ currentPage, setCurrentPage, totalPages, setTotalPages}){
@@ -20,7 +20,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
     }, [isGamesSavedPage]);
 
     useEffect(() => {
-      displayedGames <= 0 && setGamesAdded(false)
+      displayedGames.length <= 0 && setGamesAdded(false)
     }, [displayedGames])
 
     // displayedGames in below useEffect causes flickering, removing it causes issues with games being transferred from list to list. May need code refactoring.
@@ -41,7 +41,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
             setGamesAdded(true);
           } 
       }
-    }, [displayedGames, startIndex, endIndex, currentPage, currentPageType]);
+    }, [games, startIndex, endIndex, currentPage, currentPageType]);
 
     useEffect(() => {
         const updatedDisplayedGames = games.slice(startIndex, endIndex);
