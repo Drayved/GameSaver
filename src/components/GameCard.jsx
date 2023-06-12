@@ -7,7 +7,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
     const { games, setGames, user } = useContext(AuthContext)
     const startIndex = (currentPage - 1) * 3;
     let endIndex = startIndex + 3;
-    const [displayedGames, setDisplayedGames] = useState(games.slice(startIndex, endIndex))
+    const [displayedGames, setDisplayedGames] = useState([])
     const [gamesAdded, setGamesAdded] = useState(true)
 
     const isGamesSavedPage = window.location.pathname === "/games-saved";
