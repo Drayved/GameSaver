@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../App";
 import { 
@@ -13,7 +13,8 @@ import firebaseApp from "../../firebase";
 export default function Navbar() {
     
     
-    const {user, setUser, signedIn, setSignedIn, newUser, setNewUser, email, setEmail, handleSignIn, password, setPassword, showMenu, handleMenuClick} = useContext(AuthContext)
+    const {user, setUser, signedIn, setSignedIn, newUser, setNewUser, menuShowing, email, setEmail, handleSignIn, password, setPassword, showMenu, handleMenuClick} = useContext(AuthContext)
+    const menuRef = useRef(null)
 
     useEffect(() => {
         const auth = getAuth();
@@ -30,6 +31,21 @@ export default function Navbar() {
         // Clean up the listener
         return () => unsubscribe();
       }, [setUser]);
+
+      useEffect(() => {
+        const handleOutsideClick = (event) => {
+          if (showMenu && !event.target.closest(".navbar-container") && !event.target.closest(".dropdown-container")) {
+            handleMenuClick();
+          }
+        };
+      
+        document.addEventListener("click", handleOutsideClick);
+      
+        return () => {
+          document.removeEventListener("click", handleOutsideClick);
+        };
+      }, [showMenu, handleMenuClick]);
+      
 
 
     function handleNewUsers() {
@@ -77,7 +93,7 @@ export default function Navbar() {
         </div>
         
         {showMenu ? (
-            <div className={signedIn ? "signed-in-container z-50" : "dropdown-container z-50"}>
+            <div className={signedIn ? "signed-in-container z-50" : "dropdown-container z-50"} >
             {signedIn ? (
                 <div className="signed-in-menu">
                 <p className="signed-in">Signed in as {user && email || user.email}</p>

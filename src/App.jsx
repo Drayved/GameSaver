@@ -27,7 +27,7 @@ export default function App() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showMenu, setShowMenu] = useState(false);
-  const [gamesAdded, setGamesAdded] = useState(true)
+  const [menuShowing, setMenuShowing] = useState(false)
 
   const router = createBrowserRouter(
     createRoutesFromChildren(
@@ -44,6 +44,7 @@ export default function App() {
 
   function handleMenuClick() {
     setShowMenu(!showMenu);
+    setMenuShowing(!menuShowing)
 }
 
   async function handleSignIn(event) {
@@ -55,6 +56,7 @@ export default function App() {
     setUser(email)
     console.log(user)
     console.log("User signed in!");
+    handleMenuClick()
     } catch (error) {
     console.log("Error signing in:", error);
     }
@@ -83,8 +85,7 @@ export default function App() {
       showMenu,
       setShowMenu,
       handleMenuClick,
-      gamesAdded,
-      setGamesAdded
+      menuShowing
       }}>
         <RouterProvider router={router}>
           <Outlet />
