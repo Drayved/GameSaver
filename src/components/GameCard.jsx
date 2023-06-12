@@ -24,22 +24,40 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
     }, [displayedGames])
 
     // displayedGames in below useEffect causes flickering, removing it causes issues with games being transferred from list to list. May need code refactoring.
-    function arraysEqual(a, b) {
-      if (a.length !== b.length) return false;
-      for (let i = 0; i < a.length; i++) {
-        if (a[i] !== b[i]) return false;
-      }
-      return true;
-    }
+
     
     useEffect(() => {
-      const updatedDisplayedGames = games.slice(startIndex, endIndex);
-      if (!arraysEqual(displayedGames, updatedDisplayedGames)) {
-        setDisplayedGames(updatedDisplayedGames);
+      if (!isSearchPage) {
+        
+          const updatedDisplayedGames = games.slice(startIndex, endIndex);
+          const remainingGames = games.filter((g) => g.id !== games.id);
+        
+          
+            setDisplayedGames(updatedDisplayedGames);
+          
+        
+          if (remainingGames.length === 0 && currentPage > 1) {
+            setCurrentPage((prevPage) => prevPage - 1);
+            setGamesAdded(false);
+          } else {
+            setGamesAdded(true);
+          }
+        
       }
+    }, [games, startIndex, endIndex, currentPage, currentPageType]);
+
+    useEffect(() => {
       
-    }, [games, currentPage, startIndex, endIndex, currentPageType]);
-  
+        const updatedDisplayedGames = games.slice(startIndex, endIndex);
+       
+          setDisplayedGames(updatedDisplayedGames);
+        
+      
+    }, [startIndex, endIndex, currentPageType]);
+    
+    
+    
+
     useEffect(() => {
       if (user) {
         const fetchGames = async () => {
@@ -240,14 +258,16 @@ const handleDelete = async (game) => {
           <button
             className="next-page font-semibold"
             onClick={handleNextPage}
-            disabled={currentPage === totalPages}
+            disabled={currentPage === totalPages || isSearchPage && currentPage === 7}
           >
             Next Page
           </button>
+          
         </div>
-        <p className={`page-displayed`}>{currentPage} - {totalPages}</p>
+        <p className={`page-displayed `}>{currentPage} - {isSearchPage && totalPages > 7 ? "7" : totalPages}</p>
+        
         </div>
-  
+            
         
       </div>
     )

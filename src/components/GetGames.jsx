@@ -33,20 +33,23 @@ export default function GetGames() {
     const fetchTotalGames = async () => {
       try {
         const response = await fetch(
-          `https://api.rawg.io/api/games?key=${apiKey}`
+          `https://api.rawg.io/api/games?key=${apiKey}&search=${search}`
         );
         const data = await response.json();
         console.log(data.results);
         const totalGames = data.count;
+        console.log("Total Games:", totalGames);
         const calculatedTotalPages = Math.ceil(totalGames / gamesPerPage);
+        console.log("Calculated Total Pages:", calculatedTotalPages);
         setTotalPages(calculatedTotalPages);
       } catch (error) {
         console.log(error);
       }
     };
-
+  
     fetchTotalGames();
-  }, []);
+  }, [search]);
+  
 
   useEffect(() => {
     fetchGames(currentPage);
