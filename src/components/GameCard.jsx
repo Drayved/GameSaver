@@ -28,29 +28,25 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
     
     useEffect(() => {
       if (!isSearchPage) {
-        const updatedDisplayedGames = games.slice(startIndex, endIndex);
-        const remainingGames = games.filter((g) => g.id !== games.id);
-    
-        setDisplayedGames(updatedDisplayedGames);
-    
-        if (remainingGames.length === 0 && currentPage > 1) {
-          setCurrentPage((prevPage) => prevPage - 1);
-          setGamesAdded(false);
-        } else {
-          setGamesAdded(true);
-        }
-      } else {
-        setTimeout(() => {
+        
           const updatedDisplayedGames = games.slice(startIndex, endIndex);
+          const remainingGames = games.filter((g) => g.id !== games.id);
+        
           setDisplayedGames(updatedDisplayedGames);
-        }, 0);
+          
+          if (remainingGames.length === 0 && currentPage > 1) {
+            setCurrentPage((prevPage) => prevPage - 1);
+            setGamesAdded(false);
+          } else {
+            setGamesAdded(true);
+          } 
       }
-    }, [games, startIndex, endIndex, currentPage, currentPageType, isSearchPage]);
+    }, [games, startIndex, endIndex, currentPage, currentPageType]);
 
-    // useEffect(() => {
-    //     const updatedDisplayedGames = games.slice(startIndex, endIndex);
-    //     setDisplayedGames(updatedDisplayedGames);
-    // }, [startIndex]);
+    useEffect(() => {
+        const updatedDisplayedGames = games.slice(startIndex, endIndex);
+        setDisplayedGames(updatedDisplayedGames);
+    }, [startIndex, isSearchPage]);
     
     
     
