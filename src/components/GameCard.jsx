@@ -24,11 +24,21 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
     }, [displayedGames])
 
     // displayedGames in below useEffect causes flickering, removing it causes issues with games being transferred from list to list. May need code refactoring.
-  
+    function arraysEqual(a, b) {
+      if (a.length !== b.length) return false;
+      for (let i = 0; i < a.length; i++) {
+        if (a[i] !== b[i]) return false;
+      }
+      return true;
+    }
+    
     useEffect(() => {
       const updatedDisplayedGames = games.slice(startIndex, endIndex);
-      setDisplayedGames(updatedDisplayedGames);
-    }, [displayedGames, currentPage, startIndex, endIndex, currentPageType]);
+      if (!arraysEqual(displayedGames, updatedDisplayedGames)) {
+        setDisplayedGames(updatedDisplayedGames);
+      }
+      
+    }, [games, currentPage, startIndex, endIndex, currentPageType]);
   
     useEffect(() => {
       if (user) {
