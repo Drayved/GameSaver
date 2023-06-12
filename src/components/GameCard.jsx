@@ -41,7 +41,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
             setGamesAdded(true);
           } 
       }
-    }, [games, startIndex, endIndex, currentPage, currentPageType]);
+    }, [displayedGames, startIndex, endIndex, currentPage, currentPageType]);
 
     useEffect(() => {
         const updatedDisplayedGames = games.slice(startIndex, endIndex);
