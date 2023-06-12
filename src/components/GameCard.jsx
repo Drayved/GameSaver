@@ -46,36 +46,36 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
     useEffect(() => {
         const updatedDisplayedGames = games.slice(startIndex, endIndex);
         setDisplayedGames(updatedDisplayedGames);
-    }, [games, startIndex, currentPage, user]);
+    }, [startIndex, currentPage]);
     
     
     
 
-    useEffect(() => {
-      if (user) {
-        const fetchGames = async () => {
-          try {
-            let fetchedGames = [];
-            if (isGamesSavedPage) {
-              const querySnapshot = await getDocs(
-                query(collection(db, "wantToPlay"), where("game.played", "==", false))
-              );
-              fetchedGames = querySnapshot.docs.map((doc) => doc.data().game);
-            } else if (isPlayedGamesPage) {
-              const querySnapshot = await getDocs(
-                query(collection(db, "playedGames"), where("game.played", "==", true))
-              );
-              fetchedGames = querySnapshot.docs.map((doc) => doc.data().game);
-            }
-            setGames(fetchedGames);
-          } catch (error) {
-            console.log("Error fetching games:", error);
-          }
-        };
+    // useEffect(() => {
+    //   if (user) {
+    //     const fetchGames = async () => {
+    //       try {
+    //         let fetchedGames = [];
+    //         if (isGamesSavedPage) {
+    //           const querySnapshot = await getDocs(
+    //             query(collection(db, "wantToPlay"), where("game.played", "==", false))
+    //           );
+    //           fetchedGames = querySnapshot.docs.map((doc) => doc.data().game);
+    //         } else if (isPlayedGamesPage) {
+    //           const querySnapshot = await getDocs(
+    //             query(collection(db, "playedGames"), where("game.played", "==", true))
+    //           );
+    //           fetchedGames = querySnapshot.docs.map((doc) => doc.data().game);
+    //         }
+    //         setGames(fetchedGames);
+    //       } catch (error) {
+    //         console.log("Error fetching games:", error);
+    //       }
+    //     };
   
-        fetchGames();
-      }
-    }, [user, isGamesSavedPage, isPlayedGamesPage, setGames]);
+    //     fetchGames();
+    //   }
+    // }, [user, isGamesSavedPage, isPlayedGamesPage, setGames]);
   
     const handleWantToPlay = async (event, game) => {
       event.preventDefault();
