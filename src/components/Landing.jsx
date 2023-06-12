@@ -74,7 +74,7 @@ export default function Landing(){
                 <div>
                     <h1 className='sign-in-text'>signed in as:</h1>
                     <div className='lets-play-container'>
-                        <p>{user.email}</p>
+                        <p>{user.email || email}</p>
                         <img src='images/game-console.png' className='lets-play-img' alt="game console" onClick={handleMenuClick}/>
                         
                     </div>

@@ -80,7 +80,7 @@ export default function Navbar() {
             <div className={signedIn ? "signed-in-container z-50" : "dropdown-container z-50"}>
             {signedIn ? (
                 <div className="signed-in-menu">
-                <p className="signed-in">Signed in as {user && user.email}</p>
+                <p className="signed-in">Signed in as {user && email || user.email}</p>
                 <button className="sign-out-btn" onClick={handleSignOut}>
                     Sign Out
                 </button>
