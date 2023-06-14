@@ -1,11 +1,12 @@
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../App";
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, doc } from "firebase/firestore";
 import GameCard from "./GameCard";
 import { db } from "../../firebase";
 
+
 export default function GamesSaved() {
-  const { games, setGames, signedIn } = useContext(AuthContext);
+  const { games, setGames, signedIn, user } = useContext(AuthContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
@@ -13,12 +14,21 @@ export default function GamesSaved() {
     // Fetch the games from the "wantToPlay" collection in Firestore
     const fetchWantToPlayGames = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, "wantToPlay"));
-        const wantToPlayGames = querySnapshot.docs.map((doc) => doc.data().game);
-        setGames(wantToPlayGames);
-        console.log(wantToPlayGames);
+        
+        if (user) {
+          const userDocRef = doc(db, "users", user.uid);
+          const wantToPlayQuerySnapshot = await getDocs(collection(userDocRef, "wantToPlay"));
+          const wantToPlayGames = wantToPlayQuerySnapshot.docs.map((doc) => {
+            console.log("Document:", doc);
+            console.log("Document data:", doc.data());
+            return doc.data();
+          });
+          console.log("wantToPlayGames:", wantToPlayGames);
+          setGames(wantToPlayGames);
+          console.log(wantToPlayGames);
+        }
       } catch (error) {
-        console.log("Error fetching played games:", error);
+        console.log("Error fetching games:", error);
       }
     };
 

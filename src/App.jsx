@@ -47,20 +47,7 @@ export default function App() {
     setMenuShowing(!menuShowing)
 }
 
-  async function handleSignIn(event) {
-    event.preventDefault();
-    const auth = getAuth();
-    try {
-    await signInWithEmailAndPassword(auth, email, password);
-    setSignedIn(true);
-    setUser(email)
-    console.log(user)
-    console.log("User signed in!");
-    handleMenuClick()
-    } catch (error) {
-    console.log("Error signing in:", error);
-    }
-}
+
 
   return (
     <div>
@@ -79,7 +66,6 @@ export default function App() {
       setSignedIn,
       email,
       setEmail,
-      handleSignIn,
       password,
       setPassword,
       showMenu,

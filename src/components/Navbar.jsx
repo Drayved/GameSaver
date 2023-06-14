@@ -5,15 +5,18 @@ import {
     getAuth, 
     createUserWithEmailAndPassword,  
     signOut,
-    onAuthStateChanged
+    onAuthStateChanged,
+    signInWithEmailAndPassword 
     } from "firebase/auth";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, doc, setDoc } from "firebase/firestore";
 import firebaseApp from "../../firebase";
+
+
 
 export default function Navbar() {
     
     
-    const {user, setUser, signedIn, setSignedIn, newUser, setNewUser, menuShowing, email, setEmail, handleSignIn, password, setPassword, showMenu, handleMenuClick} = useContext(AuthContext)
+    const {user, setUser, signedIn, setSignedIn, newUser, setNewUser, menuShowing, email, setEmail,  password, setPassword, showMenu, handleMenuClick} = useContext(AuthContext)
     const menuRef = useRef(null)
 
     useEffect(() => {
@@ -52,27 +55,79 @@ export default function Navbar() {
         setNewUser(!newUser);
     }
 
-
-
-    async function handleSignUp(event) {
-        event.preventDefault();
-        const auth = getAuth();
-        const db = getFirestore(firebaseApp); // Initialize Firestore
-        try {
-        await createUserWithEmailAndPassword(auth, email, password);
-        setNewUser(false);
-        setUser(email)
-        console.log("User signed up!");
-
-        // Save user information to Firestore
-        const userDocRef = await addDoc(collection(db, "users"), {
-            email: email,
-        });
-        console.log("User document created with ID:", userDocRef.id);
-        } catch (error) {
-        console.log("Error signing up:", error);
-        }
+  
+async function handleSignUp(event) {
+    event.preventDefault();
+    const auth = getAuth();
+    const db = getFirestore(firebaseApp); // Initialize Firestore
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      setNewUser(false);
+      setUser(user.email);
+      console.log("User signed up!");
+  
+      // Retrieve the updated user object after setting the user
+      const updatedUser = auth.currentUser;
+  
+      // Save user information to Firestore
+      const userDocRef = doc(db, "users", updatedUser.uid);
+      await addDoc(userDocRef, { email: updatedUser.email });
+  
+      // Create subcollections "wantToPlay" and "playedGames" under the user document
+      const wantToPlayCollectionRef = collection(userDocRef, "wantToPlay");
+      await addDoc(wantToPlayCollectionRef, {});
+  
+      const playedGamesCollectionRef = collection(userDocRef, "playedGames");
+      await addDoc(playedGamesCollectionRef, {});
+  
+      console.log("User document created with ID:", userDocRef.id);
+      console.log("Subcollection 'wantToPlay' created with ID:", wantToPlayCollectionRef.id);
+      console.log("Subcollection 'playedGames' created with ID:", playedGamesCollectionRef.id);
+    } catch (error) {
+      console.log("Error signing up:", error);
     }
+  }
+  
+  async function handleSignIn(event) {
+    event.preventDefault();
+    const auth = getAuth();
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user; // Get the user object
+      setSignedIn(true);
+      setUser(user.email);
+  
+      const db = getFirestore(firebaseApp); // Initialize Firestore
+  
+      // Retrieve the updated user object after setting the user
+      const updatedUser = auth.currentUser;
+  
+      // Retrieve the user document from Firestore
+      const userDocRef = doc(db, "users", updatedUser.uid); // Use the user UID to reference the document
+  
+      await setDoc(userDocRef, { wantToPlay: {}, playedGames: {} });
+
+  
+      console.log("User signed in!");
+      console.log(updatedUser.uid);
+      console.log("Subcollection 'wantToPlay' created");
+      console.log("Subcollection 'playedGames' created");
+  
+      handleMenuClick();
+
+      window.location.reload()
+    } catch (error) {
+      console.log("Error signing in:", error);
+    }
+  }
+  
+  
+  
+  
+ 
+  
+      
 
     async function handleSignOut() {
         const auth = getAuth();
