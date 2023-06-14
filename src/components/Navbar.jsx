@@ -56,34 +56,54 @@ export default function Navbar() {
     }
 
   
-async function handleSignUp(event) {
+async function handleAuthentication(event) {
     event.preventDefault();
     const auth = getAuth();
     const db = getFirestore(firebaseApp); // Initialize Firestore
+
+    
+
+
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-      setNewUser(false);
-      setUser(user.email);
-      console.log("User signed up!");
+      let userCredential;
+      let user;
+      let wantToPlayCollectionRef;
+      let playedGamesCollectionRef;
+
+      if (newUser){
+        userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        user = userCredential.user;
+        setNewUser(false);
+        setUser(user.email);
+        console.log("User signed up!");
+    
+        // Retrieve the updated user object after setting the user
+        const updatedUser = auth.currentUser;
+    
+        // Save user information to Firestore
+        const userDocRef = doc(db, "users", updatedUser.uid);
+        await addDoc(userDocRef, { email: updatedUser.email });
+    
+        await setDoc(userDocRef, { wantToPlay: {}, playedGames: {} });
+      } else{
+          userCredential = await signInWithEmailAndPassword(auth, email, password);
+          user = userCredential.user; // Get the user object
+          setSignedIn(true);
+          setUser(user.email);
+      
+          const db = getFirestore(firebaseApp); // Initialize Firestore
+      
+          // Retrieve the updated user object after setting the user
+          const updatedUser = auth.currentUser;
+      
+          // Retrieve the user document from Firestore
+          const userDocRef = doc(db, "users", updatedUser.uid); // Use the user UID to reference the document
+      
+          await setDoc(userDocRef, { wantToPlay: {}, playedGames: {} });
+      }
+      window.location.reload()
   
-      // Retrieve the updated user object after setting the user
-      const updatedUser = auth.currentUser;
-  
-      // Save user information to Firestore
-      const userDocRef = doc(db, "users", updatedUser.uid);
-      await addDoc(userDocRef, { email: updatedUser.email });
-  
-      // Create subcollections "wantToPlay" and "playedGames" under the user document
-      const wantToPlayCollectionRef = collection(userDocRef, "wantToPlay");
-      await addDoc(wantToPlayCollectionRef, {});
-  
-      const playedGamesCollectionRef = collection(userDocRef, "playedGames");
-      await addDoc(playedGamesCollectionRef, {});
-  
-      console.log("User document created with ID:", userDocRef.id);
-      console.log("Subcollection 'wantToPlay' created with ID:", wantToPlayCollectionRef.id);
-      console.log("Subcollection 'playedGames' created with ID:", playedGamesCollectionRef.id);
+      
     } catch (error) {
       console.log("Error signing up:", error);
     }
@@ -159,7 +179,7 @@ async function handleSignUp(event) {
             ) : (
                 <>
                 <p className="sign-in">{newUser ? "Sign Up" : "Sign In"}</p>
-                <form className="dropdown-form" onSubmit={newUser ? handleSignUp : handleSignIn}>
+                <form className="dropdown-form" onSubmit={handleAuthentication}>
                     <label htmlFor="email">Email:</label>
                     <input
                     className="inputs"

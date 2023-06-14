@@ -47,16 +47,21 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
   const fetchGames = async () => {
     try {
       let fetchedGames = [];
-
+  
       if (currentPageType === "saved") {
-        const querySnapshot = await getDocs(query(collection(db, "wantToPlay"), where("played", "==", false)));
+        const querySnapshot = await getDocs(
+          query(collection(db, "users", user.uid, "wantToPlay"), where("played", "==", false))
+        );
         fetchedGames = querySnapshot.docs.map((doc) => doc.data());
       } else {
-        const querySnapshot = await getDocs(query(collection(db, "playedGames"), where("played", "==", true)));
+        const querySnapshot = await getDocs(
+          query(collection(db, "users", user.uid, "playedGames"), where("played", "==", true))
+        );
         fetchedGames = querySnapshot.docs.map((doc) => doc.data());
       }
-
+  
       setGames(fetchedGames);
+      setGamesAdded(true);
     } catch (error) {
       console.log("Error fetching games:", error);
     }
@@ -71,75 +76,120 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
     
   }, [currentPageType, setGames]);
   
-    const handleWantToPlay = async (event, game) => {
-      try {
-        if (user) {
-          const wantToPlayCollectionRef = collection(db, "users", user.uid, "wantToPlay");
-    
-          // Add the game to the "wantToPlay" subcollection
-          await addDoc(wantToPlayCollectionRef, game);
-    
-          console.log("Game added to the 'wantToPlay' subcollection successfully.");
-        } else {
-          console.log("User not authenticated.");
-          // You can add logic to show a message or redirect the user to the sign-in page
+  const handleWantToPlay = async (event, game) => {
+    try {
+      if (user) {
+        const wantToPlayCollectionRef = collection(db, "users", user.uid, "wantToPlay");
+        const playedGamesCollectionRef = collection(db, "users", user.uid, "playedGames");
+  
+        // Check if the game already exists in the "wantToPlay" subcollection
+        const wantToPlayQuerySnapshot = await getDocs(
+          query(wantToPlayCollectionRef, where("id", "==", game.id))
+        );
+        const gameExistsInWantToPlay = !wantToPlayQuerySnapshot.empty;
+  
+        // Check if the game exists in the "playedGames" subcollection
+        const playedGamesQuerySnapshot = await getDocs(
+          query(playedGamesCollectionRef, where("id", "==", game.id))
+        );
+        const gameExistsInPlayedGames = !playedGamesQuerySnapshot.empty;
+  
+        if (gameExistsInWantToPlay) {
+          // Remove the game from the "wantToPlay" subcollection
+          const gameDoc = wantToPlayQuerySnapshot.docs[0];
+          await deleteDoc(gameDoc.ref);
+          console.log("Game removed from the 'wantToPlay' subcollection.");
+  
+          // Remove the game from local storage
+          const localStorageGames = JSON.parse(localStorage.getItem("games"));
+          const updatedLocalStorageGames = localStorageGames.filter((g) => g.id !== game.id);
+          localStorage.setItem("games", JSON.stringify(updatedLocalStorageGames));
+          console.log("Game removed from local storage.");
+        } else if (gameExistsInPlayedGames) {
+          // Remove the game from the "playedGames" subcollection
+          const gameDoc = playedGamesQuerySnapshot.docs[0];
+          await deleteDoc(gameDoc.ref);
+          console.log("Game removed from the 'playedGames' subcollection.");
+  
+          // Remove the game from local storage
+          const localStorageGames = JSON.parse(localStorage.getItem("games"));
+          const updatedLocalStorageGames = localStorageGames.filter((g) => g.id !== game.id);
+          localStorage.setItem("games", JSON.stringify(updatedLocalStorageGames));
+          console.log("Game removed from local storage.");
         }
-      } catch (error) {
-        console.log("Error adding the game to the 'wantToPlay' subcollection:", error);
+  
+        // Add the game to the "wantToPlay" subcollection
+        await addDoc(wantToPlayCollectionRef, game);
+        console.log("Game added to the 'wantToPlay' subcollection successfully.");
+      } else {
+        console.log("User not authenticated.");
       }
-    };
-    
-    const handlePlayedIt = async (event, game) => {
-      try {
-        if (user) {
-          const playedGamesCollectionRef = collection(db, "users", user.uid, "playedGames");
-    
+    } catch (error) {
+      console.log("Error handling the 'I want to play it' action:", error);
+    }
+  };
+  
+  const handlePlayedIt = async (event, game) => {
+    try {
+      if (user) {
+        const playedGamesCollectionRef = collection(db, "users", user.uid, "playedGames");
+  
+        // Check if the game already exists in the "playedGames" subcollection
+        const querySnapshot = await getDocs(
+          query(playedGamesCollectionRef, where("id", "==", game.id))
+        );
+        const gameExists = !querySnapshot.empty;
+  
+        if (!gameExists) {
           // Add the game to the "playedGames" subcollection
           await addDoc(playedGamesCollectionRef, game);
-    
           console.log("Game added to the 'playedGames' subcollection successfully.");
+        } else {
+          console.log("Game already exists in the 'playedGames' subcollection.");
+        }
+      } else {
+        console.log("User not authenticated.");
+      }
+    } catch (error) {
+      console.log("Error adding the game to the 'playedGames' subcollection:", error);
+    }
+  };
+
+    const handleDelete = async (game) => {
+      try {
+        if (user) {
+          const collectionName = currentPageType === "saved" ? "wantToPlay" : "playedGames";
+          const gameQuerySnapshot = await getDocs(
+            query(collection(db, "users", user.uid, collectionName), where("id", "==", game.id))
+          );
+          const gameDoc = gameQuerySnapshot.docs[0];
+          
+          if (gameDoc) {
+            // Delete the game document from the subcollection
+            await deleteDoc(gameDoc.ref);
+            console.log("Game deleted successfully!");
+    
+            // Remove the game from the local state
+            const remainingGames = games.filter((g) => g.id !== game.id);
+            setGames(remainingGames);
+    
+            const remainingDisplayedGames = displayedGames.filter((g) => g.id !== game.id);
+            setDisplayedGames(remainingDisplayedGames);
+    
+            if (remainingDisplayedGames.length === 0 && currentPage > 1) {
+              setCurrentPage((prevPage) => prevPage - 1); // Navigate to the previous page
+            }
+          } else {
+            console.log("Game document not found in the subcollection.");
+          }
         } else {
           console.log("User not authenticated.");
           // You can add logic to show a message or redirect the user to the sign-in page
         }
       } catch (error) {
-        console.log("Error adding the game to the 'playedGames' subcollection:", error);
+        console.log("Error deleting game:", error);
       }
     };
-    
-    
-    
-    
-    
-    
-
-const handleDelete = async (game) => {
-  try {
-    if (user) {
-      const collectionName = currentPageType === "saved" ? "wantToPlay" : "playedGames";
-
-      // Delete the game from Firebase
-      await deleteDoc(doc(collection(db, collectionName), game.id.toString()));
-      console.log("Game deleted successfully!");
-
-      // Remove the game from the local state
-      const remainingGames = games.filter((g) => g.id !== game.id);
-      setGames(remainingGames);
-
-      const remainingDisplayedGames = displayedGames.filter((g) => g.id !== game.id);
-      setDisplayedGames(remainingDisplayedGames);
-
-      if (remainingDisplayedGames.length === 0 && currentPage > 1) {
-        setCurrentPage((prevPage) => prevPage - 1); // Navigate to previous page
-      }
-    } else {
-      console.log("User not authenticated.");
-      // You can add a logic to show a message or redirect the user to the sign-in page
-    }
-  } catch (error) {
-    console.log("Error deleting game:", error);
-  }
-};
 
     const handlePreviousPage = () => {
       if (currentPage > 1) {
@@ -206,7 +256,7 @@ const handleDelete = async (game) => {
         ))}
         
         
-        <div className={`${filteredGames <= 0 && window.location.pathname || !gamesAdded && window.location.pathname !== "/search" ? "hidden" : ""}`}>
+        <div className={`${filteredGames.length <= 0 && window.location.pathname || !gamesAdded && window.location.pathname !== "/search" ? "hidden" : ""}`}>
         <div className="page-container page-bottom">
           <button
             className="prev-page font-semibold"
