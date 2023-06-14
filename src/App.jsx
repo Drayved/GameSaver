@@ -7,7 +7,7 @@ import GetGames from "./components/GetGames";
 import Layout from "./components/Layout"
 import GamesSaved from "./components/GamesSaved";
 import GamesPlayed from "./components/GamesPlayed"
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
 
 export const AuthContext = createContext();
 

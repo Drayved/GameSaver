@@ -9,6 +9,7 @@ export default function GamesSaved() {
   const { games, setGames, signedIn, user } = useContext(AuthContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [playedGames, setPlayedGames] = useState([]);
 
   useEffect(() => {
     const fetchPlayedGames = async () => {
@@ -17,13 +18,11 @@ export default function GamesSaved() {
         if (user) {
           const userDocRef = doc(db, "users", user.uid);
           const playedGamesQuerySnapshot = await getDocs(collection(userDocRef, "playedGames"));
-          const playedGames = playedGamesQuerySnapshot.docs.map((doc) => {
-            console.log("Document:", doc);
-            console.log("Document data:", doc.data());
-            return doc.data();
-          });
+          const playedGamesData = playedGamesQuerySnapshot.docs.map((doc) => doc.data());
+          setPlayedGames(playedGamesData)
+          
+          setGames(playedGamesData);
           console.log("playedGames:", playedGames);
-          setGames(playedGames);
           console.log(playedGames);
         }
       } catch (error) {
@@ -40,7 +39,7 @@ export default function GamesSaved() {
     const calculatedTotalPages = Math.ceil(games.length / 3);
     setTotalPages(calculatedTotalPages);
   }, [games]);
-
+console.log(playedGames)
   return (
     <div>
       {signedIn ? (
@@ -56,6 +55,7 @@ export default function GamesSaved() {
             setCurrentPage={setCurrentPage}
             totalPages={totalPages}
             setTotalPages={setTotalPages}
+            playedGames={playedGames}
           />
         </div>
       ) : (

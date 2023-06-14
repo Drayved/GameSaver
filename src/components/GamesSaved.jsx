@@ -9,6 +9,7 @@ export default function GamesSaved() {
   const { games, setGames, signedIn, user } = useContext(AuthContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [wantToPlay, setWantToPlay] = useState([])
 
   useEffect(() => {
     // Fetch the games from the "wantToPlay" collection in Firestore
@@ -18,13 +19,11 @@ export default function GamesSaved() {
         if (user) {
           const userDocRef = doc(db, "users", user.uid);
           const wantToPlayQuerySnapshot = await getDocs(collection(userDocRef, "wantToPlay"));
-          const wantToPlayGames = wantToPlayQuerySnapshot.docs.map((doc) => {
-            console.log("Document:", doc);
-            console.log("Document data:", doc.data());
-            return doc.data();
-          });
-          console.log("wantToPlayGames:", wantToPlayGames);
+          const wantToPlayGames = wantToPlayQuerySnapshot.docs.map((doc) => doc.data());
+          setWantToPlay(wantToPlayGames)
+          
           setGames(wantToPlayGames);
+          console.log("wantToPlayGames:", wantToPlayGames);
           console.log(wantToPlayGames);
         }
       } catch (error) {
@@ -51,6 +50,7 @@ export default function GamesSaved() {
           setCurrentPage={setCurrentPage}
           totalPages={totalPages}
           setTotalPages={setTotalPages}
+          wantToPlay={wantToPlay}
         />
       </div>
       : <p className="sign-in-list">Sign in to view your list</p>}

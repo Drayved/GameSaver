@@ -259,6 +259,12 @@ body{
   @apply bg-purple-600 
 }
 
+.want-btn.disabled,
+.played-btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .remove-btn{
   @apply bg-red-900 
 }
