@@ -308,7 +308,7 @@ body{
 
 @media(max-width:400px){
   .games-card-container{
-    @apply h-[150px] text-xs
+    @apply h-[150px] text-xs 
   }
 
   .genres,
@@ -316,10 +316,8 @@ body{
     @apply text-[9px] italic
   }
 
- 
-
   .games-card{
-    @apply py-4
+    @apply py-[.8rem]
   }
 
   .game-img{
