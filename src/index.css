@@ -317,7 +317,7 @@ body{
   }
 
   .games-card{
-    @apply py-[.8rem]
+    @apply py-[.7rem] w-[95%] mx-auto
   }
 
   .game-img{
