@@ -312,11 +312,11 @@ body{
   }
 
   .genres{
-    @apply text-[11px]
+    @apply text-[9px]
   }
 
   .release{
-    @apply text-[11px]
+    @apply text-[9px]
   }
 
   .games-card{
@@ -359,7 +359,7 @@ body{
   }
 
   .page-displayed{
-    @apply  mt-[-16px]
+    @apply  mt-[-20px] ml-5
   }
 
   .page-bottom{
