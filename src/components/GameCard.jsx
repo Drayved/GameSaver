@@ -8,7 +8,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
   const startIndex = (currentPage - 1) * 3;
   let endIndex = startIndex + 3;
   const [displayedGames, setDisplayedGames] = useState([]);
-  const [gamesAdded, setGamesAdded] = useState(true);
+  
   const [disabledWantToPlay, setDisabledWantToPlay] = useState(false);
   const [disabledPlayed, setDisabledPlayed] = useState(false);
   const [wantToPlayList, setWantToPlayList] = useState([]);
@@ -20,13 +20,9 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
   const [currentPageType, setCurrentPageType] = useState(isGamesSavedPage ? "saved" : "played");
   console.log("aaaaaaaa", playedGamesList)
   console.log("bbbbbb", wantToPlayList)
-  useEffect(() => {
-    setCurrentPageType(isGamesSavedPage ? "saved" : "played");
-  }, [isGamesSavedPage]);
 
-  useEffect(() => {
-    displayedGames.length <= 0 && setGamesAdded(false);
-  }, [displayedGames]);
+
+
 
   useEffect(() => {
     if (!isSearchPage) {
@@ -37,12 +33,12 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
   
       if (remainingGames.length === 0 && currentPage > 1) {
         setCurrentPage((prevPage) => prevPage - 1);
-        setGamesAdded(false);
+       
       } else {
-        setGamesAdded(true);
+       
       }
     }
-  }, [games, startIndex, endIndex, currentPage, currentPageType, isSearchPage]);
+  }, [games]);
 
   useEffect(() => {
     const updatedDisplayedGames = games.slice(startIndex, endIndex);
@@ -69,7 +65,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
       }
   
       setGames(fetchedGames);
-      setGamesAdded(true);
+      
     } catch (error) {
       console.log("Error fetching games:", error);
     }
@@ -303,7 +299,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
         ))}
         
         
-        <div className={`${filteredGames.length <= 0 && window.location.pathname || !gamesAdded && window.location.pathname !== "/search" ? "hidden" : ""}`}>
+        <div className={`${filteredGames.length <= 0 && window.location.pathname !== "/search" ? "hidden" : ""}`}>
         <div className="page-container page-bottom">
           <button
             className="prev-page font-semibold"
