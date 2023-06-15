@@ -9,7 +9,6 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
   const startIndex = (currentPage - 1) * 3;
   let endIndex = startIndex + 3;
   const [displayedGames, setDisplayedGames] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [wantToPlayList, setWantToPlayList] = useState([]);
   const [playedGamesList, setPlayedGamesList] = useState([]);
 
@@ -41,11 +40,8 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
 
   useEffect(() => {
     const updatedDisplayedGames = games.slice(startIndex, endIndex);
-    setTimeout(() => {
-      setDisplayedGames(updatedDisplayedGames);
-    }, 3000);
-    
-  }, [currentPage, startIndex, endIndex]);
+    setDisplayedGames(updatedDisplayedGames);
+  }, [currentPage, startIndex, endIndex, displayedGames]);
 
   const fetchGames = async () => {
     try {
@@ -71,7 +67,6 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
       }
   
       setGames(fetchedGames);
-      setIsLoading(false);
       
     } catch (error) {
       console.log("Error fetching games:", error);
@@ -248,113 +243,88 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
     const filteredGames = displayedGames.filter((game) => Object.keys(game).length > 0)
 
 
-    return (
-      <div className="games-card-container">
-        {isLoading ? (
-          <div className="loading-screen">
-            <h2>Loading...</h2>
-          </div>
-        ) : (
-          filteredGames.map((game) => (
-            <div key={game.id} className="games-card">
-              <h3 className="game-name">{game.name}</h3>
-              <div className="game-info">
-                <img
-                  className="game-img"
-                  src={game.background_image}
-                  alt={game.name}
-                ></img>
-                <div className="game-details">
-                  <div className="game-release">
-                    <p>Released: </p>
-                    <p className="release">{game.released}</p>
-                  </div>
-                  <div className="game-genres">
-                    <p>Genres:</p>
-                    <p className="genres">
-                      {game.genres.map((genre) => genre.name).slice(0, 2).join(", ")}
-                    </p>
-                  </div>
+    return(
+        <div className="games-card-container">
+        {filteredGames.map((game) => (
+          <div key={game.id} className="games-card">
+            <h3 className="game-name">{game.name}</h3>
+            <div className="game-info">
+              <img
+                className="game-img"
+                src={game.background_image}
+                alt={game.name}
+              ></img>
+              <div className="game-details">
+                <div className="game-release">
+                  <p>Released: </p>
+                  <p className="release">{game.released}</p>
                 </div>
+                <div className="game-genres">
+                  <p>Genres:</p>
+                  <p className="genres"> {game.genres.map((genre) => genre.name).slice(0, 2).join(", ")}</p>
+                </div>
+                
               </div>
-              <div className="more-info-container">
-                <button
-                  onClick={() =>
-                    window.open(
-                      `https://rawg.io/games/${game.name
-                        .replace(/\s/g, "-")
-                        .replace(/:/g, "")}`
-                    )
-                  }
-                  className="more-info-btn"
-                >
-                  More Info
-                </button>
-              </div>
-              <div className="list-btns">
-                {!isGamesSavedPage && (
-                  <button
-                    onClick={(event) =>
-                      handleAddToCollection(event, game, "wantToPlay")
-                    }
-                    className="want-btn"
-                    disabled={isGameAdded(game, "wantToPlay")}
-                  >
-                    {isGameAdded(game, "wantToPlay") ? "Added" : "I want to play it"}
-                  </button>
-                )}
-                {!isPlayedGamesPage && (
-                  <button
-                    onClick={(event) =>
-                      handleAddToCollection(event, game, "playedGames")
-                    }
-                    className="played-btn"
-                    disabled={isGameAdded(game, "playedGames")}
-                  >
-                    {isGameAdded(game, "playedGames") ? "Added" : "I played it"}
-                  </button>
-                )}
-                {!isSearchPage && (
-                  <button className="remove-btn" onClick={() => handleDelete(game)}>
-                    Remove
-                  </button>
-                )}
-              </div>
+              
             </div>
-          ))
-        )}
-
-{(isLoading && currentPage !== 1) || (isLoading && currentPage !== totalPages) && (
-      <div className="loading-screen">
-        <h2>Loading...</h2>
+            <div className="more-info-container">
+              <button onClick={() => window.open(`https://rawg.io/games/${game.name.replace(/\s/g, "-").replace(/:/g, "")}`)} className="more-info-btn">More Info</button>
+            </div>
+            
+            <div className="list-btns">
+            {!isGamesSavedPage && (
+              <button 
+              onClick={(event) => handleAddToCollection(event, game, "wantToPlay")} 
+              className="want-btn"
+              disabled={isGameAdded(game, "wantToPlay")}
+              >
+                {isGameAdded(game, "wantToPlay") ? "Added" : "I want to play it"}
+              </button>
+            )}
+            {!isPlayedGamesPage && (
+              <button
+                onClick={(event) => handleAddToCollection(event, game, "playedGames")}
+                className="played-btn"
+                disabled={isGameAdded(game, "playedGames")}
+              >
+                {isGameAdded(game, "playedGames") ? "Added" : "I played it"}
+            </button>
+            )}
+          
+            {isSearchPage ? "" : 
+                <button className="remove-btn" onClick={() => handleDelete(game)}>
+                  Remove
+                </button>
+            }  
+            </div>
+          </div>
+        ))}
+        
+        
+        <div className={`${filteredGames.length <= 0 && !isSearchPage ? "hidden" : ""}`}>
+        <div className="page-container page-bottom">
+          <button
+            className="prev-page font-semibold"
+            onClick={handlePreviousPage}
+            disabled={currentPage === 1}
+          >
+            Previous Page
+          </button>
+          <p className="page-dash">-</p>
+          <button
+            className="next-page font-semibold"
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages || isSearchPage && currentPage === 7}
+          >
+            Next Page
+          </button>
+          
+        </div>
+        <p className={`page-displayed `}>{currentPage} - {isSearchPage && totalPages > 7 ? "7" : totalPages}</p>
+        
+        </div>
+            
+        
       </div>
-    )}
-    <div className={`${filteredGames.length <= 0 && !isSearchPage ? "hidden" : ""}`}>
-      <div className="page-container page-bottom">
-        <button
-          className="prev-page font-semibold"
-          onClick={handlePreviousPage}
-          disabled={currentPage === 1}
-        >
-          Previous Page
-        </button>
-        <p className="page-dash">-</p>
-        <button
-          className="next-page font-semibold"
-          onClick={handleNextPage}
-          disabled={
-            currentPage === totalPages ||
-            (isSearchPage && currentPage === 7)
-          }
-        >
-          Next Page
-        </button>
-      </div>
-      <p className={`page-displayed `}>
-        {currentPage} - {isSearchPage && totalPages > 7 ? "7" : totalPages}
-      </p>
-    </div>
-  </div>
-);
-    
+    )
 }
