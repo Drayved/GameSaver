@@ -311,13 +311,12 @@ body{
     @apply h-[150px] text-xs
   }
 
-  .genres{
-    @apply text-[9px]
+  .genres,
+  .release{
+    @apply text-[9px] italic
   }
 
-  .release{
-    @apply text-[9px]
-  }
+ 
 
   .games-card{
     @apply py-4
