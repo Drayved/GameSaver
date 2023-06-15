@@ -49,14 +49,18 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
   
       if (currentPageType === "saved") {
         const querySnapshot = await getDocs(
-          query(collection(db, "users", user.uid, "wantToPlay"), where("played", "==", false))
+          query
+          (collection(db, "users", user.uid, "wantToPlay"), 
+          where("played", "==", false))
         );
         fetchedGames = querySnapshot.docs.map((doc) => doc.data());
         setWantToPlayList(fetchedGames);
         console.log("wanttoplaylist:", wantToPlayList)
       } else {
         const querySnapshot = await getDocs(
-          query(collection(db, "users", user.uid, "playedGames"), where("played", "==", true))
+          query
+          (collection(db, "users", user.uid, "playedGames"), 
+          where("played", "==", true))
         );
         fetchedGames = querySnapshot.docs.map((doc) => doc.data());
         setPlayedGamesList(fetchedGames);
@@ -76,7 +80,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
    
 
     
-  }, [currentPageType, setGames]);
+  }, [currentPageType]);
   
   const handleAddToCollection = async (event, game, collectionName) => {
     try {
