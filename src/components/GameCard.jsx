@@ -41,7 +41,10 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
 
   useEffect(() => {
     const updatedDisplayedGames = games.slice(startIndex, endIndex);
-    setDisplayedGames(updatedDisplayedGames);
+    setTimeout(() => {
+      setDisplayedGames(updatedDisplayedGames);
+    }, 500);
+    
   }, [currentPage, startIndex, endIndex]);
 
   const fetchGames = async () => {
@@ -320,32 +323,38 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
             </div>
           ))
         )}
-    
-        <div className={`${filteredGames.length <= 0 && !isSearchPage ? "hidden" : ""}`}>
-          <div className="page-container page-bottom">
-            <button
-              className="prev-page font-semibold"
-              onClick={handlePreviousPage}
-              disabled={currentPage === 1}
-            >
-              Previous Page
-            </button>
-            <p className="page-dash">-</p>
-            <button
-              className="next-page font-semibold"
-              onClick={handleNextPage}
-              disabled={
-                currentPage === totalPages ||
-                (isSearchPage && currentPage === 7)
-              }
-            >
-              Next Page
-            </button>
-          </div>
-          <p className={`page-displayed `}>
-            {currentPage} - {isSearchPage && totalPages > 7 ? "7" : totalPages}
-          </p>
-        </div>
+
+{(isLoading && currentPage !== 1) || (isLoading && currentPage !== totalPages) && (
+      <div className="loading-screen">
+        <h2>Loading...</h2>
       </div>
-    )
+    )}
+    <div className={`${filteredGames.length <= 0 && !isSearchPage ? "hidden" : ""}`}>
+      <div className="page-container page-bottom">
+        <button
+          className="prev-page font-semibold"
+          onClick={handlePreviousPage}
+          disabled={currentPage === 1}
+        >
+          Previous Page
+        </button>
+        <p className="page-dash">-</p>
+        <button
+          className="next-page font-semibold"
+          onClick={handleNextPage}
+          disabled={
+            currentPage === totalPages ||
+            (isSearchPage && currentPage === 7)
+          }
+        >
+          Next Page
+        </button>
+      </div>
+      <p className={`page-displayed `}>
+        {currentPage} - {isSearchPage && totalPages > 7 ? "7" : totalPages}
+      </p>
+    </div>
+  </div>
+);
+    
 }
