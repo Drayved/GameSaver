@@ -41,7 +41,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
   useEffect(() => {
     const updatedDisplayedGames = games.slice(startIndex, endIndex);
     setDisplayedGames(updatedDisplayedGames);
-  }, [endIndex, setDisplayedGames]);
+  }, [endIndex]);
 
   const fetchGames = async () => {
     try {
@@ -66,7 +66,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
         setPlayedGamesList(fetchedGames);
       }
   
-      setGames(fetchedGames);
+      
       
     } catch (error) {
       console.log("Error fetching games:", error);
