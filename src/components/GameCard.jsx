@@ -25,7 +25,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
 
 
   useEffect(() => {
-    if (!isSearchPage) {
+    
       const updatedDisplayedGames = games.slice(startIndex, endIndex);
       const remainingGames = games.filter((g) => g.id !== games.id);
   
@@ -37,13 +37,13 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
       } else {
        
       }
-    }
-  }, [games]);
+    
+  }, [startIndex, displayedGames]);
 
-  useEffect(() => {
-    const updatedDisplayedGames = games.slice(startIndex, endIndex);
-    setDisplayedGames(updatedDisplayedGames);
-  }, [currentPage]);
+  // useEffect(() => {
+  //   const updatedDisplayedGames = games.slice(startIndex, endIndex);
+  //   setDisplayedGames(updatedDisplayedGames);
+  // }, [currentPage]);
 
   const fetchGames = async () => {
     try {
