@@ -308,7 +308,7 @@ body{
 
 @media(max-width:400px){
   .games-card-container{
-    @apply h-[150px] text-xs 
+    @apply h-[150px] text-xs
   }
 
   .genres{
@@ -330,11 +330,11 @@ body{
   .want-btn,
   .played-btn,
   .remove-btn{
-    @apply w-24 text-xs mt-[-28px] h-[26px] pb-0.5
+    @apply w-24 text-xs mt-[-24px] h-[26px] pb-0.5
   }
 
   .list-btns{
-    @apply mx-10 mr-2 mt-10
+    @apply mx-10 mr-2 
   }
 
   .results-title,
