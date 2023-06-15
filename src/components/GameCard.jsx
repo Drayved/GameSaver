@@ -2,6 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../App";
 import { collection, doc, setDoc, deleteDoc, getDocs, where, query, addDoc } from "firebase/firestore";
 import { db } from "../../firebase";
+import { useLocation } from "react-router-dom"
 
 export default function GameCard({ currentPage, setCurrentPage, totalPages, setTotalPages}) {
   const { games, setGames, user } = useContext(AuthContext);
@@ -10,6 +11,8 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
   const [displayedGames, setDisplayedGames] = useState([]);
   const [wantToPlayList, setWantToPlayList] = useState([]);
   const [playedGamesList, setPlayedGamesList] = useState([]);
+
+  const location = useLocation()
 
   const isGamesSavedPage = location.pathname === "/games-saved";
   const isPlayedGamesPage = location.pathname === "/games-played";
@@ -33,12 +36,12 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
        
       }
     }
-  }, [games]);
+  }, [games, startIndex, endIndex]);
 
   useEffect(() => {
     const updatedDisplayedGames = games.slice(startIndex, endIndex);
     setDisplayedGames(updatedDisplayedGames);
-  }, [currentPage]);
+  }, [currentPage, startIndex, endIndex]);
 
   const fetchGames = async () => {
     try {
