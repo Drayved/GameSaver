@@ -29,7 +29,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
   }, [displayedGames]);
 
   useEffect(() => {
-    if (!isSearchPage) {
+    
       const updatedDisplayedGames = games.slice(startIndex, endIndex);
       const remainingGames = games.filter((g) => g.id !== games.id);
   
@@ -41,7 +41,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
       } else {
         setGamesAdded(true);
       }
-    }
+    
   }, [games, startIndex, endIndex, currentPage, currentPageType, isSearchPage]);
 
   useEffect(() => {
