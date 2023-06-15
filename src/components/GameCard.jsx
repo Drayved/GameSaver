@@ -43,7 +43,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
     const updatedDisplayedGames = games.slice(startIndex, endIndex);
     setTimeout(() => {
       setDisplayedGames(updatedDisplayedGames);
-    }, 500);
+    }, 3000);
     
   }, [currentPage, startIndex, endIndex]);
 
