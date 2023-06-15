@@ -3,7 +3,7 @@ import { AuthContext } from "../App";
 import { collection, doc, setDoc, deleteDoc, getDocs, where, query, addDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 
-export default function GameCard({ currentPage, setCurrentPage, totalPages, setTotalPages }) {
+export default function GameCard({ currentPage, setCurrentPage, totalPages, setTotalPages}) {
   const { games, setGames, user } = useContext(AuthContext);
   const startIndex = (currentPage - 1) * 3;
   let endIndex = startIndex + 3;
@@ -11,12 +11,15 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
   const [gamesAdded, setGamesAdded] = useState(true);
   const [disabledWantToPlay, setDisabledWantToPlay] = useState(false);
   const [disabledPlayed, setDisabledPlayed] = useState(false);
+  const [wantToPlayList, setWantToPlayList] = useState([]);
+  const [playedGamesList, setPlayedGamesList] = useState([]);
 
   const isGamesSavedPage = window.location.pathname === "/games-saved";
   const isPlayedGamesPage = window.location.pathname === "/games-played";
   const isSearchPage = window.location.pathname === "/search";
   const [currentPageType, setCurrentPageType] = useState(isGamesSavedPage ? "saved" : "played");
-
+  console.log("aaaaaaaa", playedGamesList)
+  console.log("bbbbbb", wantToPlayList)
   useEffect(() => {
     setCurrentPageType(isGamesSavedPage ? "saved" : "played");
   }, [isGamesSavedPage]);
@@ -29,9 +32,9 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
     if (!isSearchPage) {
       const updatedDisplayedGames = games.slice(startIndex, endIndex);
       const remainingGames = games.filter((g) => g.id !== games.id);
-
+  
       setDisplayedGames(updatedDisplayedGames);
-
+  
       if (remainingGames.length === 0 && currentPage > 1) {
         setCurrentPage((prevPage) => prevPage - 1);
         setGamesAdded(false);
@@ -39,7 +42,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
         setGamesAdded(true);
       }
     }
-  }, [games, startIndex, endIndex, currentPage, currentPageType]);
+  }, [games, startIndex, endIndex, currentPage, currentPageType, isSearchPage]);
 
   useEffect(() => {
     const updatedDisplayedGames = games.slice(startIndex, endIndex);
@@ -55,11 +58,14 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
           query(collection(db, "users", user.uid, "wantToPlay"), where("played", "==", false))
         );
         fetchedGames = querySnapshot.docs.map((doc) => doc.data());
+        setWantToPlayList(fetchedGames);
+        console.log("wanttoplaylist:", wantToPlayList)
       } else {
         const querySnapshot = await getDocs(
           query(collection(db, "users", user.uid, "playedGames"), where("played", "==", true))
         );
         fetchedGames = querySnapshot.docs.map((doc) => doc.data());
+        setPlayedGamesList(fetchedGames);
       }
   
       setGames(fetchedGames);
@@ -91,19 +97,20 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
           // Add the game to the subcollection
           await addDoc(collectionRef, game);
           console.log(`Game added to the '${collectionName}' subcollection successfully.`);
+  
+          
+            // Update the local state
+            if (collectionName === "playedGames") {
+              setPlayedGamesList((prevPlayedGamesList) => [...prevPlayedGamesList, game]);
+            } else if (collectionName === "wantToPlay") {
+              setWantToPlayList((prevWantToPlayList) => [...prevWantToPlayList, game]);
+            }
+            if (remainingDisplayedGames.length === 0 && currentPage > 1) {
+              setCurrentPage((prevPage) => prevPage - 1); // Navigate to the previous page
+            }
           
 
-          if (collectionName === "wantToPlay") {
-            setGames((prevGames) =>
-              prevGames.map((g) => (g.id === game.id ? { ...g, disabledWantToPlay: true } : g))
-            );
-          } else if (collectionName === "playedGames") {
-            setGames((prevGames) =>
-              prevGames.map((g) => (g.id === game.id ? { ...g, disabledPlayed: true } : g))
-            );
-          }
-  
- 
+          
         } else {
           console.log(`Game already exists in the '${collectionName}' subcollection.`);
         }
@@ -114,10 +121,9 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
       console.log(`Error adding the game to the '${collectionName}' subcollection:`, error);
     }
   
-    if(!isSearchPage){
+    if (!isSearchPage) {
       handleDelete(game);
     }
-    
   };
     
   const handleDelete = async (game, collectionRef = null) => {
@@ -165,6 +171,50 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
     }
   };
 
+  useEffect(() => {
+    const fetchPlayedGames = async () => {
+      try {
+        if (user) {
+          const userDocRef = doc(db, "users", user.uid);
+  
+
+            const playedGamesQuerySnapshot = await getDocs(collection(userDocRef, "playedGames"));
+            const playedGamesData = playedGamesQuerySnapshot.docs.map((doc) => doc.data());
+            setPlayedGamesList(playedGamesData);
+            console.log("playedGames:", playedGamesData);
+          
+        }
+      } catch (error) {
+        console.log("Error fetching games:", error);
+      }
+    };
+  
+    fetchPlayedGames();
+  }, [user, currentPageType]);
+
+  useEffect(() => {
+    const fetchWantToPlayGames = async () => {
+      try {
+        if (user) {
+          const userDocRef = doc(db, "users", user.uid);
+  
+          
+            const wantToPlayQuerySnapshot = await getDocs(collection(userDocRef, "wantToPlay"));
+            const wantToPlayData = wantToPlayQuerySnapshot.docs.map((doc) => doc.data());
+            setWantToPlayList(wantToPlayData);
+            console.log("wantToPlayList:", wantToPlayData);
+          
+
+         
+        }
+      } catch (error) {
+        console.log("Error fetching games:", error);
+      }
+    };
+  
+    fetchWantToPlayGames();
+  }, [user, currentPageType]);
+
     const handlePreviousPage = () => {
       if (currentPage > 1) {
         setCurrentPage((prevPage) => prevPage - 1);
@@ -175,6 +225,21 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
       if (currentPage < totalPages) {
         setCurrentPage((prevPage) => prevPage + 1);
       }
+    };
+
+    const isGameAdded = (game, collectionName) => {
+      if (collectionName === "wantToPlay") {
+        return (
+          wantToPlayList.length > 0 &&
+          wantToPlayList.some((playedGame) => playedGame.id === game.id)
+        );
+      } else if (collectionName === "playedGames") {
+        return (
+          playedGamesList.length > 0 &&
+          playedGamesList.some((playedGame) => playedGame.id === game.id)
+        );
+      }
+      return false;
     };
 
     const filteredGames = displayedGames.filter((game) => Object.keys(game).length > 0)
@@ -210,23 +275,23 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
             
             <div className="list-btns">
             {!isGamesSavedPage && (
-            <button
-              onClick={(event) => handleAddToCollection(event, game, "wantToPlay")}
-              className={`want-btn ${games.some((g) => g.id === game.id && !g.played) ? 'disabled' : ''}`}
-              disabled={games.some((g) => g.id === game.id && !g.played)}
-            >
-              I want to play it
+              <button 
+              onClick={(event) => handleAddToCollection(event, game, "wantToPlay")} 
+              className="want-btn"
+              disabled={isGameAdded(game, "wantToPlay")}
+              >
+                {isGameAdded(game, "wantToPlay") ? "Added" : "I want to play it"}
+              </button>
+            )}
+            {!isPlayedGamesPage && (
+              <button
+                onClick={(event) => handleAddToCollection(event, game, "playedGames")}
+                className="played-btn"
+                disabled={isGameAdded(game, "playedGames")}
+              >
+                {isGameAdded(game, "playedGames") ? "Added" : "I played it"}
             </button>
-          )}
-          {!isPlayedGamesPage && (
-            <button
-              onClick={(event) => handleAddToCollection(event, game, "playedGames")}
-              className={`played-btn ${games.some((g) => g.id === game.id && g.played) ? 'disabled' : ''}`}
-              disabled={games.some((g) => g.id === game.id && g.played)}
-            >
-              I played it
-            </button>
-          )}
+            )}
           
             {isSearchPage ? "" : 
                 <button className="remove-btn" onClick={() => handleDelete(game)}>

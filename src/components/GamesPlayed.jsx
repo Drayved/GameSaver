@@ -5,41 +5,48 @@ import GameCard from "./GameCard";
 import { db } from "../../firebase";
 
 
-export default function GamesSaved() {
-  const { games, setGames, signedIn, user } = useContext(AuthContext);
+export default function GamesPlayed() {
+  const { games, setGames, signedIn, user, playedGames, setPlayedGames } = useContext(AuthContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [playedGames, setPlayedGames] = useState([]);
+
+  
 
   useEffect(() => {
     const fetchPlayedGames = async () => {
       try {
-        
         if (user) {
           const userDocRef = doc(db, "users", user.uid);
           const playedGamesQuerySnapshot = await getDocs(collection(userDocRef, "playedGames"));
           const playedGamesData = playedGamesQuerySnapshot.docs.map((doc) => doc.data());
-          setPlayedGames(playedGamesData)
-          
-          setGames(playedGamesData);
-          console.log("playedGames:", playedGames);
-          console.log(playedGames);
+
+          setPlayedGames(playedGamesData);
+          console.log("playedGames:", playedGamesData);
         }
       } catch (error) {
         console.log("Error fetching games:", error);
       }
     };
 
-    
-
     fetchPlayedGames();
-  }, []);
+  }, [user]);
 
   useEffect(() => {
-    const calculatedTotalPages = Math.ceil(games.length / 3);
+    const calculatedTotalPages = Math.ceil(playedGames.length / 3);
     setTotalPages(calculatedTotalPages);
-  }, [games]);
-console.log(playedGames)
+  }, [playedGames]);
+
+  useEffect(() => {
+    if (playedGames.length > 0) {
+      const calculatedTotalPages = Math.ceil(playedGames.length / 3);
+      setTotalPages(calculatedTotalPages);
+      setGames(playedGames);
+      console.log("bbb", playedGames);
+    }
+  }, [playedGames, setGames]);
+
+  
+
   return (
     <div>
       {signedIn ? (
@@ -55,7 +62,7 @@ console.log(playedGames)
             setCurrentPage={setCurrentPage}
             totalPages={totalPages}
             setTotalPages={setTotalPages}
-            playedGames={playedGames}
+            
           />
         </div>
       ) : (
@@ -64,3 +71,4 @@ console.log(playedGames)
     </div>
   );
 }
+
