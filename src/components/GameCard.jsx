@@ -8,18 +8,13 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
   const startIndex = (currentPage - 1) * 3;
   let endIndex = startIndex + 3;
   const [displayedGames, setDisplayedGames] = useState([]);
-  
-  const [disabledWantToPlay, setDisabledWantToPlay] = useState(false);
-  const [disabledPlayed, setDisabledPlayed] = useState(false);
   const [wantToPlayList, setWantToPlayList] = useState([]);
   const [playedGamesList, setPlayedGamesList] = useState([]);
 
-  const isGamesSavedPage = window.location.pathname === "/games-saved";
-  const isPlayedGamesPage = window.location.pathname === "/games-played";
-  const isSearchPage = window.location.pathname === "/search";
+  const isGamesSavedPage = location.pathname === "/games-saved";
+  const isPlayedGamesPage = location.pathname === "/games-played";
+  const isSearchPage = location.pathname === "/search";
   const [currentPageType, setCurrentPageType] = useState(isGamesSavedPage ? "saved" : "played");
-  console.log("aaaaaaaa", playedGamesList)
-  console.log("bbbbbb", wantToPlayList)
 
 
 
@@ -299,7 +294,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
         ))}
         
         
-        <div className={`${filteredGames.length <= 0 && window.location.pathname !== "/search" ? "hidden" : ""}`}>
+        <div className={`${filteredGames.length <= 0 && !isSearchPage ? "hidden" : ""}`}>
         <div className="page-container page-bottom">
           <button
             className="prev-page font-semibold"
