@@ -41,7 +41,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
   useEffect(() => {
     const updatedDisplayedGames = games.slice(startIndex, endIndex);
     setDisplayedGames(updatedDisplayedGames);
-  }, [endIndex]);
+  }, [endIndex, setDisplayedGames]);
 
   const fetchGames = async () => {
     try {
