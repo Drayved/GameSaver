@@ -349,7 +349,7 @@ body{
 
   .results-title,
   .game-list-title{
-    @apply text-lg mb-[-6px] mt-0
+    @apply text-lg  mt-2
   }
 
   .game-details{
