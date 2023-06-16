@@ -11,6 +11,10 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
   const [displayedGames, setDisplayedGames] = useState([]);
   const [wantToPlayList, setWantToPlayList] = useState([]);
   const [playedGamesList, setPlayedGamesList] = useState([]);
+  const [isWantToPlayHovered, setIsWantToPlayHovered] = useState(false);
+  const [isPlayedGamesHovered, setIsPlayedGamesHovered] = useState(false);
+  const [hoveredButton, setHoveredButton] = useState(null);
+  
 
   const location = useLocation()
 
@@ -80,6 +84,8 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
   }, [currentPageType]);
   
   const handleAddToCollection = async (event, game, collectionName) => {
+    event.stopPropagation();
+    
     try {
       if (user) {
         const collectionRef = collection(db, "users", user.uid, collectionName);
@@ -87,41 +93,34 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
         // Check if the game already exists in the subcollection
         const querySnapshot = await getDocs(query(collectionRef, where("id", "==", game.id)));
         const gameExists = !querySnapshot.empty;
-
-        if (gameExists){
-          // Remove the game from the subcollection
-       const gameDoc = querySnapshot.docs[0];
-       await deleteDoc(gameDoc.ref);
-       console.log(`Game removed from the '${collectionName}' subcollection successfully.`);
-
-       // Update the local state based on the collection name
-       if (collectionName === "playedGames") {
-         setPlayedGamesList((prevPlayedGamesList) =>
-           prevPlayedGamesList.filter((g) => g.id !== game.id)
-         );
-       } else if (collectionName === "wantToPlay") {
-         setWantToPlayList((prevWantToPlayList) =>
-           prevWantToPlayList.filter((g) => g.id !== game.id)
-         );
-       }
-
-     }
   
-        if (!gameExists) {
+        if (gameExists) {
+          // Remove the game from the subcollection
+          const gameDoc = querySnapshot.docs[0];
+          await deleteDoc(gameDoc.ref);
+          console.log(`Game removed from the '${collectionName}' subcollection successfully.`);
+  
+          // Update the local state based on the collection name
+          if (collectionName === "playedGames") {
+            setPlayedGamesList((prevPlayedGamesList) =>
+              prevPlayedGamesList.filter((g) => g.id !== game.id)
+            );
+          } else if (collectionName === "wantToPlay") {
+            setWantToPlayList((prevWantToPlayList) =>
+              prevWantToPlayList.filter((g) => g.id !== game.id)
+            );
+          }
+        } else {
           // Add the game to the subcollection
           await addDoc(collectionRef, game);
           console.log(`Game added to the '${collectionName}' subcollection successfully.`);
   
-          
-            // Update the local state
-            if (collectionName === "playedGames") {
-              setPlayedGamesList((prevPlayedGamesList) => [...prevPlayedGamesList, game]);
-            } else if (collectionName === "wantToPlay") {
-              setWantToPlayList((prevWantToPlayList) => [...prevWantToPlayList, game]);
-            }
-            if (remainingDisplayedGames.length === 0 && currentPage > 1) {
-              setCurrentPage((prevPage) => prevPage - 1); // Navigate to the previous page
-            }
+          // Update the local state
+          if (collectionName === "playedGames") {
+            setPlayedGamesList((prevPlayedGamesList) => [...prevPlayedGamesList, game]);
+          } else if (collectionName === "wantToPlay") {
+            setWantToPlayList((prevWantToPlayList) => [...prevWantToPlayList, game]);
+          }
         }
       } else {
         console.log("User not authenticated.");
@@ -251,27 +250,28 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
       return false;
     };
 
-    const filteredGames = displayedGames.filter((game) => Object.keys(game).length > 0)
-
-
-    const [isWantToPlayHovered, setIsWantToPlayHovered] = useState(false);
-    const [isPlayedGamesHovered, setIsPlayedGamesHovered] = useState(false);
-
-    const handleWantToPlayMouseEnter = () => {
+    const handleWantToPlayMouseEnter = (buttonId) => {
       setIsWantToPlayHovered(true);
+      setHoveredButton(buttonId);
     };
   
     const handleWantToPlayMouseLeave = () => {
       setIsWantToPlayHovered(false);
+      setHoveredButton(null);
     };
   
-    const handlePlayedGamesMouseEnter = () => {
+    const handlePlayedGamesMouseEnter = (buttonId) => {
       setIsPlayedGamesHovered(true);
+      setHoveredButton(buttonId);
     };
   
     const handlePlayedGamesMouseLeave = () => {
       setIsPlayedGamesHovered(false);
+      setHoveredButton(null);
     };
+
+    const filteredGames = displayedGames.filter((game) => Object.keys(game).length > 0)
+
     return(
         <div className="games-card-container">
         {filteredGames.map((game) => (
@@ -304,12 +304,12 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
             {!isGamesSavedPage && (
               <button
                 onClick={(event) => handleAddToCollection(event, game, "wantToPlay")}
-                className={`want-btn ${isGameAdded(game, "wantToPlay") && isWantToPlayHovered ? "remove-btn" : ""}`}
-                onMouseEnter={handleWantToPlayMouseEnter}
+                className={`want-btn ${isGameAdded(game, "wantToPlay") && (isWantToPlayHovered && hoveredButton === game.id) ? "remove-btn" : ""}`}
+                onMouseEnter={() => handleWantToPlayMouseEnter(game.id)}
                 onMouseLeave={handleWantToPlayMouseLeave}
               >
-                {isGameAdded(game, "wantToPlay") ? (
-                  <span className={`Added ${isWantToPlayHovered ? "hide-on-hover" : ""}`}>
+                {isGameAdded(game, "wantToPlay")  ? (
+                  <span className={`Added ${isWantToPlayHovered && hoveredButton === game.id ? "hide-on-hover" : ""}`}>
                     Added
                   </span>
                 ) : (
@@ -323,12 +323,12 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
             {!isPlayedGamesPage && (
               <button
                 onClick={(event) => handleAddToCollection(event, game, "playedGames")}
-                className={`played-btn ${isGameAdded(game, "playedGames") && isPlayedGamesHovered ? "remove-btn" : ""}`}
-                onMouseEnter={handlePlayedGamesMouseEnter}
+                className={`played-btn ${isGameAdded(game, "playedGames") && isPlayedGamesHovered && hoveredButton === game.id ? "remove-btn" : ""}`}
+                onMouseEnter={() => handlePlayedGamesMouseEnter(game.id)}
                 onMouseLeave={handlePlayedGamesMouseLeave}
               >
                 {isGameAdded(game, "playedGames") ? (
-                  <span className={`Added ${isPlayedGamesHovered ? "hide-on-hover" : ""}`}>
+                  <span className={`Added ${isPlayedGamesHovered && hoveredButton === game.id ? "hide-on-hover" : ""}`}>
                     Added
                   </span>
                 ) : (

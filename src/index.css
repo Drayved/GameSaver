@@ -259,43 +259,23 @@ body{
   @apply bg-purple-600 
 }
 
-.want-btn.disabled,
-.played-btn.disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.want-btn:hover,
-.played-btn:hover {
-  @apply bg-red-900
-}
-
 .hide-on-hover{
   display: none;
 }
 
 .remove-btn:hover .remove-text {
   display: inline;
-  @apply bg-red-900
-}
-
-
-
-.remove-text {
-  display: none;
-}
-
-.remove-btn {
-  /* Add styles for the remove button */
-}
-
-.remove-btn:hover {
-  /* Add styles for when the remove button is hovered over */
+  @apply bg-red-900 
 }
 
 .want-btn:hover,
-.played-btn:hover {
-  /* Add styles for when the want/played button is hovered over */
+.played-btn:hover,
+.remove-btn:hover{
+  @apply scale-105
+}
+
+.remove-text {
+  display: none;
 }
 
 .remove-btn{
