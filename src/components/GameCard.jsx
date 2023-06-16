@@ -77,9 +77,6 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
       if (user) {
         fetchGames();
       }
-   
-
-    
   }, [currentPageType]);
   
   const handleAddToCollection = async (event, game, collectionName) => {
@@ -90,6 +87,25 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
         // Check if the game already exists in the subcollection
         const querySnapshot = await getDocs(query(collectionRef, where("id", "==", game.id)));
         const gameExists = !querySnapshot.empty;
+
+        if (gameExists){
+          // Remove the game from the subcollection
+       const gameDoc = querySnapshot.docs[0];
+       await deleteDoc(gameDoc.ref);
+       console.log(`Game removed from the '${collectionName}' subcollection successfully.`);
+
+       // Update the local state based on the collection name
+       if (collectionName === "playedGames") {
+         setPlayedGamesList((prevPlayedGamesList) =>
+           prevPlayedGamesList.filter((g) => g.id !== game.id)
+         );
+       } else if (collectionName === "wantToPlay") {
+         setWantToPlayList((prevWantToPlayList) =>
+           prevWantToPlayList.filter((g) => g.id !== game.id)
+         );
+       }
+
+     }
   
         if (!gameExists) {
           // Add the game to the subcollection
@@ -106,11 +122,6 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
             if (remainingDisplayedGames.length === 0 && currentPage > 1) {
               setCurrentPage((prevPage) => prevPage - 1); // Navigate to the previous page
             }
-          
-
-          
-        } else {
-          console.log(`Game already exists in the '${collectionName}' subcollection.`);
         }
       } else {
         console.log("User not authenticated.");
@@ -243,6 +254,24 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
     const filteredGames = displayedGames.filter((game) => Object.keys(game).length > 0)
 
 
+    const [isWantToPlayHovered, setIsWantToPlayHovered] = useState(false);
+    const [isPlayedGamesHovered, setIsPlayedGamesHovered] = useState(false);
+
+    const handleWantToPlayMouseEnter = () => {
+      setIsWantToPlayHovered(true);
+    };
+  
+    const handleWantToPlayMouseLeave = () => {
+      setIsWantToPlayHovered(false);
+    };
+  
+    const handlePlayedGamesMouseEnter = () => {
+      setIsPlayedGamesHovered(true);
+    };
+  
+    const handlePlayedGamesMouseLeave = () => {
+      setIsPlayedGamesHovered(false);
+    };
     return(
         <div className="games-card-container">
         {filteredGames.map((game) => (
@@ -273,22 +302,42 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
             
             <div className="list-btns">
             {!isGamesSavedPage && (
-              <button 
-              onClick={(event) => handleAddToCollection(event, game, "wantToPlay")} 
-              className="want-btn"
-              disabled={isGameAdded(game, "wantToPlay")}
+              <button
+                onClick={(event) => handleAddToCollection(event, game, "wantToPlay")}
+                className={`want-btn ${isGameAdded(game, "wantToPlay") && isWantToPlayHovered ? "remove-btn" : ""}`}
+                onMouseEnter={handleWantToPlayMouseEnter}
+                onMouseLeave={handleWantToPlayMouseLeave}
               >
-                {isGameAdded(game, "wantToPlay") ? "Added" : "I want to play it"}
+                {isGameAdded(game, "wantToPlay") ? (
+                  <span className={`Added ${isWantToPlayHovered ? "hide-on-hover" : ""}`}>
+                    Added
+                  </span>
+                ) : (
+                  "I want to play it"
+                )}
+                <span className={`remove-text ${isWantToPlayHovered ? "show-on-hover" : ""}`}>
+                  Remove
+                </span>
               </button>
             )}
             {!isPlayedGamesPage && (
               <button
                 onClick={(event) => handleAddToCollection(event, game, "playedGames")}
-                className="played-btn"
-                disabled={isGameAdded(game, "playedGames")}
+                className={`played-btn ${isGameAdded(game, "playedGames") && isPlayedGamesHovered ? "remove-btn" : ""}`}
+                onMouseEnter={handlePlayedGamesMouseEnter}
+                onMouseLeave={handlePlayedGamesMouseLeave}
               >
-                {isGameAdded(game, "playedGames") ? "Added" : "I played it"}
-            </button>
+                {isGameAdded(game, "playedGames") ? (
+                  <span className={`Added ${isPlayedGamesHovered ? "hide-on-hover" : ""}`}>
+                    Added
+                  </span>
+                ) : (
+                  "I played it"
+                )}
+                <span className={`remove-text ${isPlayedGamesHovered  ? "show-on-hover" : ""}`}>
+                  Remove
+                </span>
+              </button>
             )}
           
             {isSearchPage ? "" : 

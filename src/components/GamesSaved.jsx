@@ -42,20 +42,24 @@ export default function GamesSaved() {
   return (
     <div>
       {signedIn ? 
-      <div>
-        <h1 className="game-list-title">{games.length > 0 ? "Games You Haven't Played" : "You haven't added any games to this list"}</h1>
-        <GameCard
-          games={games}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          totalPages={totalPages}
-          setTotalPages={setTotalPages}
-          wantToPlay={wantToPlay}
-        />
+        <div>
+          <h1 className="game-list-title">
+            {games.length > 0 
+              ? "Games You Haven't Played" 
+              : "You haven't added any games to this list"}
+          </h1>
+          <GameCard
+            games={games}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalPages={totalPages}
+            setTotalPages={setTotalPages}
+            
+          />
+        </div>
+        : <p className="sign-in-list">Sign in to view your list</p>}
       </div>
-      : <p className="sign-in-list">Sign in to view your list</p>}
-    </div>
-  );
-};
+  )
+}
 
 

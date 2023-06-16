@@ -5,10 +5,12 @@ import GameCard from "./GameCard";
 import { db } from "../../firebase";
 
 
+
 export default function GamesPlayed() {
-  const { games, setGames, signedIn, user, playedGames, setPlayedGames } = useContext(AuthContext);
+  const { games, setGames, signedIn, user,} = useContext(AuthContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [playedGames, setPlayedGames] = useState([])
 
   
 
@@ -19,8 +21,9 @@ export default function GamesPlayed() {
           const userDocRef = doc(db, "users", user.uid);
           const playedGamesQuerySnapshot = await getDocs(collection(userDocRef, "playedGames"));
           const playedGamesData = playedGamesQuerySnapshot.docs.map((doc) => doc.data());
-
           setPlayedGames(playedGamesData);
+
+          setGames(playedGamesData)
           console.log("playedGames:", playedGamesData);
         }
       } catch (error) {
@@ -29,27 +32,16 @@ export default function GamesPlayed() {
     };
 
     fetchPlayedGames();
-  }, [user]);
+  }, []);
 
   useEffect(() => {
-    const calculatedTotalPages = Math.ceil(playedGames.length / 3);
+    const calculatedTotalPages = Math.ceil(games.length / 3);
     setTotalPages(calculatedTotalPages);
-  }, [playedGames]);
-
-  useEffect(() => {
-    if (playedGames.length > 0) {
-      const calculatedTotalPages = Math.ceil(playedGames.length / 3);
-      setTotalPages(calculatedTotalPages);
-      setGames(playedGames);
-      console.log("bbb", playedGames);
-    }
-  }, [playedGames, setGames]);
-
-  
+  }, [games]);
 
   return (
     <div>
-      {signedIn ? (
+      {signedIn ? 
         <div>
           <h1 className="game-list-title">
             {games.length > 0
@@ -65,10 +57,8 @@ export default function GamesPlayed() {
             
           />
         </div>
-      ) : (
-        <p className="sign-in-list">Sign in to view your list</p>
-      )}
-    </div>
-  );
+        : <p className="sign-in-list">Sign in to view your list</p>}
+      </div>
+  )
 }
 

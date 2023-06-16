@@ -265,6 +265,39 @@ body{
   cursor: not-allowed;
 }
 
+.want-btn:hover,
+.played-btn:hover {
+  @apply bg-red-900
+}
+
+.hide-on-hover{
+  display: none;
+}
+
+.remove-btn:hover .remove-text {
+  display: inline;
+  @apply bg-red-900
+}
+
+
+
+.remove-text {
+  display: none;
+}
+
+.remove-btn {
+  /* Add styles for the remove button */
+}
+
+.remove-btn:hover {
+  /* Add styles for when the remove button is hovered over */
+}
+
+.want-btn:hover,
+.played-btn:hover {
+  /* Add styles for when the want/played button is hovered over */
+}
+
 .remove-btn{
   @apply bg-red-900 
 }
