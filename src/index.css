@@ -369,7 +369,7 @@ body{
   }
 
   .page-displayed{
-    @apply  mt-[-20px] ml-5
+    @apply  mt-[-16px] ml-5
   }
 
   .page-bottom{
@@ -382,15 +382,15 @@ body{
 
   .prev-page,
   .next-page{
-    @apply mt-[-20px]
+    @apply mt-[-10px]
   }
 
   .page-dash{
-    @apply mt-[-19px]
+    @apply mt-[-10px]
   }
 
   .page-container{
-    @apply mt-[-25px]
+    @apply mt-[25px]
   }
 
 
