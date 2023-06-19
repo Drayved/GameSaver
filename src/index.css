@@ -283,7 +283,34 @@ body{
 }
 
 .loading{
-  @apply text-center mt-10 text-2xl 
+  @apply mx-auto  w-screen h-screen
+}
+
+.loading-text {
+  @apply absolute top-52 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-4xl
+}
+
+@keyframes loading {
+  0% {
+    content: "Loading";
+  }
+  25% {
+    content: "Loading.";
+  }
+  50% {
+    content: "Loading..";
+  }
+  75% {
+    content: "Loading...";
+  }
+  100% {
+    content: "Loading....";
+  }
+}
+
+.animate-loading::after {
+  content: "Loading.";
+  animation: loading 2s infinite;
 }
 
 .sign-in-list{

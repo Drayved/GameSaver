@@ -22,10 +22,12 @@ export default function GetGames() {
       );
       const data = await response.json();
       setGames(data.results);
-      setLoading(false)
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000); 
     } catch (error) {
       console.log(error);
-      setLoading
+      setLoading(false)
     }
   };
 
@@ -56,11 +58,15 @@ export default function GetGames() {
   }, [currentPage, search]);
 
 
+
   
   return (
     <div >
-      {loading ? 
-      <h1 className="loading">Loading...</h1>
+      {loading ?
+      <div className="loading-container">
+        <h1 className="loading-text animate-loading"></h1>
+        <img className="loading w-screen" src="images/loading.gif" alt="loading" />
+      </div>
     :
     <div>
       <h1 className="results-title">Results for "{search}"</h1>
