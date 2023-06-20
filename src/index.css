@@ -12,8 +12,20 @@ body{
   @apply flex bg-gray-900 py-1 w-[screen]
 }
 
+.menu{
+  @apply w-10 cursor-pointer
+}
+
+.dropdown-menu{
+  @apply  absolute h-screen bg-gray-900 w-[20%] text-center text-white
+}
+
+.dropdown-menu li{
+  @apply mb-20  cursor-pointer
+}
+
 .title{
-  @apply mx-auto text-2xl pl-1 font-semibold  font-extrabold max-w-[50%] mx-auto text-transparent bg-clip-text bg-gradient-to-br from-cyan-400 to-green-600  drop-shadow-sm 
+  @apply mx-auto my-auto text-2xl pl-1 font-semibold  font-extrabold max-w-[50%] mx-auto text-transparent bg-clip-text bg-gradient-to-br from-cyan-400 to-green-600  drop-shadow-sm 
 }
 
 .account-img{
@@ -25,26 +37,18 @@ body{
 }
 
 .sign-in{
-  @apply absolute left-12 top-2 bg-cyan-600 font-bold
+  @apply absolute left-12 top-2 bg-gray-900 font-bold
 }
 
-.dropdown-container{
-  @apply block absolute left-0 right-0 items-center bg-cyan-600 w-[90%]
-  mx-auto rounded-2xl py-5 text-white mt-3 max-w-[1200px]
-}
 
-.dropdown-form{
-  @apply flex flex-col border mx-10 px-3 py-3
-}
 
 .new-user{
-  @apply flex flex-col my-3 italic font-semibold underline text-black
+  @apply flex flex-col my-3 italic underline text-white
 }
 
 .sign-in-btn{
-  @apply w-[100%] bg-cyan-500 mt-5 py-1 rounded-md border border-2 border-gray-500
+  @apply w-[100%] bg-cyan-600 mt-5 py-1 rounded-md border border-2 border-gray-500
   text-white font-semibold
-
 }
 
 .sign-up-btn{
@@ -56,7 +60,7 @@ body{
 }
 
 .signed-in-container{
-  @apply absolute right-1 bg-cyan-600 w-52 text-white text-center rounded-md shadow-md shadow-gray-600 border-t-2 
+  @apply absolute right-1 bg-gray-900 w-52 text-white text-center rounded-md shadow-md shadow-gray-600 border-t-2 
 }
 
 .sign-out-btn{
@@ -69,6 +73,55 @@ body{
 
 .signed-in{
   @apply my-1 font-semibold
+}
+
+.dropdown-container{
+  @apply block absolute left-0 right-0 items-center bg-gray-900 w-[90%]
+  mx-auto rounded-2xl py-5 text-white mt-3 max-w-[1200px]
+}
+
+.dropdown-form{
+  @apply flex flex-col border mx-10 px-3 py-3
+}
+
+.dropdown-list li:hover{
+  @apply text-cyan-600
+}
+
+.genre-dropdown{
+  @apply flex flex-col items-center ml-[4rem] mt-[-120px] bg-gray-900  rounded-sm px-16 py-5
+}
+
+.genre-dropdown li{
+  @apply mb-10
+}
+
+.genre-dropdown li:hover{
+  @apply text-cyan-600
+}
+
+@media(min-width: 530px){
+  .genre-dropdown{
+    @apply ml-[6rem]
+  }
+}
+
+@media(min-width: 650px){
+  .genre-dropdown{
+    @apply ml-[8rem]
+  }
+}
+
+@media(min-width: 825px){
+  .genre-dropdown{
+    @apply ml-[10rem]
+  }
+}
+
+@media(min-width: 980px){
+  .genre-dropdown{
+    @apply ml-[12rem]
+  }
 }
 /* Landing */
 
@@ -188,7 +241,7 @@ body{
 }
 
 .games-card{
-  @apply shadow-sm shadow-gray-400 p-5 mb-12 h-[270px] bg-blue-100 
+  @apply shadow-sm shadow-gray-400 p-5 mb-12 h-[270px] bg-blue-100 rounded-md
 }
 
 .game-name{

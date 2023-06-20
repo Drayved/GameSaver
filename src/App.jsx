@@ -28,7 +28,35 @@ export default function App() {
   const [password, setPassword] = useState("");
   const [showMenu, setShowMenu] = useState(false);
   const [menuShowing, setMenuShowing] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [selectedOption, setSelectedOption] = useState("");
+  const apiKey = "10cab07048cb4f6591685d4bf79954bd";
 
+
+  const fetchGames = async (page, option) => {
+    try {
+      let url = `https://api.rawg.io/api/games?key=${apiKey}&page=${page}&search=${search}`;
+  
+      if (option === "genres") {
+        url += `&genres=${selectedOption}`;
+        console.log(option)
+      } else if (option) {
+        url += `&ordering=${selectedOption}`;
+      }
+      // Include any additional options here
+      console.log('Making API request with URL:', url);
+      const response = await fetch(url);
+      const data = await response.json();
+      setGames(data.results);
+
+    } catch (error) {
+      console.log(error);
+      setLoading(false)
+    }
+  };
+  setTimeout(() => {
+    setLoading(false);
+  }, 2000); 
   const router = createBrowserRouter(
     createRoutesFromChildren(
       <Route path={"/"} element={<Layout />}>
@@ -41,6 +69,8 @@ export default function App() {
       </Route>
     )
   );
+
+
 
   function handleMenuClick() {
     setShowMenu(!showMenu);
@@ -72,6 +102,12 @@ export default function App() {
       setShowMenu,
       handleMenuClick,
       menuShowing,
+      fetchGames,
+      loading,
+      setLoading,
+      apiKey,
+      selectedOption,
+      setSelectedOption
       }}>
         <RouterProvider router={router}>
           <Outlet />
