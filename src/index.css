@@ -77,7 +77,7 @@ body{
 
 .dropdown-container{
   @apply block absolute left-0 right-0 items-center bg-gray-900 w-[90%]
-  mx-auto rounded-2xl py-5 text-white mt-3 max-w-[1200px]
+  mx-auto rounded-2xl py-5 text-white mt-3 max-w-[1200px] z-50
 }
 
 .dropdown-form{
@@ -89,7 +89,7 @@ body{
 }
 
 .genre-dropdown{
-  @apply flex flex-col items-center ml-[4rem] mt-[-120px] bg-gray-900  rounded-sm px-16 py-5
+  @apply flex flex-col items-center ml-[4rem] mt-[-120px] bg-gray-900  rounded-sm px-16 py-5 z-50
 }
 
 .genre-dropdown li{
