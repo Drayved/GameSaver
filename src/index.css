@@ -78,11 +78,11 @@ body{
 
 
 .dropdown-menu{
-  @apply  absolute h-[35%] bg-gray-900 w-[150px] text-center text-white z-50
+  @apply  absolute h-[465px] bg-gray-900 w-[150px] text-center text-white z-50
 }
 
 .dropdown-menu li{
-  @apply   cursor-pointer my-2
+  @apply cursor-pointer my-2
 }
 
 .dropdown-list li:hover{
