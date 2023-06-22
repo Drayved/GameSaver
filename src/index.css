@@ -78,7 +78,7 @@ body{
 
 
 .dropdown-menu{
-  @apply  absolute h-[465px] bg-gray-900 w-[150px] text-center text-white z-50
+  @apply  absolute h-[450px] bg-gray-900 w-[150px] text-center text-white z-50
 }
 
 .dropdown-menu li{
