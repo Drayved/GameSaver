@@ -9,7 +9,29 @@ export default function Navbar() {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showGenres, setShowGenres] = useState(false);
   
-  const {search, setSearch, selectedOption, setSelectedOption, fetchGames, user, setUser, signedIn, setSignedIn, newUser, setNewUser, menuShowing, email, setEmail, password, setPassword, showMenu, handleMenuClick } = useContext(AuthContext);
+  const {
+    search, 
+    setSearch, 
+    selectedOption, 
+    setSelectedOption, 
+    fetchGames, 
+    user, 
+    setUser, 
+    signedIn, 
+    setSignedIn, 
+    newUser, 
+    setNewUser, 
+    menuShowing, 
+    email, 
+    setEmail, 
+    password, 
+    setPassword, 
+    showMenu, 
+    handleMenuClick,      
+    selectedGenre,
+    setSelectedGenre,
+    selectedSorting,
+    setSelectedSorting } = useContext(AuthContext);
 
   useEffect(() => {
     const auth = getAuth();
@@ -112,13 +134,27 @@ export default function Navbar() {
     setShowGenres((prevState) => !prevState);
   };
 
-  const handleClick = (option) => {
-    setSearch(option);
-    setSelectedOption(option);
+  const handleSortingOptionClick = (option) => {
+    setSelectedSorting(option)
+    setSearch("")
+    setSelectedGenre("")
+    
     setShowDropdown(false); // Hide the dropdown menu when an option is clicked
-    fetchGames(1, option);
-    console.log("handleClick called with option:", option);
+    fetchGames(1);
+    console.log("handleSortingOptionClick called with option:", option);
   };
+
+  const handleGenreOptionClick = (genre) => {
+    setSelectedGenre(genre)
+    setSelectedSorting("")
+    setSearch("")
+   
+    setShowDropdown(false); // Hide the dropdown menu when an option is clicked
+    fetchGames(1);
+    console.log("handleGenreOptionClick called with genre:", genre);
+  };
+
+ 
 
   useEffect(() => {
     // Call fetchGames when the search state changes
@@ -192,37 +228,29 @@ export default function Navbar() {
 
       {showDropdown && (
         <div className="dropdown-menu">
-          <ul className="dropdown-list">
-          <li onClick={() => handleClick("most-played")}>
-            <Link to="/search?sortBy=mostPlayed">Most Played</Link>
-          </li>
-          <li onClick={() => handleClick("newly-released")}>
-            <Link to="/search?sortBy=newlyReleased">Newly Released</Link>
-          </li>
-          <li onClick={() => handleClick("highest-rated")}>
-            <Link to="/search?sortBy=highestRated">Highest Rated</Link>
-          </li>
-          <li onClick={toggleGenres}>Genres</li>
-      {showGenres && (
           <ul className="genre-dropdown">
-            <li onClick={() => handleClick("action")}>
+            <li onClick={() => handleGenreOptionClick("action")}>
               <Link to="/search?genre=action">Action</Link>
             </li>
-            <li onClick={() => handleClick("adventure")}>
+            <li onClick={() => handleGenreOptionClick("adventure")}>
               <Link to="/search?genre=adventure">Adventure</Link>
             </li>
-            <li onClick={() => handleClick("fantasy")}>
-              <Link to="/search?genre=fantasy">Fantasy</Link>
+            <li onClick={() => handleGenreOptionClick("strategy")}>
+              <Link to="/search?genre=strategy">Strategy</Link>
             </li>
-            <li onClick={() => handleClick("roleplaying")}>
-              <Link to="/search?genre=roleplaying">Roleplaying</Link>
+            <li onClick={() => handleGenreOptionClick("role-playing-games-rpg")}>
+              <Link to="/search?genre=role-playing-games-rpg">RPG</Link>
             </li>
-            <li onClick={() => handleClick("racing")}>
+            <li onClick={() => handleGenreOptionClick("racing")}>
               <Link to="/search?genre=racing">Racing</Link>
             </li>
+            <li onClick={() => handleGenreOptionClick("shooter")}>
+              <Link to="/search?genre=shooter">Shooter</Link>
+            </li>
+            <li onClick={() => handleGenreOptionClick("puzzle")}>
+              <Link to="/search?genre=puzzle">Puzzle</Link>
+            </li>
           </ul>
-      )}
-    </ul>
         </div>
       )}
     </div>

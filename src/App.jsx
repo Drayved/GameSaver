@@ -30,6 +30,9 @@ export default function App() {
   const [menuShowing, setMenuShowing] = useState(false)
   const [loading, setLoading] = useState(true)
   const [selectedOption, setSelectedOption] = useState("");
+  const [selectedSorting, setSelectedSorting] = useState("")
+  const [selectedGenre, setSelectedGenre] = useState("")
+  
   const apiKey = "10cab07048cb4f6591685d4bf79954bd";
 
 
@@ -107,7 +110,11 @@ export default function App() {
       setLoading,
       apiKey,
       selectedOption,
-      setSelectedOption
+      setSelectedOption,
+      selectedGenre,
+      setSelectedGenre,
+      selectedSorting,
+      setSelectedSorting
       }}>
         <RouterProvider router={router}>
           <Outlet />

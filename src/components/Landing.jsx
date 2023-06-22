@@ -5,7 +5,7 @@ import { AuthContext } from "../App";
 export default function Landing(){
     const navigate = useNavigate();
     
-    const {setGamesSearched, search, setSearch, signedIn, user, email, handleMenuClick} = useContext(AuthContext)
+    const {setGamesSearched, search, setSearch, signedIn, user, email, handleMenuClick, setSelectedGenre, setSelectedSorting} = useContext(AuthContext)
 
     function handleSearch() {
         navigate('/search');
@@ -19,6 +19,8 @@ export default function Landing(){
 
       useEffect(() => {
         setSearch(''); // Clear the search input when the page is loaded
+        setSelectedGenre('')
+        setSelectedSorting('')
       }, []);
 
     return(

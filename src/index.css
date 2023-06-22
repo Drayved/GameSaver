@@ -16,14 +16,6 @@ body{
   @apply w-10 cursor-pointer
 }
 
-.dropdown-menu{
-  @apply  absolute h-screen bg-gray-900 w-[20%] text-center text-white z-50
-}
-
-.dropdown-menu li{
-  @apply mb-20  cursor-pointer
-}
-
 .title{
   @apply mx-auto my-auto text-2xl pl-1 font-semibold  font-extrabold max-w-[50%] mx-auto text-transparent bg-clip-text bg-gradient-to-br from-cyan-400 to-green-600  drop-shadow-sm 
 }
@@ -84,13 +76,20 @@ body{
   @apply flex flex-col border mx-10 px-3 py-3
 }
 
+
+.dropdown-menu{
+  @apply  absolute h-[35%] bg-gray-900 w-[150px] text-center text-white z-50
+}
+
+.dropdown-menu li{
+  @apply   cursor-pointer my-2
+}
+
 .dropdown-list li:hover{
   @apply text-cyan-600
 }
 
-.genre-dropdown{
-  @apply flex flex-col items-center ml-[4rem] mt-[-120px] bg-gray-900  rounded-sm px-16 py-5 z-50
-}
+
 
 .genre-dropdown li{
   @apply mb-10
@@ -100,29 +99,7 @@ body{
   @apply text-cyan-600
 }
 
-@media(min-width: 530px){
-  .genre-dropdown{
-    @apply ml-[6rem]
-  }
-}
 
-@media(min-width: 650px){
-  .genre-dropdown{
-    @apply ml-[8rem]
-  }
-}
-
-@media(min-width: 825px){
-  .genre-dropdown{
-    @apply ml-[10rem]
-  }
-}
-
-@media(min-width: 980px){
-  .genre-dropdown{
-    @apply ml-[12rem]
-  }
-}
 /* Landing */
 
 .landing-container{

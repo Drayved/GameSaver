@@ -12,15 +12,27 @@ export default function GetGames() {
   const [totalPages, setTotalPages] = useState(1);
   const [gamesPerPage] = useState(3);
 
-  const { loading, setLoading, games, setGames, search, apiKey } = useContext(AuthContext);
+  const { loading, setLoading, games, setGames, search, apiKey, selectedGenre, selectedSorting } = useContext(AuthContext);
 
   const fetchGames = useCallback(
     async (page) => {
       try {
         setLoading(true);
-        const response = await fetch(
-          `https://api.rawg.io/api/games?key=${apiKey}&search=${search}&page=${page}`
-        );
+        let apiUrl = `https://api.rawg.io/api/games?key=${apiKey}&page=${page}`;
+        
+        if (search) {
+          apiUrl += `&search=${search}`;
+        }
+        
+        if (selectedSorting) {
+          apiUrl += `&ordering=${selectedSorting}`;
+        }
+        
+        if (selectedGenre) {
+          apiUrl += `&genres=${selectedGenre}`;
+        }
+        
+        const response = await fetch(apiUrl);
         const data = await response.json();
         console.log(data.results);
         setGames(data.results);
@@ -30,7 +42,7 @@ export default function GetGames() {
         setLoading(false);
       }
     },
-    [apiKey, search, setGames, setLoading]
+    [apiKey, search, selectedSorting, selectedGenre]
   );
 
   useEffect(() => {
