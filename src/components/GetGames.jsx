@@ -20,29 +20,29 @@ export default function GetGames() {
         setLoading(true);
         let apiUrl = `https://api.rawg.io/api/games?key=${apiKey}&page=${page}`;
         
-        if (search) {
+        if (search !== "") {
           apiUrl += `&search=${search}`;
         }
         
-        if (selectedSorting) {
-          apiUrl += `&ordering=${selectedSorting}`;
-        }
-        
         if (selectedGenre) {
-          apiUrl += `&genres=${selectedGenre}`;
+          apiUrl += `&genres=${selectedGenre}`
+          setCurrentPage(1)
         }
         
         const response = await fetch(apiUrl);
         const data = await response.json();
         console.log(data.results);
         setGames(data.results);
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000);
+        
       } catch (error) {
         console.log(error);
         setLoading(false);
       }
     },
-    [apiKey, search, selectedSorting, selectedGenre]
+    [apiKey, search, selectedGenre]
   );
 
   useEffect(() => {
@@ -68,7 +68,7 @@ export default function GetGames() {
 
   useEffect(() => {
     fetchGames(currentPage);
-  }, [currentPage, fetchGames]);
+  }, [currentPage, fetchGames, selectedGenre]);
 
   return (
     <div>

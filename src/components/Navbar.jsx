@@ -12,26 +12,21 @@ export default function Navbar() {
   const {
     search, 
     setSearch, 
-    selectedOption, 
-    setSelectedOption, 
-    fetchGames, 
     user, 
     setUser, 
     signedIn, 
     setSignedIn, 
     newUser, 
     setNewUser, 
-    menuShowing, 
     email, 
     setEmail, 
     password, 
-    setPassword, 
+    setPassword,
+    currentPage,
     showMenu, 
     handleMenuClick,      
     selectedGenre,
-    setSelectedGenre,
-    selectedSorting,
-    setSelectedSorting } = useContext(AuthContext);
+    setSelectedGenre, } = useContext(AuthContext);
 
   useEffect(() => {
     const auth = getAuth();
@@ -75,8 +70,7 @@ export default function Navbar() {
     try {
       let userCredential;
       let user;
-      let wantToPlayCollectionRef;
-      let playedGamesCollectionRef;
+
 
       if (newUser) {
         userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -130,36 +124,12 @@ export default function Navbar() {
     setShowDropdown((prevState) => !prevState);
   };
 
-  const toggleGenres = () => {
-    setShowGenres((prevState) => !prevState);
-  };
-
-  const handleSortingOptionClick = (option) => {
-    setSelectedSorting(option)
-    setSearch("")
-    setSelectedGenre("")
-    
-    setShowDropdown(false); // Hide the dropdown menu when an option is clicked
-    fetchGames(1);
-    console.log("handleSortingOptionClick called with option:", option);
-  };
-
   const handleGenreOptionClick = (genre) => {
     setSelectedGenre(genre)
-    setSelectedSorting("")
-    setSearch("")
-   
     setShowDropdown(false); // Hide the dropdown menu when an option is clicked
-    fetchGames(1);
+    setSearch("")
     console.log("handleGenreOptionClick called with genre:", genre);
   };
-
- 
-
-  useEffect(() => {
-    // Call fetchGames when the search state changes
-    fetchGames(1, selectedOption);
-  }, [search, selectedOption]);
 
   return (
     <div>

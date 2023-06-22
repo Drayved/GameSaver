@@ -36,7 +36,7 @@ export default function App() {
   const apiKey = "10cab07048cb4f6591685d4bf79954bd";
 
 
-  const fetchGames = async (page, option) => {
+  const fetchGames = async (page) => {
     try {
       let url = `https://api.rawg.io/api/games?key=${apiKey}&page=${page}&search=${search}`;
   
