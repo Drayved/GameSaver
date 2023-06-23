@@ -194,12 +194,12 @@ body{
 }
 
 @media(max-width: 380px){
-  .login-landing-text{
-    
-  }
-
   .search{
     @apply text-lg py-1 
+  }
+
+  .more-info-btn{
+    @apply ml-32
   }
 }
 
@@ -226,7 +226,7 @@ body{
 }
 
 .game-img{
-  @apply w-[50%] h-[130px] rounded-md shadow-sm shadow-gray-400
+  @apply w-[50%] h-[150px] rounded-md shadow-sm shadow-gray-400
 }
 
 .game-info{
@@ -267,12 +267,16 @@ body{
   @apply flex mb-2 flex-col
 }
 
+.more-info-container{
+  @apply mt-[-20px]
+}
+
 .more-info-btn{
-  @apply ml-52 italic text-blue-600 font-bold underline 
+  @apply ml-52 italic text-blue-600 font-bold underline mt-[-20px]
 }
 
 .list-btns{
-  @apply flex justify-around mt-6 text-white font-bold
+  @apply flex justify-around mt-[1.2rem] text-white font-bold
 }
 
 .want-btn,
@@ -371,16 +375,8 @@ body{
     }
 
     .list-btns{
-      @apply mt-7
+      @apply mt-7 
     }
-
-    .want-btn{
-    @apply mr-1
-  }
-
-  .played-btn{
-    @apply ml-1 
-  }
 }
 
 @media(max-width:400px){
@@ -458,12 +454,6 @@ body{
   }
 
 
-}
-
-@media(max-width:380px){
-  .more-info-btn{
-    @apply ml-32
-  }
 }
 
 @media(max-height:1100px){
