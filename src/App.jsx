@@ -7,7 +7,7 @@ import GetGames from "./components/GetGames";
 import Layout from "./components/Layout"
 import GamesSaved from "./components/GamesSaved";
 import GamesPlayed from "./components/GamesPlayed"
-import { process } from "/env"
+import { process } from "/env.js"
 
 
 export const AuthContext = createContext();
@@ -34,9 +34,6 @@ export default function App() {
   const [selectedSorting, setSelectedSorting] = useState("")
   const [selectedGenre, setSelectedGenre] = useState("")
   const [showDropdown, setShowDropdown] = useState(false);
-  
-  
-
   
   const apiKey = process.env.RAWG_API_KEY
 
