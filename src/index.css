@@ -214,7 +214,7 @@ body{
 }
 
 .games-card-container{
-  @apply w-[40%] max-w-[600px] min-w-[400px] flex flex-col  mx-auto mt-9
+  @apply w-[40%] max-w-[500px] min-w-[400px] flex flex-col  mx-auto mt-9
 }
 
 .games-card{
@@ -268,7 +268,7 @@ body{
 }
 
 .more-info-btn{
-  @apply ml-52 italic text-blue-600 font-bold underline
+  @apply ml-52 italic text-blue-600 font-bold underline 
 }
 
 .list-btns{
@@ -346,6 +346,13 @@ body{
 .sign-in-list{
   @apply text-center text-xl mt-10 text-cyan-600 font-semibold
 }
+
+@media(min-width: 1100px){
+  .more-info-btn{
+    @apply ml-[16rem]
+  }
+}
+
 @media(max-width: 420px){
     .body{
       @apply h-[700px]
@@ -422,7 +429,7 @@ body{
   }
 
   .more-info-btn{
-    @apply w-16 ml-0 ml-32 
+    @apply w-16  ml-36 
   }
 
   .page-displayed{
@@ -451,6 +458,12 @@ body{
   }
 
 
+}
+
+@media(max-width:380px){
+  .more-info-btn{
+    @apply ml-32
+  }
 }
 
 @media(max-height:1100px){
