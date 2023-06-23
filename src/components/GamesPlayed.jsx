@@ -24,7 +24,7 @@ export default function GamesPlayed() {
           setPlayedGames(playedGamesData);
 
           setGames(playedGamesData)
-          console.log("playedGames:", playedGamesData);
+          
         }
       } catch (error) {
         console.log("Error fetching games:", error);

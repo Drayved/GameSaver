@@ -7,6 +7,7 @@ import GetGames from "./components/GetGames";
 import Layout from "./components/Layout"
 import GamesSaved from "./components/GamesSaved";
 import GamesPlayed from "./components/GamesPlayed"
+import { process } from "/env"
 
 
 export const AuthContext = createContext();
@@ -32,34 +33,14 @@ export default function App() {
   const [selectedOption, setSelectedOption] = useState("");
   const [selectedSorting, setSelectedSorting] = useState("")
   const [selectedGenre, setSelectedGenre] = useState("")
+  const [showDropdown, setShowDropdown] = useState(false);
   
-  const apiKey = "10cab07048cb4f6591685d4bf79954bd";
-
-
-  const fetchGames = async (page) => {
-    try {
-      let url = `https://api.rawg.io/api/games?key=${apiKey}&page=${page}&search=${search}`;
   
-      if (option === "genres") {
-        url += `&genres=${selectedOption}`;
-        console.log(option)
-      } else if (option) {
-        url += `&ordering=${selectedOption}`;
-      }
-      // Include any additional options here
-      console.log('Making API request with URL:', url);
-      const response = await fetch(url);
-      const data = await response.json();
-      setGames(data.results);
 
-    } catch (error) {
-      console.log(error);
-      setLoading(false)
-    }
-  };
-  setTimeout(() => {
-    setLoading(false);
-  }, 2000); 
+  
+  const apiKey = process.env.RAWG_API_KEY
+
+
   const router = createBrowserRouter(
     createRoutesFromChildren(
       <Route path={"/"} element={<Layout />}>
@@ -80,7 +61,9 @@ export default function App() {
     setMenuShowing(!menuShowing)
 }
 
-
+const toggleDropdown = () => {
+  setShowDropdown((prevState) => !prevState);
+};
 
   return (
     <div>
@@ -105,7 +88,6 @@ export default function App() {
       setShowMenu,
       handleMenuClick,
       menuShowing,
-      fetchGames,
       loading,
       setLoading,
       apiKey,
@@ -114,7 +96,10 @@ export default function App() {
       selectedGenre,
       setSelectedGenre,
       selectedSorting,
-      setSelectedSorting
+      setSelectedSorting,
+      toggleDropdown,
+      showDropdown,
+      setShowDropdown
       }}>
         <RouterProvider router={router}>
           <Outlet />

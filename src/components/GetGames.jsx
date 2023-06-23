@@ -20,18 +20,18 @@ export default function GetGames() {
         setLoading(true);
         let apiUrl = `https://api.rawg.io/api/games?key=${apiKey}&page=${page}`;
         
-        if (search !== "") {
+        if (search) {
           apiUrl += `&search=${search}`;
         }
         
         if (selectedGenre) {
           apiUrl += `&genres=${selectedGenre}`
-          setCurrentPage(1)
         }
-        
+
+        console.log(selectedGenre)
         const response = await fetch(apiUrl);
         const data = await response.json();
-        console.log(data.results);
+       
         setGames(data.results);
         setTimeout(() => {
           setLoading(false);
@@ -42,7 +42,7 @@ export default function GetGames() {
         setLoading(false);
       }
     },
-    [apiKey, search, selectedGenre]
+    [setGames, currentPage, selectedGenre, search]
   );
 
   useEffect(() => {
@@ -52,11 +52,11 @@ export default function GetGames() {
           `https://api.rawg.io/api/games?key=${apiKey}&search=${search}`
         );
         const data = await response.json();
-        console.log(data.results);
+        
         const totalGames = data.count;
-        console.log("Total Games:", totalGames);
+        
         const calculatedTotalPages = Math.ceil(totalGames / gamesPerPage);
-        console.log("Calculated Total Pages:", calculatedTotalPages);
+       
         setTotalPages(calculatedTotalPages);
       } catch (error) {
         console.log(error);
@@ -68,7 +68,7 @@ export default function GetGames() {
 
   useEffect(() => {
     fetchGames(currentPage);
-  }, [currentPage, fetchGames, selectedGenre]);
+  }, [currentPage, selectedGenre]);
 
   return (
     <div>
@@ -81,7 +81,7 @@ export default function GetGames() {
           </div>
         ) : (
           <div>
-            <h1 className="results-title">Results for "{search}"</h1>
+            <h1 className="results-title">Results for "{search ? search : selectedGenre}"</h1>
             <GameCard
               games={games}
               currentPage={currentPage}

@@ -23,8 +23,7 @@ export default function GamesSaved() {
           setWantToPlay(wantToPlayGames)
           
           setGames(wantToPlayGames);
-          console.log("wantToPlayGames:", wantToPlayGames);
-          console.log(wantToPlayGames);
+
         }
       } catch (error) {
         console.log("Error fetching games:", error);

@@ -59,7 +59,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
         );
         fetchedGames = querySnapshot.docs.map((doc) => doc.data());
         setWantToPlayList(fetchedGames);
-        console.log("wanttoplaylist:", wantToPlayList)
+        
       } else {
         const querySnapshot = await getDocs(
           query
@@ -98,7 +98,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
           // Remove the game from the subcollection
           const gameDoc = querySnapshot.docs[0];
           await deleteDoc(gameDoc.ref);
-          console.log(`Game removed from the '${collectionName}' subcollection successfully.`);
+          
   
           // Update the local state based on the collection name
           if (collectionName === "playedGames") {
@@ -113,7 +113,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
         } else {
           // Add the game to the subcollection
           await addDoc(collectionRef, game);
-          console.log(`Game added to the '${collectionName}' subcollection successfully.`);
+          
   
           // Update the local state
           if (collectionName === "playedGames") {
@@ -155,7 +155,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
         if (gameDoc) {
           // Delete the game document from the subcollection
           await deleteDoc(gameDoc.ref);
-          console.log("Game deleted successfully!");
+          
   
           // Remove the game from the local state
           const remainingGames = games.filter((g) => g.id !== game.id);
@@ -189,7 +189,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
             const playedGamesQuerySnapshot = await getDocs(collection(userDocRef, "playedGames"));
             const playedGamesData = playedGamesQuerySnapshot.docs.map((doc) => doc.data());
             setPlayedGamesList(playedGamesData);
-            console.log("playedGames:", playedGamesData);
+            
           
         }
       } catch (error) {
@@ -210,7 +210,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
             const wantToPlayQuerySnapshot = await getDocs(collection(userDocRef, "wantToPlay"));
             const wantToPlayData = wantToPlayQuerySnapshot.docs.map((doc) => doc.data());
             setWantToPlayList(wantToPlayData);
-            console.log("wantToPlayList:", wantToPlayData);
+            
           
 
          

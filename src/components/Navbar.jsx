@@ -6,7 +6,7 @@ import { getFirestore, collection, addDoc, doc, setDoc } from "firebase/firestor
 import firebaseApp from "../../firebase";
 
 export default function Navbar() {
-  const [showDropdown, setShowDropdown] = useState(false);
+  
   const [showGenres, setShowGenres] = useState(false);
   
   const {
@@ -26,7 +26,11 @@ export default function Navbar() {
     showMenu, 
     handleMenuClick,      
     selectedGenre,
-    setSelectedGenre, } = useContext(AuthContext);
+    setSelectedGenre,
+    toggleDropdown,
+    showDropdown,
+    setShowDropdown
+   } = useContext(AuthContext);
 
   useEffect(() => {
     const auth = getAuth();
@@ -120,16 +124,15 @@ export default function Navbar() {
     }
   }
 
-  const toggleDropdown = () => {
-    setShowDropdown((prevState) => !prevState);
-  };
+
 
   const handleGenreOptionClick = (genre) => {
     setSelectedGenre(genre)
-    setShowDropdown(false); // Hide the dropdown menu when an option is clicked
+    setShowDropdown(false)
     setSearch("")
     console.log("handleGenreOptionClick called with genre:", genre);
   };
+  
 
   return (
     <div>

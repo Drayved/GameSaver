@@ -60,7 +60,7 @@ body{
 }
 
 .sign-out-btn:hover{
-  @apply text-gray-600
+  @apply text-cyan-600
 }
 
 .signed-in{
@@ -176,7 +176,7 @@ body{
 }
 
 .lets-play-img{
-  @apply w-20 mx-auto mt-5 
+  @apply w-20 mx-auto mt-5 cursor-pointer
 }
 
 @media(max-height: 800px){
