@@ -37,7 +37,7 @@ export default function App() {
   
   // const apiKey = process.env.RAWG_API_KEY
   
-  const apiKey = import.meta.env.VITE_RAWG_KEY
+  
 
 
   const router = createBrowserRouter(
@@ -89,7 +89,6 @@ const toggleDropdown = () => {
       menuShowing,
       loading,
       setLoading,
-      apiKey,
       selectedOption,
       setSelectedOption,
       selectedGenre,

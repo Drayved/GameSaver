@@ -12,7 +12,10 @@ export default function GetGames() {
   const [totalPages, setTotalPages] = useState(1);
   const [gamesPerPage] = useState(3);
 
-  const { loading, setLoading, games, setGames, search, apiKey, selectedGenre, selectedSorting } = useContext(AuthContext);
+
+  const { loading, setLoading, games, setGames, search, selectedGenre } = useContext(AuthContext);
+
+  const apiKey = import.meta.env.VITE_RAWG_KEY
 
   const fetchGames = useCallback(
     async (page) => {
