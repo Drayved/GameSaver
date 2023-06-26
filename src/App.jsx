@@ -8,7 +8,6 @@ import Layout from "./components/Layout"
 import GamesSaved from "./components/GamesSaved";
 import GamesPlayed from "./components/GamesPlayed"
 
-// import { process } from "/env.js"
 
 
 export const AuthContext = createContext();
