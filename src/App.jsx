@@ -7,6 +7,7 @@ import GetGames from "./components/GetGames";
 import Layout from "./components/Layout"
 import GamesSaved from "./components/GamesSaved";
 import GamesPlayed from "./components/GamesPlayed"
+
 // import { process } from "/env.js"
 
 
@@ -36,7 +37,8 @@ export default function App() {
   const [showDropdown, setShowDropdown] = useState(false);
   
   // const apiKey = process.env.RAWG_API_KEY
-  const apiKey = process.env.REACT_APP_API_KEY
+  
+  const apiKey = import.meta.env.VITE_RAWG_KEY
 
 
   const router = createBrowserRouter(
