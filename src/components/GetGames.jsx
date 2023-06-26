@@ -26,6 +26,7 @@ export default function GetGames() {
         
         if (selectedGenre) {
           apiUrl += `&genres=${selectedGenre}`
+          setCurrentPage(1)
         }
 
         console.log(selectedGenre)
