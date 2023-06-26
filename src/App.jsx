@@ -36,7 +36,7 @@ export default function App() {
   const [showDropdown, setShowDropdown] = useState(false);
   
   // const apiKey = process.env.RAWG_API_KEY
-  const apiKey = "10cab07048cb4f6591685d4bf79954bd"
+  const apiKey = process.env.REACT_APP_API_KEY
 
 
   const router = createBrowserRouter(
