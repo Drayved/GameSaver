@@ -16,6 +16,7 @@ export default function GetGames() {
   const { loading, setLoading, games, setGames, search, selectedGenre } = useContext(AuthContext);
 
   const apiKey = import.meta.env.VITE_RAWG_KEY
+  
 
   const fetchGames = useCallback(
     async (page) => {
