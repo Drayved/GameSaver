@@ -33,9 +33,9 @@ export default function GetGames() {
         const data = await response.json();
        
         setGames(data.results);
-        setTimeout(() => {
-          setLoading(false);
-        }, 2000);
+       
+        setLoading(false);
+        
         
       } catch (error) {
         console.log(error);
