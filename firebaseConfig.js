@@ -7,7 +7,7 @@ import { getAnalytics } from "firebase/analytics";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyCKJjSw1QLRIEXlTgv133O6VTRXR3ZU6aI",
+  apiKey: import.meta.env.VITE_FIREBASE_KEY,
   authDomain: "gamesaver-52467.firebaseapp.com",
   projectId: "gamesaver-52467",
   storageBucket: "gamesaver-52467.appspot.com",
