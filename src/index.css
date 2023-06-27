@@ -402,7 +402,7 @@ body{
   .want-btn,
   .played-btn,
   .remove-btn{
-    @apply w-28 text-xs mt-5 h-[26px] pb-0.5 mt-2.5
+    @apply w-28 text-xs mt-5 h-[26px] pb-0.5 mt-0
   }
 
   .played-btn{
@@ -419,7 +419,11 @@ body{
   }
 
   .game-details{
-    @apply flex mx-3
+    @apply flex mx-1
+  }
+
+  .game-release{
+    
   }
 
   .game-release{
@@ -427,7 +431,7 @@ body{
   }
 
   .more-info-container{
-    @apply mt-[-45px] ml-[-40px]
+    @apply  flex justify-center ml-[-45px]
   }
 
   .more-info-btn{

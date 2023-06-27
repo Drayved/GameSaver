@@ -18,57 +18,48 @@ export default function GetGames() {
   const apiKey = import.meta.env.VITE_RAWG_KEY
   
 
-  const fetchGames = useCallback(async (page) => {
-    try {
-      setLoading(true);
-      const apiUrl = 'http://localhost:8888/.netlify/functions/getGames';
-      const requestBody = {
-        search,
-        selectedGenre,
-        page,
-      };
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        body: JSON.stringify(requestBody),
-      });
-      const data = await response.json();
-      console.log(data)
-      setGames(data.results);
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-    }
-  }, [setGames, selectedGenre, search]);
-
   useEffect(() => {
-    const fetchTotalGames = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch(
-          'http://localhost:8888/.netlify/functions/getGames',
-          {
+        setLoading(true);
+        
+        const apiUrl = 'http://localhost:8888/.netlify/functions/getGames';
+        
+        const requestBody = {
+          search,
+          selectedGenre,
+        };
+        
+        const [totalGamesResponse, gamesResponse] = await Promise.all([
+          fetch(apiUrl, {
             method: 'POST',
-            body: JSON.stringify({ search, selectedGenre }),
-          }
-        );
-        const data = await response.json();
-
-        const totalGames = data.count;
-
+            body: JSON.stringify(requestBody),
+          }),
+          fetch(apiUrl, {
+            method: 'POST',
+            body: JSON.stringify({ ...requestBody, page: currentPage }),
+          }),
+        ]);
+        
+        const [totalGamesData, gamesData] = await Promise.all([
+          totalGamesResponse.json(),
+          gamesResponse.json(),
+        ]);
+  
+        const totalGames = totalGamesData.count;
         const calculatedTotalPages = Math.ceil(totalGames / gamesPerPage);
-
+  
         setTotalPages(calculatedTotalPages);
+        setGames(gamesData.results);
+        setLoading(false);
       } catch (error) {
         console.log(error);
+        setLoading(false);
       }
     };
-
-    fetchTotalGames();
-  }, [search, apiKey, gamesPerPage, setTotalPages]);
-
-  useEffect(() => {
-    fetchGames(currentPage);
-  }, [currentPage, selectedGenre]);
+  
+    fetchData();
+  }, [search, selectedGenre, currentPage, gamesPerPage, setTotalPages, setGames]);
 
   return (
     <div>
