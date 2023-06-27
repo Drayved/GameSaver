@@ -18,50 +18,45 @@ export default function GetGames() {
   const apiKey = import.meta.env.VITE_RAWG_KEY
   
 
-  const fetchGames = useCallback(
-    async (page) => {
-      try {
-        setLoading(true);
-        let apiUrl = `https://api.rawg.io/api/games?key=${apiKey}&page=${page}`;
-        
-        if (search) {
-          apiUrl += `&search=${search}`;
-        }
-        
-        if (selectedGenre) {
-          apiUrl += `&genres=${selectedGenre}`
-          setCurrentPage(1)
-        }
-
-        console.log(selectedGenre)
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-       
-        setGames(data.results);
-       
-        setLoading(false);
-        
-        
-      } catch (error) {
-        console.log(error);
-        setLoading(false);
-      }
-    },
-    [setGames, currentPage, selectedGenre, search]
-  );
+  const fetchGames = useCallback(async (page) => {
+    try {
+      setLoading(true);
+      const apiUrl = 'http://localhost:8888/.netlify/functions/getGames';
+      const requestBody = {
+        search,
+        selectedGenre,
+        page,
+      };
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+      });
+      const data = await response.json();
+      console.log(data)
+      setGames(data.results);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  }, [setGames, selectedGenre, search]);
 
   useEffect(() => {
     const fetchTotalGames = async () => {
       try {
         const response = await fetch(
-          `https://api.rawg.io/api/games?key=${apiKey}&search=${search}`
+          'http://localhost:8888/.netlify/functions/getGames',
+          {
+            method: 'POST',
+            body: JSON.stringify({ search, selectedGenre }),
+          }
         );
         const data = await response.json();
-        
+
         const totalGames = data.count;
-        
+
         const calculatedTotalPages = Math.ceil(totalGames / gamesPerPage);
-       
+
         setTotalPages(calculatedTotalPages);
       } catch (error) {
         console.log(error);
