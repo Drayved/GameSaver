@@ -1,19 +1,16 @@
-import fetch from 'node-fetch';
-
-export const handler = async (event) => {
+const handler = async function (event) {
   try {
-    const { search, selectedGenre, page } = JSON.parse(event.body);
-    const apiKey = process.env.VITE_RAWG_KEY;
-    console.log(apiKey);
+    const { search, genres } = event.queryStringParameters;
+    const apiKey = process.env.VITE_RAWG_KEY
 
-    let apiUrl = `https://api.rawg.io/api/games?key=${apiKey}&page=${page}`;
+    let apiUrl = `https://api.rawg.io/api/games?key=${apiKey}`;
 
     if (search) {
       apiUrl += `&search=${search}`;
     }
 
-    if (selectedGenre) {
-      apiUrl += `&genres=${selectedGenre}`;
+    if (genres) {
+      apiUrl += `&genres=${genres}`;
     }
 
     const response = await fetch(apiUrl);
@@ -28,8 +25,6 @@ export const handler = async (event) => {
       body: JSON.stringify(data),
     };
   } catch (error) {
-    console.log(error);
-
     return {
       statusCode: 500,
       headers: {
@@ -40,3 +35,5 @@ export const handler = async (event) => {
     };
   }
 };
+
+export { handler };

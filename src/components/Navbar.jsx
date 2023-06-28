@@ -9,8 +9,7 @@ export default function Navbar() {
   
   const [showGenres, setShowGenres] = useState(false);
   
-  const {
-    search, 
+  const { 
     setSearch, 
     user, 
     setUser, 
@@ -22,10 +21,8 @@ export default function Navbar() {
     setEmail, 
     password, 
     setPassword,
-    currentPage,
     showMenu, 
     handleMenuClick,      
-    selectedGenre,
     setSelectedGenre,
     toggleDropdown,
     showDropdown,

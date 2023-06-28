@@ -11,8 +11,13 @@
     "start": "set NODE_ENV=dev && node app.js"
   },
   "dependencies": {
+    "-": "^0.0.1",
+    "axios": "^1.4.0",
+    "cli": "^1.0.1",
     "dotenv": "^16.3.1",
     "firebase": "^9.22.2",
+    "g": "^2.0.1",
+    "netlify": "^13.1.9",
     "node-fetch": "^3.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -33,5 +38,18 @@
     "postcss": "^8.4.23",
     "tailwindcss": "^3.3.2",
     "vite": "^4.3.2"
-  }
+  },
+  "description": "GameSaver is a web application built with React, JavaScript, and Tailwind CSS. It leverages Firebase to provide a seamless experience for users to create accounts, log in, and save their favorite games to customized lists. The project aims to offer a convenient way for gamers to organize and track their gaming experiences across different devices.",
+  "main": "firebase.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Drayved/GameSaver.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Drayved/GameSaver/issues"
+  },
+  "homepage": "https://github.com/Drayved/GameSaver#readme"
 }

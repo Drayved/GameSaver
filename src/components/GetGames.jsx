@@ -12,58 +12,43 @@ export default function GetGames() {
   const [totalPages, setTotalPages] = useState(1);
   const [gamesPerPage] = useState(3);
 
-
   const { loading, setLoading, games, setGames, search, selectedGenre } = useContext(AuthContext);
 
-  const apiKey = import.meta.env.VITE_RAWG_KEY
-  
+  const fetchGames = useCallback(async () => {
+    try {
+      setLoading(true);
+      let apiUrl = `https://davids-gamesaver.netlify.app/.netlify/functions/fetchGames`;
+
+      if (search) {
+        apiUrl += `search=${search}`;
+      }
+
+      if (selectedGenre) {
+        apiUrl += `genres=${selectedGenre}`;
+        setCurrentPage(1);
+      }
+
+      const response = await fetch(apiUrl);
+      const data = await response.json();
+      console.log(data)
+      const totalGames = data.count;
+      const calculatedTotalPages = Math.ceil(totalGames / gamesPerPage);
+
+      setTotalPages(calculatedTotalPages);
+      setGames(data.results);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  }, [currentPage, gamesPerPage, search, selectedGenre, setLoading, setGames]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        
-        const apiUrl = 'http://localhost:8888/.netlify/functions/getGames';
-        
-        const requestBody = {
-          search,
-          selectedGenre,
-        };
-        
-        const [totalGamesResponse, gamesResponse] = await Promise.all([
-          fetch(apiUrl, {
-            method: 'POST',
-            body: JSON.stringify(requestBody),
-          }),
-          fetch(apiUrl, {
-            method: 'POST',
-            body: JSON.stringify({ ...requestBody, page: currentPage }),
-          }),
-        ]);
-        
-        const [totalGamesData, gamesData] = await Promise.all([
-          totalGamesResponse.json(),
-          gamesResponse.json(),
-        ]);
-  
-        const totalGames = totalGamesData.count;
-        const calculatedTotalPages = Math.ceil(totalGames / gamesPerPage);
-  
-        setTotalPages(calculatedTotalPages);
-        setGames(gamesData.results);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-        setLoading(false);
-      }
-    };
-  
-    fetchData();
-  }, [search, selectedGenre, currentPage, gamesPerPage, setTotalPages, setGames]);
+    fetchGames();
+  }, [fetchGames]);
 
   return (
     <div>
-      
       <div>
         {loading ? (
           <div className="loading-container">
