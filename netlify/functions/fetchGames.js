@@ -1,5 +1,3 @@
-const fetch = require('node-fetch');
-
 const handler = async function (event) {
   try {
     const { search, genres } = event.queryStringParameters;
