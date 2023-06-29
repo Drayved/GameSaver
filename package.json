@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "build:netlify": "npm run build && netlify deploy --prod",
+    "build": "vite build && netlify deploy --prod",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "start": "set NODE_ENV=dev && node app.js"
