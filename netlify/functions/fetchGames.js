@@ -1,7 +1,7 @@
 import fetch from 'node-fetch'
 
 export const handler = async (event) => {
-  try {
+  
     const { search, genres } = event.queryStringParameters;
     const apiKey = "10cab07048cb4f6591685d4bf79954bd";
 
@@ -26,14 +26,5 @@ export const handler = async (event) => {
       },
       body: JSON.stringify({data}),
     };
-  } catch (error) {
-    return {
-      statusCode: 500,
-      headers: {
-        'Access-Control-Allow-Origin': '*', // Allow requests from any origin
-        'Access-Control-Allow-Headers': 'Content-Type',
-      },
-      body: JSON.stringify({ error: 'Something went wrong' }),
-    };
-  }
+  
 }
