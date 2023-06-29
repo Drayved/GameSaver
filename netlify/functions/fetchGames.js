@@ -1,6 +1,22 @@
-const handler = async (event) => {
-  try {
 
+
+export const handler = async () => {
+  try {
+    const { search, genres } = event.queryStringParameters;
+    const apiKey = process.env.VITE_RAWG_KEY;
+
+    let apiUrl = `https://api.rawg.io/api/games?key=${apiKey}`;
+
+    if (search) {
+      apiUrl += `&search=${search}`;
+    }
+
+    if (genres) {
+      apiUrl += `&genres=${genres}`;
+    }
+
+    const response = await fetch(apiUrl);
+    const data = await response.json();
 
     return {
       statusCode: 200,
@@ -20,6 +36,4 @@ const handler = async (event) => {
       body: JSON.stringify({ error: 'Something went wrong' }),
     };
   }
-};
-
-module.exports = { handler };
+}
