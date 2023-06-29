@@ -1,6 +1,6 @@
 
 
-export default async function handler(event){
+export const handler = async (event) => {
   return {
 		statusCode: 200,
 		body: JSON.stringify({
