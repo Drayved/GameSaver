@@ -41,7 +41,7 @@ export default function GetGames() {
       console.log(error);
       setLoading(false);
     }
-  }, [currentPage, gamesPerPage, search, selectedGenre, setLoading, setGames]);
+  }, [ search, selectedGenre, setGames]);
 
   useEffect(() => {
     fetchGames();
