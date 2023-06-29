@@ -1,6 +1,6 @@
 
 
-export const handler = async () => {
+export const handler = async (event) => {
   try {
     const { search, genres } = event.queryStringParameters;
     const apiKey = process.env.VITE_RAWG_KEY;
