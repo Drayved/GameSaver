@@ -1,6 +1,6 @@
 
 
-export const handler = async (event) => {
+export default async function handler(event){
   try {
     const { search, genres } = event.queryStringParameters;
     const apiKey = "10cab07048cb4f6591685d4bf79954bd";
