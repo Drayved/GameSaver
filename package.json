@@ -9,7 +9,7 @@
     "deploy": "netlify deploy --prod",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "start": "set NODE_ENV=dev && node app.js"
+    "start": "netlify deploy --prod"
   },
   "dependencies": {
     "-": "^0.0.1",
