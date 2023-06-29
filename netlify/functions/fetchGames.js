@@ -24,7 +24,7 @@ export const handler = async (event) => {
         'Access-Control-Allow-Origin': '*', // Allow requests from any origin
         'Access-Control-Allow-Headers': 'Content-Type',
       },
-      body: JSON.stringify({data}),
+      body: JSON.stringify(data),
     };
   } catch (error) {
     return {

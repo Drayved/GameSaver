@@ -20,11 +20,11 @@ export default function GetGames() {
       let apiUrl = `https://davids-gamesaver.netlify.app/.netlify/functions/fetchGames?`;
 
       if (search) {
-        apiUrl += `search=${search}`;
+        apiUrl += `&search=${search}`;
       }
 
       if (selectedGenre) {
-        apiUrl += `genres=${selectedGenre}`;
+        apiUrl += `&genres=${selectedGenre}`;
         setCurrentPage(1);
       }
 
