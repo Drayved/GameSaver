@@ -2,18 +2,12 @@ import fetch from 'node-fetch'
 
 export const handler = async (event) => {
   
-    const { search, genres } = event.queryStringParameters;
+    
     const apiKey = "10cab07048cb4f6591685d4bf79954bd";
 
     const apiUrl = `https://api.rawg.io/api/games?key=${apiKey}`;
 
-    if (search) {
-      apiUrl += `&search=${search}`;
-    }
-
-    if (genres) {
-      apiUrl += `&genres=${genres}`;
-    }
+   
 
     const response = await fetch(apiUrl);
     const data = await response.json();
