@@ -20,6 +20,7 @@
     "g": "^2.0.1",
     "netlify": "^13.1.9",
     "node-fetch": "^3.3.1",
+    "node.js": "^0.0.1-security",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dotenv": "^0.1.3",
