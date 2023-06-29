@@ -1,7 +1,9 @@
-const handler = function (event) {
+const fetch = require('node-fetch');
+
+const handler = async function (event) {
   try {
     const { search, genres } = event.queryStringParameters;
-    const apiKey = process.env.VITE_RAWG_KEY
+    const apiKey = process.env.VITE_RAWG_KEY;
 
     let apiUrl = `https://api.rawg.io/api/games?key=${apiKey}`;
 
@@ -13,8 +15,8 @@ const handler = function (event) {
       apiUrl += `&genres=${genres}`;
     }
 
-    const response = fetch(apiUrl);
-    const data = response.json();
+    const response = await fetch(apiUrl);
+    const data = await response.json();
 
     return {
       statusCode: 200,
@@ -36,4 +38,4 @@ const handler = function (event) {
   }
 };
 
-export { handler };
+module.exports = { handler };
