@@ -427,7 +427,7 @@ body{
   }
 
   .game-release{
-    @apply mr-10
+    @apply mr-9
   }
 
   .more-info-container{
