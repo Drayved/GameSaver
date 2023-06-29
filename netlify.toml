@@ -1,2 +1,2 @@
 [build]
-functions = "davids-gamesaver.netlify.app/fetchGames"
+functions = "netlify/functions/fetchGames"
