@@ -1,2 +1,2 @@
 [build]
-functions = ".netlify/functions"
+functions = "https://app.netlify.com/sites/davids-gamesaver/functions"
