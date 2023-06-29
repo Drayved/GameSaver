@@ -410,7 +410,7 @@ body{
   }
 
   .list-btns{
-    @apply mx-auto w-fit mt-4
+    @apply mx-auto w-fit mt-1.5
   }
 
   .results-title,
@@ -431,7 +431,7 @@ body{
   }
 
   .more-info-container{
-    @apply  flex justify-center ml-[-160px] mt-[-10px]
+    @apply  flex justify-center ml-[-190px] mt-[-1px]
   }
 
   .more-info-btn{
