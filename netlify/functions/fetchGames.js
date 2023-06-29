@@ -18,8 +18,11 @@ export const handler = async (event) => {
 
     return {
       statusCode: 200,
-      
-      body: JSON.stringify(data),
+      headers: {
+        'Access-Control-Allow-Origin': '*', // Allow requests from any origin
+        'Access-Control-Allow-Headers': 'Content-Type',
+      },
+      body: JSON.stringify({data}),
     };
   } catch (error) {
     return {
