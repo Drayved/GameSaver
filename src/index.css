@@ -392,7 +392,7 @@ body{
   }
 
   .games-card{
-    @apply w-[95%] mx-auto min-h-[150px] py-4
+    @apply w-[95%] mx-auto min-h-[135px] py-4
   }
 
   .game-img{
