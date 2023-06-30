@@ -288,11 +288,11 @@ body{
 }
 
 .want-btn{
-  @apply bg-blue-600 
+  @apply bg-cyan-600 
 }
 
 .played-btn{
-  @apply bg-purple-600 
+  @apply bg-green-600 
 }
 
 .hide-on-hover{
