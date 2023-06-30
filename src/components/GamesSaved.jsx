@@ -24,6 +24,8 @@ export default function GamesSaved() {
           
           setGames(wantToPlayGames);
 
+          localStorage.setItem("savedGames", JSON.stringify(wantToPlayGames));
+
         }
       } catch (error) {
         console.log("Error fetching games:", error);
@@ -31,7 +33,15 @@ export default function GamesSaved() {
     };
 
     fetchWantToPlayGames();
-  }, []);
+  }, [user]);
+
+  useEffect(() => {
+    const storedSavedGames = localStorage.getItem("savedGames");
+    if (storedSavedGames) {
+      const parsedSavedGames = JSON.parse(storedSavedGames);
+      setWantToPlay(parsedSavedGames);
+    }
+  }, [])
 
   useEffect(() => {
     const calculatedTotalPages = Math.ceil(games.length / 3);

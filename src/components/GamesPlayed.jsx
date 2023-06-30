@@ -25,6 +25,7 @@ export default function GamesPlayed() {
 
           setGames(playedGamesData)
           
+          localStorage.setItem("playedGames", JSON.stringify(playedGamesData));
         }
       } catch (error) {
         console.log("Error fetching games:", error);
@@ -32,12 +33,22 @@ export default function GamesPlayed() {
     };
 
     fetchPlayedGames();
-  }, []);
+  }, [user]);
+
+  useEffect(() => {
+    const storedPlayedGames = localStorage.getItem("playedGames");
+    if (storedPlayedGames) {
+      const parsedPlayedGames = JSON.parse(storedPlayedGames);
+      setPlayedGames(parsedPlayedGames);
+    }
+  }, [])
 
   useEffect(() => {
     const calculatedTotalPages = Math.ceil(games.length / 3);
     setTotalPages(calculatedTotalPages);
   }, [games]);
+
+
 
   return (
     <div>
