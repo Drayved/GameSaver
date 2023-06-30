@@ -5,6 +5,7 @@
 html,
 body{
   font-family: 'Roboto', sans-serif;
+  @apply w-full
 }
 
 /* Navbar */
@@ -359,11 +360,12 @@ body{
   }
 }
 
-
-
-@media(max-width:400px){
+@media(max-width:420px){
+  .body{
+    @apply h-[700px]
+  }
   .games-card-container{
-    @apply h-[150px] text-xs 
+    @apply h-[150px] text-xs min-w-[95%]
   }
 
 
@@ -377,7 +379,7 @@ body{
   }
 
   .game-img{
-    @apply max-w-[49%]  h-[70px] ml-[-16px] mt-[-5px]
+    @apply max-w-[124px]  h-[70px] ml-[-16px] mt-[-5px]
   }
 
   .want-btn,
@@ -408,7 +410,7 @@ body{
   }
 
   .more-info-container{
-    @apply  relative right-[5.8rem]
+    @apply  relative right-[6.47rem]
   }
 
   .more-info-btn{
