@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCKJjSw1QLRIEXlTgv133O6VTRXR3ZU6aI",
+    apiKey: process.env.VITE_RAWG_KEY,
     authDomain: "gamesaver-52467.firebaseapp.com",
     projectId: "gamesaver-52467",
     storageBucket: "gamesaver-52467.appspot.com",
