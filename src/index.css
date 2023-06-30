@@ -359,27 +359,7 @@ body{
   }
 }
 
-@media(max-width: 420px){
-    .body{
-      @apply h-[700px]
-    }
 
-    .games-card-container{
-      @apply min-w-[95%] text-sm 
-    }
-
-    .game-release{
-      @apply mb-2
-    }
-
-    .game-img{
-      @apply w-[60%] 
-    }
-
-    .list-btns{
-      @apply mt-7 
-    }
-}
 
 @media(max-width:400px){
   .games-card-container{
