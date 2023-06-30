@@ -1,15 +1,15 @@
-import { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../App";
-import { getDocs, collection, doc } from "firebase/firestore";
-import GameCard from "./GameCard";
-import { db } from "../../firebase";
+import { useState, useEffect, useContext } from "react"
+import { AuthContext } from "../App"
+import { getDocs, collection, doc } from "firebase/firestore"
+import GameCard from "./GameCard"
+import { db } from "../../firebase"
 
 
 
 export default function GamesPlayed() {
-  const { games, setGames, signedIn, user,} = useContext(AuthContext);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const { games, setGames, signedIn, user,} = useContext(AuthContext)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
   const [playedGames, setPlayedGames] = useState([])
 
   
@@ -18,35 +18,35 @@ export default function GamesPlayed() {
     const fetchPlayedGames = async () => {
       try {
         if (user) {
-          const userDocRef = doc(db, "users", user.uid);
-          const playedGamesQuerySnapshot = await getDocs(collection(userDocRef, "playedGames"));
-          const playedGamesData = playedGamesQuerySnapshot.docs.map((doc) => doc.data());
-          setPlayedGames(playedGamesData);
+          const userDocRef = doc(db, "users", user.uid)
+          const playedGamesQuerySnapshot = await getDocs(collection(userDocRef, "playedGames"))
+          const playedGamesData = playedGamesQuerySnapshot.docs.map((doc) => doc.data())
+          setPlayedGames(playedGamesData)
 
           setGames(playedGamesData)
           
-          localStorage.setItem("playedGames", JSON.stringify(playedGamesData));
+          localStorage.setItem("playedGames", JSON.stringify(playedGamesData))
         }
       } catch (error) {
-        console.log("Error fetching games:", error);
+        console.log("Error fetching games:", error)
       }
-    };
+    }
 
-    fetchPlayedGames();
-  }, [user]);
+    fetchPlayedGames()
+  }, [user])
 
   useEffect(() => {
-    const storedPlayedGames = localStorage.getItem("playedGames");
+    const storedPlayedGames = localStorage.getItem("playedGames")
     if (storedPlayedGames) {
-      const parsedPlayedGames = JSON.parse(storedPlayedGames);
-      setPlayedGames(parsedPlayedGames);
+      const parsedPlayedGames = JSON.parse(storedPlayedGames)
+      setPlayedGames(parsedPlayedGames)
     }
   }, [])
 
   useEffect(() => {
-    const calculatedTotalPages = Math.ceil(games.length / 3);
-    setTotalPages(calculatedTotalPages);
-  }, [games]);
+    const calculatedTotalPages = Math.ceil(games.length / 3)
+    setTotalPages(calculatedTotalPages)
+  }, [games])
 
 
 

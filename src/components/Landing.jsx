@@ -1,28 +1,28 @@
 import { useState, useEffect, useContext} from 'react'
-import { useNavigate, Link } from 'react-router-dom';
-import { AuthContext } from "../App";
+import { useNavigate, Link } from 'react-router-dom'
+import { AuthContext } from "../App"
 
 export default function Landing(){
-    const navigate = useNavigate();
+    const navigate = useNavigate()
     
     const {setGamesSearched, search, setSearch, signedIn, user, email, handleMenuClick, setSelectedGenre, setSelectedSorting, toggleDropdown} = useContext(AuthContext)
 
     function handleSearch() {
-        navigate('/search');
-        setGamesSearched(true);
+        navigate('/search')
+        setGamesSearched(true)
         localStorage.setItem('search', search)
-        console.log(search);
+        console.log(search)
       }
 
       function handleInputChange(e) {
-        setSearch(e.target.value.toLowerCase());
+        setSearch(e.target.value.toLowerCase())
       }
 
       useEffect(() => {
-        setSearch(''); 
+        setSearch('') 
         setSelectedGenre('')
         setSelectedSorting('')
-      }, []);
+      }, [])
 
     return(
         <div className="landing-container">

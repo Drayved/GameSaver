@@ -1,13 +1,14 @@
-import React, { useState, useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { AuthContext } from "../App";
-import { getAuth, createUserWithEmailAndPassword, signOut, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
-import { getFirestore, collection, addDoc, doc, setDoc } from "firebase/firestore";
-import firebaseApp from "../../firebase";
+import React, { useState, useContext, useEffect } from "react"
+import { Link } from "react-router-dom"
+import { AuthContext } from "../App"
+import { getAuth, createUserWithEmailAndPassword, signOut, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth"
+import { getFirestore, collection, addDoc, doc, setDoc } from "firebase/firestore"
+import firebaseApp from "../../firebase"
 
 export default function Navbar() {
   
-  const [showGenres, setShowGenres] = useState(false);
+  const [showGenres, setShowGenres] = useState(false)
+  const [errorMessage, setErrorMessage] = useState("")
   
   const { 
     setSearch, 
@@ -28,97 +29,98 @@ export default function Navbar() {
     toggleDropdown,
     showDropdown,
     setShowDropdown
-   } = useContext(AuthContext);
+   } = useContext(AuthContext)
 
   useEffect(() => {
-    const auth = getAuth();
+    const auth = getAuth()
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        setSignedIn(true);
-        setUser(user);
+        setSignedIn(true)
+        setUser(user)
       } else {
-        setSignedIn(false);
-        setUser(null);
+        setSignedIn(false)
+        setUser(null)
       }
-    });
+    })
 
     // Clean up the listener
-    return () => unsubscribe();
-  }, [setUser]);
+    return () => unsubscribe()
+  }, [setUser])
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (showMenu && !event.target.closest(".navbar-container") && !event.target.closest(".dropdown-container")) {
-        handleMenuClick();
+        handleMenuClick()
       }
-    };
+    }
 
-    document.addEventListener("click", handleOutsideClick);
+    document.addEventListener("click", handleOutsideClick)
 
     return () => {
-      document.removeEventListener("click", handleOutsideClick);
-    };
-  }, [showMenu, handleMenuClick]);
+      document.removeEventListener("click", handleOutsideClick)
+    }
+  }, [showMenu, handleMenuClick])
 
   function handleNewUsers() {
-    setNewUser(!newUser);
+    setNewUser(!newUser)
   }
 
   async function handleAuthentication(event) {
-    event.preventDefault();
-    const auth = getAuth();
-    const db = getFirestore(firebaseApp); // Initialize Firestore
+    event.preventDefault()
+    const auth = getAuth()
+    const db = getFirestore(firebaseApp) // Initialize Firestore
 
     try {
-      let userCredential;
-      let user;
+      let userCredential
+      let user
 
 
       if (newUser) {
-        userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        user = userCredential.user;
-        setNewUser(false);
-        setUser(user.email);
-        console.log("User signed up!");
+        userCredential = await createUserWithEmailAndPassword(auth, email, password)
+        user = userCredential.user
+        setNewUser(false)
+        setUser(user.email)
+        console.log("User signed up!")
 
         // Retrieve the updated user object after setting the user
-        const updatedUser = auth.currentUser;
+        const updatedUser = auth.currentUser
 
         // Save user information to Firestore
-        const userDocRef = doc(db, "users", updatedUser.uid);
-        await addDoc(userDocRef, { email: updatedUser.email });
+        const userDocRef = doc(db, "users", updatedUser.uid)
+        await addDoc(userDocRef, { email: updatedUser.email })
 
-        await setDoc(userDocRef, { wantToPlay: {}, playedGames: {} });
+        await setDoc(userDocRef, { wantToPlay: {}, playedGames: {} })
       } else {
-        userCredential = await signInWithEmailAndPassword(auth, email, password);
-        user = userCredential.user; // Get the user object
-        setSignedIn(true);
-        setUser(user.email);
+        userCredential = await signInWithEmailAndPassword(auth, email, password)
+        user = userCredential.user // Get the user object
+        setSignedIn(true)
+        setUser(user.email)
 
-        const db = getFirestore(firebaseApp); // Initialize Firestore
+        const db = getFirestore(firebaseApp) // Initialize Firestore
 
         // Retrieve the updated user object after setting the user
-        const updatedUser = auth.currentUser;
+        const updatedUser = auth.currentUser
 
         // Retrieve the user document from Firestore
-        const userDocRef = doc(db, "users", updatedUser.uid); // Use the user UID to reference the document
+        const userDocRef = doc(db, "users", updatedUser.uid) // Use the user UID to reference the document
 
-        await setDoc(userDocRef, { wantToPlay: {}, playedGames: {} });
+        await setDoc(userDocRef, { wantToPlay: {}, playedGames: {} })
       }
-      window.location.reload();
+      window.location.reload()
     } catch (error) {
-      console.log("Error signing up:", error);
+      setErrorMessage("Invalid email or password.")
+      
     }
   }
 
   async function handleSignOut() {
-    const auth = getAuth();
+    const auth = getAuth()
     try {
-      await signOut(auth);
-      setSignedIn(false);
-      console.log("User signed out!");
+      await signOut(auth)
+      setSignedIn(false)
+      console.log("User signed out!")
     } catch (error) {
-      console.log("Error signing out:", error);
+      console.log("Error signing out:", error)
     }
   }
 
@@ -130,8 +132,8 @@ export default function Navbar() {
     setSearch("")
     localStorage.setItem('genre', selectedGenre)
     localStorage.setItem('search', "")
-    console.log("handleGenreOptionClick called with genre:", genre);
-  };
+    console.log("handleGenreOptionClick called with genre:", genre)
+  }
   
 
   return (
@@ -180,6 +182,7 @@ export default function Navbar() {
                     Sign In
                   </button>
                 )}
+                {errorMessage && <p className="error-message">{errorMessage}</p>}
               </form>
               <div className="new-user">
                 {newUser ? (
@@ -227,5 +230,5 @@ export default function Navbar() {
         </div>
       )}
     </div>
-  );
+  )
 }

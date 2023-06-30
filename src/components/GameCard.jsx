@@ -1,274 +1,274 @@
-import { useContext, useState, useEffect } from "react";
-import { AuthContext } from "../App";
-import { collection, doc, setDoc, deleteDoc, getDocs, where, query, addDoc } from "firebase/firestore";
-import { db } from "../../firebase";
+import { useContext, useState, useEffect } from "react"
+import { AuthContext } from "../App"
+import { collection, doc, setDoc, deleteDoc, getDocs, where, query, addDoc } from "firebase/firestore"
+import { db } from "../../firebase"
 import { useLocation } from "react-router-dom"
 
 export default function GameCard({ currentPage, setCurrentPage, totalPages, setTotalPages}) {
-  const { games, setGames, user } = useContext(AuthContext);
-  const startIndex = (currentPage - 1) * 3;
-  let endIndex = startIndex + 3;
-  const [displayedGames, setDisplayedGames] = useState([]);
-  const [wantToPlayList, setWantToPlayList] = useState([]);
-  const [playedGamesList, setPlayedGamesList] = useState([]);
-  const [isWantToPlayHovered, setIsWantToPlayHovered] = useState(false);
-  const [isPlayedGamesHovered, setIsPlayedGamesHovered] = useState(false);
-  const [hoveredButton, setHoveredButton] = useState(null);
+  const { games, setGames, user } = useContext(AuthContext)
+  const startIndex = (currentPage - 1) * 3
+  let endIndex = startIndex + 3
+  const [displayedGames, setDisplayedGames] = useState([])
+  const [wantToPlayList, setWantToPlayList] = useState([])
+  const [playedGamesList, setPlayedGamesList] = useState([])
+  const [isWantToPlayHovered, setIsWantToPlayHovered] = useState(false)
+  const [isPlayedGamesHovered, setIsPlayedGamesHovered] = useState(false)
+  const [hoveredButton, setHoveredButton] = useState(null)
   
 
   const location = useLocation()
 
-  const isGamesSavedPage = location.pathname === "/games-saved";
-  const isPlayedGamesPage = location.pathname === "/games-played";
-  const isSearchPage = location.pathname === "/search";
-  const [currentPageType, setCurrentPageType] = useState(isGamesSavedPage ? "saved" : "played");
+  const isGamesSavedPage = location.pathname === "/games-saved"
+  const isPlayedGamesPage = location.pathname === "/games-played"
+  const isSearchPage = location.pathname === "/search"
+  const [currentPageType, setCurrentPageType] = useState(isGamesSavedPage ? "saved" : "played")
 
 
 
 
   useEffect(() => {
     if (!isSearchPage) {
-      const updatedDisplayedGames = games.slice(startIndex, endIndex);
-      const remainingGames = games.filter((g) => g.id !== games.id);
+      const updatedDisplayedGames = games.slice(startIndex, endIndex)
+      const remainingGames = games.filter((g) => g.id !== games.id)
   
-      setDisplayedGames(updatedDisplayedGames);
+      setDisplayedGames(updatedDisplayedGames)
   
       if (remainingGames.length === 0 && currentPage > 1) {
-        setCurrentPage((prevPage) => prevPage - 1);
+        setCurrentPage((prevPage) => prevPage - 1)
        
       } else {
        
       }
     }
-  }, [games, startIndex, endIndex]);
+  }, [games, startIndex, endIndex])
 
   useEffect(() => {
-    const updatedDisplayedGames = games.slice(startIndex, endIndex);
-    setDisplayedGames(updatedDisplayedGames);
-  }, [endIndex]);
+    const updatedDisplayedGames = games.slice(startIndex, endIndex)
+    setDisplayedGames(updatedDisplayedGames)
+  }, [endIndex])
 
   const fetchGames = async () => {
     try {
-      let fetchedGames = [];
+      let fetchedGames = []
   
       if (currentPageType === "saved") {
         const querySnapshot = await getDocs(
           query
           (collection(db, "users", user.uid, "wantToPlay"), 
           where("played", "==", false))
-        );
-        fetchedGames = querySnapshot.docs.map((doc) => doc.data());
-        setWantToPlayList(fetchedGames);
+        )
+        fetchedGames = querySnapshot.docs.map((doc) => doc.data())
+        setWantToPlayList(fetchedGames)
         
       } else {
         const querySnapshot = await getDocs(
           query
           (collection(db, "users", user.uid, "playedGames"), 
           where("played", "==", true))
-        );
-        fetchedGames = querySnapshot.docs.map((doc) => doc.data());
-        setPlayedGamesList(fetchedGames);
+        )
+        fetchedGames = querySnapshot.docs.map((doc) => doc.data())
+        setPlayedGamesList(fetchedGames)
       }
   
       
       
     } catch (error) {
-      console.log("Error fetching games:", error);
+      console.log("Error fetching games:", error)
     }
-  };
+  }
 
   useEffect(() => {
       if (user) {
-        fetchGames();
+        fetchGames()
       }
-  }, [currentPageType]);
+  }, [currentPageType])
   
   const handleAddToCollection = async (event, game, collectionName) => {
-    event.stopPropagation();
+    event.stopPropagation()
     
     try {
       if (user) {
-        const collectionRef = collection(db, "users", user.uid, collectionName);
+        const collectionRef = collection(db, "users", user.uid, collectionName)
   
         // Check if the game already exists in the subcollection
-        const querySnapshot = await getDocs(query(collectionRef, where("id", "==", game.id)));
-        const gameExists = !querySnapshot.empty;
+        const querySnapshot = await getDocs(query(collectionRef, where("id", "==", game.id)))
+        const gameExists = !querySnapshot.empty
   
         if (gameExists) {
           // Remove the game from the subcollection
-          const gameDoc = querySnapshot.docs[0];
-          await deleteDoc(gameDoc.ref);
+          const gameDoc = querySnapshot.docs[0]
+          await deleteDoc(gameDoc.ref)
           
   
           // Update the local state based on the collection name
           if (collectionName === "playedGames") {
             setPlayedGamesList((prevPlayedGamesList) =>
               prevPlayedGamesList.filter((g) => g.id !== game.id)
-            );
+            )
           } else if (collectionName === "wantToPlay") {
             setWantToPlayList((prevWantToPlayList) =>
               prevWantToPlayList.filter((g) => g.id !== game.id)
-            );
+            )
           }
         } else {
           // Add the game to the subcollection
-          await addDoc(collectionRef, game);
+          await addDoc(collectionRef, game)
           
   
           // Update the local state
           if (collectionName === "playedGames") {
-            setPlayedGamesList((prevPlayedGamesList) => [...prevPlayedGamesList, game]);
+            setPlayedGamesList((prevPlayedGamesList) => [...prevPlayedGamesList, game])
           } else if (collectionName === "wantToPlay") {
-            setWantToPlayList((prevWantToPlayList) => [...prevWantToPlayList, game]);
+            setWantToPlayList((prevWantToPlayList) => [...prevWantToPlayList, game])
           }
         }
       } else {
-        console.log("User not authenticated.");
+        console.log("User not authenticated.")
       }
     } catch (error) {
-      console.log(`Error adding the game to the '${collectionName}' subcollection:`, error);
+      console.log(`Error adding the game to the '${collectionName}' subcollection:`, error)
     }
   
     if (!isSearchPage) {
-      handleDelete(game);
+      handleDelete(game)
     }
-  };
+  }
     
   const handleDelete = async (game, collectionRef = null) => {
     try {
       if (user) {
-        let gameDoc;
+        let gameDoc
   
         if (collectionRef) {
           const querySnapshot = await getDocs(
             query(collectionRef, where("id", "==", game.id))
-          );
-          gameDoc = querySnapshot.docs[0];
+          )
+          gameDoc = querySnapshot.docs[0]
         } else {
-          const collectionName = currentPageType === "saved" ? "wantToPlay" : "playedGames";
+          const collectionName = currentPageType === "saved" ? "wantToPlay" : "playedGames"
           const gameQuerySnapshot = await getDocs(
             query(collection(db, "users", user.uid, collectionName), where("id", "==", game.id))
-          );
-          gameDoc = gameQuerySnapshot.docs[0];
+          )
+          gameDoc = gameQuerySnapshot.docs[0]
         }
   
         if (gameDoc) {
           // Delete the game document from the subcollection
-          await deleteDoc(gameDoc.ref);
+          await deleteDoc(gameDoc.ref)
           
   
           // Remove the game from the local state
-          const remainingGames = games.filter((g) => g.id !== game.id);
-          setGames(remainingGames);
+          const remainingGames = games.filter((g) => g.id !== game.id)
+          setGames(remainingGames)
   
-          const remainingDisplayedGames = displayedGames.filter((g) => g.id !== game.id);
-          setDisplayedGames(remainingDisplayedGames);
+          const remainingDisplayedGames = displayedGames.filter((g) => g.id !== game.id)
+          setDisplayedGames(remainingDisplayedGames)
   
           if (remainingDisplayedGames.length === 0 && currentPage > 1) {
-            setCurrentPage((prevPage) => prevPage - 1); // Navigate to the previous page
+            setCurrentPage((prevPage) => prevPage - 1) // Navigate to the previous page
           }
         } else {
-          console.log("Game document not found in the subcollection.");
+          console.log("Game document not found in the subcollection.")
         }
       } else {
-        console.log("User not authenticated.");
+        console.log("User not authenticated.")
         // You can add logic to show a message or redirect the user to the sign-in page
       }
     } catch (error) {
-      console.log("Error deleting game:", error);
+      console.log("Error deleting game:", error)
     }
-  };
+  }
 
   useEffect(() => {
     const fetchPlayedGames = async () => {
       try {
         if (user) {
-          const userDocRef = doc(db, "users", user.uid);
+          const userDocRef = doc(db, "users", user.uid)
   
 
-            const playedGamesQuerySnapshot = await getDocs(collection(userDocRef, "playedGames"));
-            const playedGamesData = playedGamesQuerySnapshot.docs.map((doc) => doc.data());
-            setPlayedGamesList(playedGamesData);
+            const playedGamesQuerySnapshot = await getDocs(collection(userDocRef, "playedGames"))
+            const playedGamesData = playedGamesQuerySnapshot.docs.map((doc) => doc.data())
+            setPlayedGamesList(playedGamesData)
             
           
         }
       } catch (error) {
-        console.log("Error fetching games:", error);
+        console.log("Error fetching games:", error)
       }
-    };
+    }
   
-    fetchPlayedGames();
-  }, [user, currentPageType]);
+    fetchPlayedGames()
+  }, [user, currentPageType])
 
   useEffect(() => {
     const fetchWantToPlayGames = async () => {
       try {
         if (user) {
-          const userDocRef = doc(db, "users", user.uid);
+          const userDocRef = doc(db, "users", user.uid)
   
           
-            const wantToPlayQuerySnapshot = await getDocs(collection(userDocRef, "wantToPlay"));
-            const wantToPlayData = wantToPlayQuerySnapshot.docs.map((doc) => doc.data());
-            setWantToPlayList(wantToPlayData);
+            const wantToPlayQuerySnapshot = await getDocs(collection(userDocRef, "wantToPlay"))
+            const wantToPlayData = wantToPlayQuerySnapshot.docs.map((doc) => doc.data())
+            setWantToPlayList(wantToPlayData)
             
           
 
          
         }
       } catch (error) {
-        console.log("Error fetching games:", error);
+        console.log("Error fetching games:", error)
       }
-    };
+    }
   
-    fetchWantToPlayGames();
-  }, [user, currentPageType]);
+    fetchWantToPlayGames()
+  }, [user, currentPageType])
 
     const handlePreviousPage = () => {
       if (currentPage > 1) {
-        setCurrentPage((prevPage) => prevPage - 1);
+        setCurrentPage((prevPage) => prevPage - 1)
       }
-    };
+    }
   
     const handleNextPage = () => {
       if (currentPage < totalPages) {
-        setCurrentPage((prevPage) => prevPage + 1);
+        setCurrentPage((prevPage) => prevPage + 1)
       }
-    };
+    }
 
     const isGameAdded = (game, collectionName) => {
       if (collectionName === "wantToPlay") {
         return (
           wantToPlayList.length > 0 &&
           wantToPlayList.some((playedGame) => playedGame.id === game.id)
-        );
+        )
       } else if (collectionName === "playedGames") {
         return (
           playedGamesList.length > 0 &&
           playedGamesList.some((playedGame) => playedGame.id === game.id)
-        );
+        )
       }
-      return false;
-    };
+      return false
+    }
 
     const handleWantToPlayMouseEnter = (buttonId) => {
-      setIsWantToPlayHovered(true);
-      setHoveredButton(buttonId);
-    };
+      setIsWantToPlayHovered(true)
+      setHoveredButton(buttonId)
+    }
   
     const handleWantToPlayMouseLeave = () => {
-      setIsWantToPlayHovered(false);
-      setHoveredButton(null);
-    };
+      setIsWantToPlayHovered(false)
+      setHoveredButton(null)
+    }
   
     const handlePlayedGamesMouseEnter = (buttonId) => {
-      setIsPlayedGamesHovered(true);
-      setHoveredButton(buttonId);
-    };
+      setIsPlayedGamesHovered(true)
+      setHoveredButton(buttonId)
+    }
   
     const handlePlayedGamesMouseLeave = () => {
-      setIsPlayedGamesHovered(false);
-      setHoveredButton(null);
-    };
+      setIsPlayedGamesHovered(false)
+      setHoveredButton(null)
+    }
 
     const filteredGames = displayedGames.filter((game) => Object.keys(game).length > 0)
 

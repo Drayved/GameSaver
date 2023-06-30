@@ -33,15 +33,17 @@ body{
   @apply absolute left-12 top-2 bg-gray-900 font-bold
 }
 
-
+.error-message{
+  @apply text-red-800
+}
 
 .new-user{
-  @apply flex flex-col my-3 italic underline text-white
+  @apply flex flex-col my-3 italic underline text-gray-100
 }
 
 .sign-in-btn{
   @apply w-[100%] bg-cyan-600 mt-5 py-1 rounded-md border border-2 border-gray-500
-  text-white font-semibold
+  text-gray-100 font-semibold
 }
 
 .sign-up-btn{
@@ -53,7 +55,7 @@ body{
 }
 
 .signed-in-container{
-  @apply absolute right-1 bg-gray-900 w-52 text-white text-center rounded-md shadow-md shadow-gray-600 border-t-2 
+  @apply absolute right-1 bg-gray-900 w-52 text-gray-100 text-center rounded-md shadow-md shadow-gray-600 border-t-2 
 }
 
 .sign-out-btn{
@@ -70,7 +72,7 @@ body{
 
 .dropdown-container{
   @apply block absolute left-0 right-0 items-center bg-gray-900 w-[90%]
-  mx-auto rounded-2xl py-5 text-white mt-3 max-w-[1200px] z-50
+  mx-auto rounded-2xl py-5 text-gray-100 mt-3 max-w-[1200px] z-50
 }
 
 .dropdown-form{
@@ -79,7 +81,7 @@ body{
 
 
 .dropdown-menu{
-  @apply  absolute h-[440px] bg-gray-900 w-[150px] text-center text-white z-50
+  @apply  absolute h-[440px] bg-gray-900 w-[150px] text-center text-gray-100 z-50
 }
 
 .dropdown-menu li{
@@ -278,7 +280,7 @@ body{
 }
 
 .list-btns{
-  @apply flex justify-around mt-[1.2rem] text-white font-bold;
+  @apply flex justify-around mt-[1.2rem] text-gray-100 font-bold;
   
 }
 
@@ -475,7 +477,7 @@ body{
 
 
 .footer-btns{
-  @apply flex justify-around text-white
+  @apply flex justify-around text-gray-100
 }
 
 .games-played,

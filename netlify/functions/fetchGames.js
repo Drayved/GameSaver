@@ -2,21 +2,21 @@ import fetch from 'node-fetch'
 
 export const handler = async (event) => {
   try {
-    const { search, genres } = event.queryStringParameters;
-    const apiKey = process.env.VITE_RAWG_KEY;
+    const { search, genres } = event.queryStringParameters
+    const apiKey = process.env.VITE_RAWG_KEY
 
-    let apiUrl = `https://api.rawg.io/api/games?key=${apiKey}`;
+    let apiUrl = `https://api.rawg.io/api/games?key=${apiKey}`
 
     if (search) {
-      apiUrl += `&search=${search}`;
+      apiUrl += `&search=${search}`
     }
 
     if (genres) {
-      apiUrl += `&genres=${genres}`;
+      apiUrl += `&genres=${genres}`
     }
 
-    const response = await fetch(apiUrl);
-    const data = await response.json();
+    const response = await fetch(apiUrl)
+    const data = await response.json()
 
     return {
       statusCode: 200,
@@ -25,7 +25,7 @@ export const handler = async (event) => {
         'Access-Control-Allow-Headers': 'Content-Type',
       },
       body: JSON.stringify(data),
-    };
+    }
   } catch (error) {
     return {
       statusCode: 500,
@@ -34,6 +34,6 @@ export const handler = async (event) => {
         'Access-Control-Allow-Headers': 'Content-Type',
       },
       body: JSON.stringify({ error: 'Something went wrong' }),
-    };
+    }
   }
 }
