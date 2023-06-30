@@ -1,5 +1,5 @@
 import { useEffect, useState, createContext } from "react"
-import { createBrowserRouter, RouterProvider, Route, createRoutesFromChildren, Outlet, useLocation, Navigate, useNavigate } from "react-router-dom"
+import { createBrowserRouter, RouterProvider, Route, createRoutesFromChildren, Outlet, useLocation, Navigate, useNavigate} from "react-router-dom"
 import Landing from "./components/Landing"
 import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
@@ -7,23 +7,11 @@ import GetGames from "./components/GetGames"
 import Layout from "./components/Layout"
 import GamesSaved from "./components/GamesSaved"
 import GamesPlayed from "./components/GamesPlayed"
-
+import RefreshRedirect from "./components/RefreshRedirect";
 
 
 export const AuthContext = createContext()
 
-const NotFound = () => {
-  const location = useLocation()
-  console.log(`404: Page not found - ${location.pathname}`)
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    const navigateToLanding = () => navigate("/", { replace: true })
-    navigateToLanding()
-  }, [])
-
-  return null
-}
 
 export default function App() {
   const [gamesSearched, setGamesSearched] = useState(false)
@@ -43,6 +31,9 @@ export default function App() {
   const [showDropdown, setShowDropdown] = useState(false)
   
 
+
+  
+
   const router = createBrowserRouter(
     createRoutesFromChildren(
       <Route path={"/"} element={<Layout />}>
@@ -50,7 +41,7 @@ export default function App() {
         <Route path="/search" element={<GetGames />} />
         <Route path="/games-saved" element={<GamesSaved />}/>
         <Route path="/games-played" element={<GamesPlayed />}/>
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<RefreshRedirect />} />
         
       </Route>
     )
