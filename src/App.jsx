@@ -1,44 +1,40 @@
-import { useEffect, useState, createContext } from "react";
-import { createBrowserRouter, RouterProvider, Route, createRoutesFromChildren, Outlet, useLocation, Navigate } from "react-router-dom";
-import Landing from "./components/Landing";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import GetGames from "./components/GetGames";
+import { useEffect, useState, createContext } from "react"
+import { createBrowserRouter, RouterProvider, Route, createRoutesFromChildren, Outlet, useLocation, Navigate } from "react-router-dom"
+import Landing from "./components/Landing"
+import Navbar from "./components/Navbar"
+import Footer from "./components/Footer"
+import GetGames from "./components/GetGames"
 import Layout from "./components/Layout"
-import GamesSaved from "./components/GamesSaved";
+import GamesSaved from "./components/GamesSaved"
 import GamesPlayed from "./components/GamesPlayed"
 
 
 
-export const AuthContext = createContext();
+export const AuthContext = createContext()
 
 const NotFound = () => {
-  const location = useLocation();
-  console.log(`404: Page not found - ${location.pathname}`);
-  return <Navigate to="/" />;
-};
+  const location = useLocation()
+  console.log(`404: Page not found - ${location.pathname}`)
+  return <Navigate to="/" />
+}
 
 export default function App() {
-  const [gamesSearched, setGamesSearched] = useState(false);
+  const [gamesSearched, setGamesSearched] = useState(false)
   const [search, setSearch] = useState("")
   const [user, setUser] = useState(null)
   const [games, setGames] = useState([])
-  const [signedIn, setSignedIn] = useState(false);
-  const [newUser, setNewUser] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showMenu, setShowMenu] = useState(false);
+  const [signedIn, setSignedIn] = useState(false)
+  const [newUser, setNewUser] = useState(false)
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [showMenu, setShowMenu] = useState(false)
   const [menuShowing, setMenuShowing] = useState(false)
   const [loading, setLoading] = useState(true)
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOption, setSelectedOption] = useState("")
   const [selectedSorting, setSelectedSorting] = useState("")
   const [selectedGenre, setSelectedGenre] = useState("")
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false)
   
-  // const apiKey = process.env.RAWG_API_KEY
-  
-  
-
 
   const router = createBrowserRouter(
     createRoutesFromChildren(
@@ -47,22 +43,22 @@ export default function App() {
         <Route path="/search" element={<GetGames />} />
         <Route path="/games-saved" element={<GamesSaved />}/>
         <Route path="/games-played" element={<GamesPlayed />}/>
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<Landing />} />
         
       </Route>
     )
-  );
+  )
 
 
 
   function handleMenuClick() {
-    setShowMenu(!showMenu);
+    setShowMenu(!showMenu)
     setMenuShowing(!menuShowing)
 }
 
 const toggleDropdown = () => {
-  setShowDropdown((prevState) => !prevState);
-};
+  setShowDropdown((prevState) => !prevState)
+}
 
   return (
     <div>
@@ -105,5 +101,5 @@ const toggleDropdown = () => {
       </AuthContext.Provider>
       
     </div>
-  );
+  )
 }
