@@ -236,7 +236,7 @@ body{
 }
 
 .page-container{
-  @apply flex justify-center mt-[-20px] text-gray-700
+  @apply flex justify-center mt-[-20px] text-gray-700 mr-5
 }
 
 .page-top{
@@ -418,7 +418,7 @@ body{
   }
 
   .page-displayed{
-    @apply  mt-[-16px] ml-5
+    @apply  mt-[-16px]
   }
 
   .page-bottom{
