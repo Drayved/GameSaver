@@ -13,6 +13,7 @@ import RefreshRedirect from "./components/RefreshRedirect";
 export const AuthContext = createContext()
 
 
+
 export default function App() {
   const [gamesSearched, setGamesSearched] = useState(false)
   const [search, setSearch] = useState("")
@@ -58,8 +59,11 @@ const toggleDropdown = () => {
   setShowDropdown((prevState) => !prevState)
 }
 
+
+
   return (
     <div>
+       
       <AuthContext.Provider 
       value={{games, 
       setGames, 

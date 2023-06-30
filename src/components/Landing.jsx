@@ -10,6 +10,7 @@ export default function Landing(){
     function handleSearch() {
         navigate('/search');
         setGamesSearched(true);
+        localStorage.setItem('search', search)
         console.log(search);
       }
 
@@ -18,7 +19,7 @@ export default function Landing(){
       }
 
       useEffect(() => {
-        setSearch(''); // Clear the search input when the page is loaded
+        setSearch(''); 
         setSelectedGenre('')
         setSelectedSorting('')
       }, []);

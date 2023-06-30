@@ -1,19 +1,36 @@
 import { useEffect } from "react";
-import { useNavigate, Router } from "react-router-dom";
+import { useNavigate, Router, useLocation, Navigate } from "react-router-dom";
 
 const RefreshRedirect = () => {
-  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    navigate("/");
-  }, [navigate]);
+    const handleBeforeUnload = (event) => {
+      event.preventDefault();
+      event.returnValue = "";
+    };
 
-  return (
-    <Router>
-      
-      <div>Redirecting...</div>
-    </Router>
-  );
-};
+    const handleUnload = () => {
+      sessionStorage.setItem("refreshed", "true");
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener("unload", handleUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener("unload", handleUnload);
+    };
+  }, []);
+
+  useEffect(() => {
+    const refreshed = sessionStorage.getItem("refreshed");
+    if (refreshed === "true" && location.pathname !== "/") {
+      window.location.href = "/";
+    }
+  }, [location]);
+
+  return null;
+}
 
 export default RefreshRedirect;
