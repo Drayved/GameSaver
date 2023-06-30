@@ -440,9 +440,6 @@ body{
     @apply mt-[25px]
   }
 
-  .game-details{
-    @apply mt-2
-  }
 
 }
 

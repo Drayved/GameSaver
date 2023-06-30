@@ -290,7 +290,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
                 </div>
                 <div className="game-genres">
                   <p>Genres:</p>
-                  <p className="genres"> {game.genres.map((genre) => genre.name.slice(0, 15)).slice(0, 2).join(", ")}</p>
+                  <p className="genres"> {game.genres.map((genre) => genre.name).slice(0, 2).join(", ")}</p>
                 </div>
                 
               </div>
