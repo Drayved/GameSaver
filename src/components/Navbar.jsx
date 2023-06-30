@@ -22,7 +22,8 @@ export default function Navbar() {
     password, 
     setPassword,
     showMenu, 
-    handleMenuClick,      
+    handleMenuClick,
+    selectedGenre,      
     setSelectedGenre,
     toggleDropdown,
     showDropdown,
@@ -127,6 +128,8 @@ export default function Navbar() {
     setSelectedGenre(genre)
     setShowDropdown(false)
     setSearch("")
+    localStorage.setItem('genre', selectedGenre)
+    localStorage.setItem('search', "")
     console.log("handleGenreOptionClick called with genre:", genre);
   };
   

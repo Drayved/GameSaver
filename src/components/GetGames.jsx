@@ -13,20 +13,34 @@ export default function GetGames() {
   const [gamesPerPage] = useState(3);
 
   const { loading, setLoading, games, setGames, search, selectedGenre } = useContext(AuthContext);
+  const searchQuery = localStorage.getItem("search") || "";
+  const genreQuery = localStorage.getItem("genre") || "";
 
   const fetchGames = useCallback(async () => {
     try {
       setLoading(true);
       let apiUrl = `https://davids-gamesaver.netlify.app/.netlify/functions/fetchGames?`;
+      
 
-      if (search) {
+
+      if (searchQuery){
+        apiUrl += `&search=${searchQuery}`
+        
+      }else if (search) {
         apiUrl += `&search=${search}`;
+        localStorage.setItem("seach", search)
       }
+
 
       if (selectedGenre) {
         apiUrl += `&genres=${selectedGenre}`;
+        localStorage.setItem("genre", selectedGenre)
         setCurrentPage(1);
-      }
+      } else if (genreQuery){
+          apiUrl += `&genres=${genreQuery}`
+          setCurrentPage(1)
+      } 
+     
 
       const response = await fetch(apiUrl);
       const data = await response.json();
@@ -57,7 +71,7 @@ export default function GetGames() {
           </div>
         ) : (
           <div>
-            <h1 className="results-title">Results for "{search ? search : selectedGenre}"</h1>
+            <h1 className="results-title">Results for "{search || selectedGenre || searchQuery || genreQuery}"</h1>
             <GameCard
               games={games}
               currentPage={currentPage}
