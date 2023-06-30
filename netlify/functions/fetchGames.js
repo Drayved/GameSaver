@@ -3,7 +3,7 @@ import fetch from 'node-fetch'
 export const handler = async (event) => {
   try {
     const { search, genres } = event.queryStringParameters;
-    const apiKey = "10cab07048cb4f6591685d4bf79954bd";
+    const apiKey = process.env.VITE_RAWG_KEY;
 
     let apiUrl = `https://api.rawg.io/api/games?key=${apiKey}`;
 
