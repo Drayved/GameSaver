@@ -396,21 +396,17 @@ body{
   }
 
   .game-img{
-    @apply w-[49%]  h-[70px] ml-[-16px] mt-[-5px]
+    @apply max-w-[49%]  h-[70px] ml-[-16px] mt-[-5px]
   }
 
   .want-btn,
   .played-btn,
   .remove-btn{
-    @apply w-28 text-xs h-[26px] pb-0.5 mt-0
-  }
-
-  .played-btn{
-    @apply ml-10
+    @apply w-28 text-xs h-[26px] pb-0.5 mt-0 
   }
 
   .list-btns{
-    @apply mx-auto w-fit mt-1.5
+    @apply mx-auto w-fit mt-1.5 gap-12
   }
 
   .results-title,
@@ -431,7 +427,7 @@ body{
   }
 
   .more-info-container{
-    @apply  flex justify-center ml-[-190px] mt-[-1px]
+    @apply  absolute right-32
   }
 
   .more-info-btn{
