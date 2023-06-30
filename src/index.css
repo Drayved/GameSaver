@@ -373,7 +373,7 @@ body{
   }
 
   .games-card{
-    @apply w-[95%] mx-auto min-h-[135px] py-4
+    @apply  mx-auto min-h-[135px] py-4
   }
 
   .game-img{
@@ -387,7 +387,7 @@ body{
   }
 
   .list-btns{
-    @apply mx-auto w-fit mt-1.5 gap-12
+    @apply mx-auto w-fit mt-2.5 gap-12
   }
 
   .results-title,
@@ -408,7 +408,7 @@ body{
   }
 
   .more-info-container{
-    @apply  relative right-[3.75rem]
+    @apply  relative right-[5.8rem]
   }
 
   .more-info-btn{
