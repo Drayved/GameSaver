@@ -184,13 +184,9 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
       try {
         if (user) {
           const userDocRef = doc(db, "users", user.uid)
-  
-
             const playedGamesQuerySnapshot = await getDocs(collection(userDocRef, "playedGames"))
             const playedGamesData = playedGamesQuerySnapshot.docs.map((doc) => doc.data())
             setPlayedGamesList(playedGamesData)
-            
-          
         }
       } catch (error) {
         console.log("Error fetching games:", error)
@@ -205,15 +201,9 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
       try {
         if (user) {
           const userDocRef = doc(db, "users", user.uid)
-  
-          
             const wantToPlayQuerySnapshot = await getDocs(collection(userDocRef, "wantToPlay"))
             const wantToPlayData = wantToPlayQuerySnapshot.docs.map((doc) => doc.data())
-            setWantToPlayList(wantToPlayData)
-            
-          
-
-         
+            setWantToPlayList(wantToPlayData)  
         }
       } catch (error) {
         console.log("Error fetching games:", error)

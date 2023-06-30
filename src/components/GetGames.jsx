@@ -21,11 +21,10 @@ export default function GetGames() {
       setLoading(true)
       let apiUrl = `https://davids-gamesaver.netlify.app/.netlify/functions/fetchGames?`
       
-
+      
 
       if (searchQuery){
         apiUrl += `&search=${searchQuery}`
-        
       }else if (search) {
         apiUrl += `&search=${search}`
         localStorage.setItem("seach", search)
@@ -41,6 +40,7 @@ export default function GetGames() {
           setCurrentPage(1)
       } 
      
+      
 
       const response = await fetch(apiUrl)
       const data = await response.json()
