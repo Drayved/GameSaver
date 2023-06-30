@@ -8,14 +8,14 @@ import Navbar from "./Navbar";
 const db = getFirestore(firebaseApp);
 
 export default function GetGames() {
-  
+  const storedSearchQuery = localStorage.getItem("search") || ""
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [gamesPerPage] = useState(3);
 
   const { loading, setLoading, games, setGames, search, selectedGenre } = useContext(AuthContext);
 
-  const storedSearchQuery = localStorage.getItem("search") || ""
+  
 
   const fetchGames = useCallback(async () => {
     try {
