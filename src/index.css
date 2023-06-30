@@ -408,7 +408,7 @@ body{
   }
 
   .more-info-container{
-    @apply  absolute right-32
+    @apply  relative right-[3.75rem]
   }
 
   .more-info-btn{
