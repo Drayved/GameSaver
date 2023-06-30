@@ -221,7 +221,7 @@ body{
 }
 
 .games-card{
-  @apply shadow-sm shadow-gray-300 p-5 mb-12 h-[270px] rounded-md;
+  @apply shadow-sm shadow-gray-300 py-5 px-2 pl-5 mb-12 h-[270px] rounded-md;
   background: linear-gradient(to bottom, #92fbfb, #fafbfa);
 }
 
@@ -367,7 +367,7 @@ body{
     @apply h-[700px]
   }
   .games-card-container{
-    @apply h-[150px] text-xs min-w-[95%]
+    @apply h-[150px] text-xs min-w-[100%]
   }
 
 
@@ -377,7 +377,7 @@ body{
   }
 
   .games-card{
-    @apply  mx-auto min-h-[135px] py-4
+    @apply  mx-auto min-h-[135px] py-4 max-w-[310px]
   }
 
   .game-img{
@@ -400,7 +400,7 @@ body{
   }
 
   .game-details{
-    @apply flex mx-1
+    @apply flex mx-1 p-0
   }
 
   .game-release{
@@ -454,8 +454,6 @@ body{
   .games-card-container{
     @apply mt-2 
   }
-
- 
 
   .page-bottom{
     @apply mt-2 
