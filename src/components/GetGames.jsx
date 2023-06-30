@@ -8,26 +8,20 @@ import Navbar from "./Navbar";
 const db = getFirestore(firebaseApp);
 
 export default function GetGames() {
-  const storedSearchQuery = localStorage.getItem("search") || ""
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [gamesPerPage] = useState(3);
 
   const { loading, setLoading, games, setGames, search, selectedGenre } = useContext(AuthContext);
 
-  
-
   const fetchGames = useCallback(async () => {
     try {
       setLoading(true);
       let apiUrl = `https://davids-gamesaver.netlify.app/.netlify/functions/fetchGames?`;
 
-      if (storedSearchQuery) {
-        apiUrl += `&search=${storedSearchQuery}`; // Use the stored search query if it exists
-      }else if (search) {
+      if (search) {
         apiUrl += `&search=${search}`;
       }
-      
 
       if (selectedGenre) {
         apiUrl += `&genres=${selectedGenre}`;
@@ -53,8 +47,6 @@ export default function GetGames() {
     fetchGames();
   }, [fetchGames]);
 
-
-
   return (
     <div>
       <div>
@@ -65,7 +57,7 @@ export default function GetGames() {
           </div>
         ) : (
           <div>
-            <h1 className="results-title">Results for "{storedSearchQuery || search || selectedGenre}"</h1>
+            <h1 className="results-title">Results for "{search ? search : selectedGenre}"</h1>
             <GameCard
               games={games}
               currentPage={currentPage}
