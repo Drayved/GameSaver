@@ -158,11 +158,11 @@ body{
 }
 
 .login-landing-container {
-  @apply h-[100%] flex items-center justify-center
+  @apply h-[100%] flex items-center justify-center 
 }
 
 .login-landing{
-  @apply  mx-auto w-44 mt-10 
+  @apply  mx-auto w-44 mt-10 cursor-pointer
 }
 
 .login-landing-content {

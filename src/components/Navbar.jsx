@@ -47,19 +47,19 @@ export default function Navbar() {
     return () => unsubscribe()
   }, [setUser])
 
-  useEffect(() => {
-    const handleOutsideClick = (event) => {
-      if (showMenu && !event.target.closest(".navbar-container") && !event.target.closest(".dropdown-container")) {
-        handleMenuClick()
-      }
-    }
+  // useEffect(() => {
+  //   const handleOutsideClick = (event) => {
+  //     if (showMenu && !event.target.closest(".navbar-container") && !event.target.closest(".dropdown-container")) {
+  //       handleMenuClick()
+  //     }
+  //   }
 
-    document.addEventListener("click", handleOutsideClick)
+  //   document.addEventListener("click", handleOutsideClick)
 
-    return () => {
-      document.removeEventListener("click", handleOutsideClick)
-    }
-  }, [showMenu, handleMenuClick])
+  //   return () => {
+  //     document.removeEventListener("click", handleOutsideClick)
+  //   }
+  // }, [showMenu, handleMenuClick])
 
   function handleNewUsers() {
     setNewUser(!newUser)

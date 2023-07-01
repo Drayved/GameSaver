@@ -95,7 +95,7 @@ const toggleDropdown = () => {
       setSelectedSorting,
       toggleDropdown,
       showDropdown,
-      setShowDropdown
+      setShowDropdown,
       }}>
         <RouterProvider router={router}>
           <Outlet />
