@@ -435,9 +435,7 @@ body{
     @apply text-lg py-1 
   }
 
-  .more-info-btn{
-    @apply ml-32
-  }
+
 }
 
 @media(max-width:420px){
