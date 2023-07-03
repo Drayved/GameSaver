@@ -431,9 +431,7 @@ body{
 }
 
 @media(max-width: 380px){
-  .search{
-    @apply text-lg py-1 
-  }
+
 
 
 }
@@ -444,6 +442,10 @@ body{
   }
   .games-card-container{
     @apply h-[150px] text-xs min-w-[100%]
+  }
+
+  .search{
+    @apply text-lg py-1 
   }
 
   .genres,
