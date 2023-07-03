@@ -182,6 +182,38 @@ body{
   @apply w-20 mx-auto mt-5 cursor-pointer
 }
 
+@media(max-height: 650px){
+  .list-btns-landing{
+    @apply mb-5
+  }
+
+  .login-landing{
+    @apply mt-2
+  }
+
+  .find-games-container{
+    @apply mb-0
+  }
+
+  .search-container{
+    @apply mt-[-1rem]
+  }
+
+  .save-games-container{
+    @apply mt-[-1rem]
+  }
+
+  .bottom-landing{
+    @apply mt-[-1.2rem]
+  }
+
+  .lets-play-img{
+    @apply mt-2
+  }
+
+
+}
+
 @media(max-height: 800px){
   .landing-container{
     @apply mt-2

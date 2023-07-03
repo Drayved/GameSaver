@@ -64,7 +64,7 @@ export default function Landing(){
             
             <div>
             {!signedIn ?
-                <div>
+                <div className='bottom-landing'>
                     <h1 className="sign-in-text">Sign in to access your list on any device!</h1>
                     <div className='login-landing-container'>
                         <div className='login-landing-content'>
@@ -74,7 +74,7 @@ export default function Landing(){
                     </div>
                 </div>
                 : 
-                <div>
+                <div className='bottom-landing'>
                     <h1 className='sign-in-text'>signed in as:</h1>
                     <div className='lets-play-container'>
                         <p>{user.email ? user.email : email}</p>
