@@ -430,15 +430,9 @@ body{
   
 }
 
-@media(max-width: 380px){
-
-
-
-}
-
 @media(max-width:420px){
   .body{
-    @apply h-[700px]
+    @apply h-[650px]
   }
   .games-card-container{
     @apply h-[150px] text-xs min-w-[100%]
@@ -454,7 +448,7 @@ body{
   }
 
   .games-card{
-    @apply  mx-auto min-h-[135px] py-4 max-w-[310px]
+    @apply  mx-auto min-h-[130px] py-3 max-w-[310px]
   }
 
   .game-img{
@@ -473,7 +467,7 @@ body{
 
   .results-title,
   .game-list-title{
-    @apply text-lg mb-0 mt-2
+    @apply text-lg mb-0 mt-1
   }
 
   .game-details{
@@ -497,12 +491,12 @@ body{
   }
 
   .page-bottom{
-    @apply pb-5 
+    @apply pb-4 
   }
 
   .prev-page,
   .next-page{
-    @apply mt-[-10px]
+    @apply mt-[-1rem]
   }
 
   .page-dash{
@@ -510,7 +504,7 @@ body{
   }
 
   .page-container{
-    @apply mt-[0.4rem]
+    @apply mt-[0.3rem]
   }
 }
 
