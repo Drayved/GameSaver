@@ -27,7 +27,7 @@ GameSaver utilizes the RAWG.io API to fetch game information, including titles, 
 
 ## Project Link
 
-You can access the Quizzical application [here](https://davids-gamesaver.netlify.app).
+You can access the GameSaver application [here](https://davids-gamesaver.netlify.app).
 
 
 ## Technologies Used
