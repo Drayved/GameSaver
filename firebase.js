@@ -3,12 +3,12 @@ import { getFirestore } from "firebase/firestore"
 
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_FIREBASE_KEY,
-    authDomain: "gamesaver-52467.firebaseapp.com",
-    projectId: "gamesaver-52467",
-    storageBucket: "gamesaver-52467.appspot.com",
-    messagingSenderId: "995477091855",
-    appId: "1:995477091855:web:9a1628d8f66d17381f157a",
-    measurementId: "G-WGHVZP9CB7"
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECTID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_SENDERID,
+    appId: import.meta.env.VITE_FIREBASE_APPID,
+    measurementId: import.meta.env.VITE_FIREBASE_APPID
 }
 
 const firebaseApp = initializeApp(firebaseConfig)

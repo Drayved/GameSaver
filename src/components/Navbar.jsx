@@ -43,23 +43,11 @@ export default function Navbar() {
       }
     })
 
-    // Clean up the listener
+  
     return () => unsubscribe()
   }, [setUser])
 
-  // useEffect(() => {
-  //   const handleOutsideClick = (event) => {
-  //     if (showMenu && !event.target.closest(".navbar-container") && !event.target.closest(".dropdown-container")) {
-  //       handleMenuClick()
-  //     }
-  //   }
 
-  //   document.addEventListener("click", handleOutsideClick)
-
-  //   return () => {
-  //     document.removeEventListener("click", handleOutsideClick)
-  //   }
-  // }, [showMenu, handleMenuClick])
 
   function handleNewUsers() {
     setNewUser(!newUser)
@@ -68,7 +56,7 @@ export default function Navbar() {
   async function handleAuthentication(event) {
     event.preventDefault()
     const auth = getAuth()
-    const db = getFirestore(firebaseApp) // Initialize Firestore
+    const db = getFirestore(firebaseApp) 
 
     try {
       let userCredential
@@ -82,28 +70,27 @@ export default function Navbar() {
         setUser(user.email)
         console.log("User signed up!")
 
-        // Retrieve the updated user object after setting the user
+       
         const updatedUser = auth.currentUser
 
-        // Save user information to Firestore
+       
         const userDocRef = doc(db, "users", updatedUser.uid)
         await addDoc(userDocRef, { email: updatedUser.email })
 
         await setDoc(userDocRef, { wantToPlay: {}, playedGames: {} })
       } else {
         userCredential = await signInWithEmailAndPassword(auth, email, password)
-        user = userCredential.user // Get the user object
+        user = userCredential.user 
         setSignedIn(true)
         setUser(user.email)
 
-        const db = getFirestore(firebaseApp) // Initialize Firestore
+        const db = getFirestore(firebaseApp) 
 
-        // Retrieve the updated user object after setting the user
+       
         const updatedUser = auth.currentUser
 
-        // Retrieve the user document from Firestore
-        const userDocRef = doc(db, "users", updatedUser.uid) // Use the user UID to reference the document
-
+       
+        const userDocRef = doc(db, "users", updatedUser.uid) 
         await setDoc(userDocRef, { wantToPlay: {}, playedGames: {} })
       }
       window.location.reload()

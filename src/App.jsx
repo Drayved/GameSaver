@@ -1,5 +1,5 @@
 import { useEffect, useState, createContext } from "react"
-import { createBrowserRouter, RouterProvider, Route, createRoutesFromChildren, Outlet, useLocation, Navigate, useNavigate} from "react-router-dom"
+import { createBrowserRouter, RouterProvider, Route, createRoutesFromChildren, Outlet} from "react-router-dom"
 import Landing from "./components/Landing"
 import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
