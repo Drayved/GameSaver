@@ -44,7 +44,7 @@ export default function GetGames() {
 
       const response = await fetch(apiUrl)
       const data = await response.json()
-      console.log(data)
+      
       const totalGames = data.count
       const calculatedTotalPages = Math.ceil(totalGames / gamesPerPage)
 
