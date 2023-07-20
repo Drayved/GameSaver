@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react"
 import { AuthContext } from "../App"
 import { collection, doc, setDoc, deleteDoc, getDocs, where, query, addDoc } from "firebase/firestore"
-import { db } from "../../firebaseInfo"
+import { db } from "../../firebase"
 import { useLocation } from "react-router-dom"
 
 export default function GameCard({ currentPage, setCurrentPage, totalPages, setTotalPages}) {

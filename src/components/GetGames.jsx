@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useCallback } from "react"
 import { AuthContext } from "../App"
-import firebaseApp from "../../firebaseInfo"
+import firebaseApp from "../../firebase"
 import { getFirestore } from "firebase/firestore"
 import GameCard from "./GameCard"
 
@@ -19,7 +19,7 @@ export default function GetGames() {
   const fetchGames = useCallback(async () => {
     try {
       setLoading(true)
-      let apiUrl = `https://davids-gamesaver.netlify.app/.netlify/functions/fetchGames?`
+      let apiUrl = `https://davids-gamesaver.netlify.app/.netlify/functions/getGames?`
       
       
 

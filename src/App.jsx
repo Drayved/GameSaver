@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider, Route, createRoutesFromChildren, O
 import Landing from "./components/Landing"
 import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
-import FetchGames from "./components/FetchGames"
+import GetGames from "./components/GetGames"
 import Layout from "./components/Layout"
 import GamesSaved from "./components/GamesSaved"
 import GamesPlayed from "./components/GamesPlayed"
@@ -39,7 +39,7 @@ export default function App() {
     createRoutesFromChildren(
       <Route path={"/"} element={<Layout />}>
         <Route path={"/"} element={<Landing />} />
-        <Route path="/search" element={<FetchGames />} />
+        <Route path="/search" element={<GetGames />} />
         <Route path="/games-saved" element={<GamesSaved />}/>
         <Route path="/games-played" element={<GamesPlayed />}/>
         

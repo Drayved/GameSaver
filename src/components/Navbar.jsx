@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import { AuthContext } from "../App"
 import { getAuth, createUserWithEmailAndPassword, signOut, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth"
 import { getFirestore, collection, addDoc, doc, setDoc } from "firebase/firestore"
-import firebaseApp from "../../firebaseInfo"
+import firebaseApp from "../../firebase"
 
 export default function Navbar() {
   
