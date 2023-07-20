@@ -124,6 +124,7 @@ export default function GameCard({ currentPage, setCurrentPage, totalPages, setT
         }
       } else {
         console.log("User not authenticated.")
+        alert("Must sign in to add games to a list!")
       }
     } catch (error) {
       console.log(`Error adding the game to the '${collectionName}' subcollection:`, error)
