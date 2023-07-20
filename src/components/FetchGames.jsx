@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext, useCallback } from "react"
 import { AuthContext } from "../App"
-import firebaseApp from "../../firebase"
+import firebaseApp from "../../firebaseInfo"
 import { getFirestore } from "firebase/firestore"
 import GameCard from "./GameCard"
-import Navbar from "./Navbar"
+
 
 const db = getFirestore(firebaseApp)
 

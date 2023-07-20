@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react"
 import { AuthContext } from "../App"
 import { getDocs, collection, doc } from "firebase/firestore"
 import GameCard from "./GameCard"
-import { db } from "../../firebase"
+import { db } from "../../firebaseInfo"
 
 
 export default function GamesSaved() {
