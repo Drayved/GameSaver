@@ -19,7 +19,7 @@ export default function GetGames() {
   const fetchGames = useCallback(async () => {
     try {
       setLoading(true)
-      let apiUrl = `https://davids-gamesaver.netlify.app/.netlify/functions/getGames?`
+      let apiUrl = `https://davids-gamesaver.netlify.app/.netlify/functions/fetchGames?`
       
       
 
