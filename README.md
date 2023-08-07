@@ -40,5 +40,5 @@ You can access the GameSaver application [here](https://davids-gamesaver.netlify
 
 ## Screenshots
 
-![Screenshot 1](/screenshots/screenshot1.jpg)
-![Screenshot 2](/screenshots/screenshot2.jpg)
+![Screenshot 1](/screenshots/screenshot1.JPG)
+![Screenshot 2](/screenshots/screenshot2.JPG)
