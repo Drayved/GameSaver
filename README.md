@@ -38,3 +38,7 @@ You can access the GameSaver application [here](https://davids-gamesaver.netlify
 - Firebase - [https://firebase.google.com](https://firebase.google.com)
 - RAWG.io API - [https://rawg.io/apidocs](https://rawg.io/apidocs)
 
+## Screenshots
+
+![Screenshot 1](/screenshots/screenshot1.jpg)
+![Screenshot 2](/screenshots/screenshot2.jpg)
